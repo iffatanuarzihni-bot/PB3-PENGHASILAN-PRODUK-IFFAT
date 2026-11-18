@@ -130,6 +130,7 @@ button:hover{transform:translateY(-2px);box-shadow:0 7px 0 var(--ink);filter:bri
 button:active{transform:translateY(4px);box-shadow:0 1px 0 var(--ink)}
 button.ghost{background:#fff;color:var(--navy)}
 button.danger{background:var(--red);color:#fff}
+button.skip-btn{background:#ff9800;color:#fff;border-style:dashed}
 button:focus-visible,input:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
 
 input{
@@ -318,7 +319,6 @@ th{font-size:.82rem;color:var(--mut);text-transform:uppercase;letter-spacing:.04
   55%{transform:translate(-4px, 2px)}
 }
 
-/* Awan & bintang arena mula */
 .stage-cloud{
   position:absolute;
   top:14%;
@@ -329,7 +329,6 @@ th{font-size:.82rem;color:var(--mut);text-transform:uppercase;letter-spacing:.04
 .stage-cloud.c2{top:27%;font-size:1.25rem;animation-delay:-9s}
 @keyframes driftSlow{from{left:-12%}to{left:108%}}
 
-/* HUD mini dalam pentas animasi */
 .stage-hud{
   position:absolute;
   padding:.35rem .6rem;
@@ -390,7 +389,6 @@ th{font-size:.82rem;color:var(--mut);text-transform:uppercase;letter-spacing:.04
 .plat-left{left:7%}
 .plat-right{right:7%}
 
-/* Pikachu Hero */
 .hero-pikachu{
   position:absolute;
   left:9%;
@@ -438,7 +436,6 @@ th{font-size:.82rem;color:var(--mut);text-transform:uppercase;letter-spacing:.04
   30%, 44%{opacity:.95;transform:rotate(180deg) scale(1.15)}
 }
 
-/* Panahan Petir Ganda SVG */
 .lightning-beam{
   position:absolute;
   left:23%;
@@ -534,7 +531,6 @@ th{font-size:.82rem;color:var(--mut);text-transform:uppercase;letter-spacing:.04
   70%, 100%{opacity:0;transform:translateY(-40px)}
 }
 
-/* Butang MULA Utama */
 .btn-start-game{
   position:relative;
   z-index:4;
@@ -573,7 +569,6 @@ th{font-size:.82rem;color:var(--mut);text-transform:uppercase;letter-spacing:.04
 }
 @keyframes blinkText{50%{opacity:.3}}
 
-/* ==================== HUB PILIHAN PERANAN ==================== */
 .hub-nav{
   display:flex;
   justify-content:space-between;
@@ -676,8 +671,6 @@ th{font-size:.82rem;color:var(--mut);text-transform:uppercase;letter-spacing:.04
   transition:transform .16s,box-shadow .16s;
 }
 .role:hover{transform:translateY(-6px);box-shadow:0 12px 0 var(--ink)}
-.role:hover .mon{animation:jump .48s}
-@keyframes jump{40%{transform:translateY(-14px) scale(1.1)}}
 .role .mon{width:90px;height:90px}
 .role strong{font-size:1.3rem;color:var(--ink)}
 .role .mut{font-size:.86rem;line-height:1.3}
@@ -698,7 +691,6 @@ th{font-size:.82rem;color:var(--mut);text-transform:uppercase;letter-spacing:.04
 .role-guru{background:linear-gradient(155deg,#ffe9dc,#ffffff)}
 .role-murid{background:linear-gradient(155deg,#fff5cc,#ffffff)}
 
-/* ==================== HUD MURID & ARENA PERTARUNGAN ==================== */
 .stage{display:flex;align-items:center;gap:1rem;border-radius:22px}
 .stage .mon{width:88px;height:88px}
 .grow{flex:1;min-width:0}
@@ -753,17 +745,6 @@ th{font-size:.82rem;color:var(--mut);text-transform:uppercase;letter-spacing:.04
 @keyframes drift{from{left:-12%}to{left:108%}}
 
 .enemy{position:absolute;right:10%;top:55px;width:136px;z-index:2}
-.enemy:after{
-  content:"";
-  position:absolute;
-  left:5%;
-  right:5%;
-  bottom:-8px;
-  height:18px;
-  border-radius:50%;
-  background:rgba(0,0,0,.22);
-  z-index:-1;
-}
 .enemy .mon{width:124px;height:124px;animation:bob 2s ease-in-out infinite}
 .enemy .pokemon-sprite{width:100%;height:100%}
 
@@ -802,7 +783,6 @@ th{font-size:.82rem;color:var(--mut);text-transform:uppercase;letter-spacing:.04
 .plate.en{left:4%;top:14px;width:44%}
 .plate.me{right:4%;bottom:14px}
 
-/* Kesan Serangan & Kilat Semasa Menjawab Betul */
 .battle-bolt{
   position:absolute;
   left:20%;
@@ -870,7 +850,6 @@ th{font-size:.82rem;color:var(--mut);text-transform:uppercase;letter-spacing:.04
   margin:.5rem 0;
 }
 
-/* Animasi Tangkap Pokéball */
 .capt{position:relative;height:155px;display:grid;place-items:center}
 .capt .mon{width:125px;height:125px;opacity:0;animation:appear .5s 2s forwards}
 .capt .mon img{width:100%;height:100%}
@@ -909,7 +888,6 @@ th{font-size:.82rem;color:var(--mut);text-transform:uppercase;letter-spacing:.04
 .flee{width:120px;margin:0 auto;animation:flee 1.2s forwards}
 @keyframes flee{to{transform:translateX(220px) rotate(25deg);opacity:0}}
 
-/* Pokémon Interaktif di Latar */
 .pokemon-background{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:1}
 .bg-pokemon{
   position:absolute;
@@ -950,30 +928,6 @@ th{font-size:.82rem;color:var(--mut);text-transform:uppercase;letter-spacing:.04
   100%{opacity:0;transform:translateY(-10px) scale(.9)}
 }
 
-/* Responsif */
-@media(max-width:720px){
-  .world-banner{grid-template-columns:1fr;padding:1.15rem}
-  .world-characters{min-height:150px}
-  .roles{grid-template-columns:1fr}
-  .role{min-height:110px;flex-direction:row;justify-content:flex-start;text-align:left;padding:.75rem 1rem}
-  .role .mon{width:76px;height:76px}
-  .role-arrow{top:50%;transform:translateY(-50%)}
-  .battle-stage{height:215px}
-  .hero-pikachu{width:102px;height:102px;left:5%}
-  .target-dummy{width:95px;height:95px;right:5%}
-  .stage-hud{display:none}
-}
-@media(max-width:520px){
-  .btn-start-game{font-size:.98rem;padding:.9rem 1.7rem}
-  .arena{height:280px}
-  .enemy{right:4%;width:110px}
-  .enemy .mon{width:100px;height:100px}
-  .plate.en{width:54%}
-  .stage{flex-wrap:wrap}
-  .stage button{width:100%}
-  .audio-dock{top:8px;right:8px}
-}
-@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important}}
 .fbbox{margin-top:1rem;padding:.9rem 1.1rem;border:3px solid var(--ink);border-radius:16px;text-align:left}
 .fbbox.good{background:#e3fbea}
 .fbbox.try{background:#fff4d6}
@@ -985,16 +939,14 @@ button[disabled]{opacity:.55;cursor:not-allowed}
 </head>
 <body>
 
-<!-- Kawalan Muzik 8-Bit -->
 <div class="audio-dock">
-  <button id="musicBtn" class="audio-btn" onclick="toggleMusic()" aria-label="Hidupkan atau matikan muzik 8-bit">🎵 Muzik: OFF</button>
+  <button id="musicBtn" class="audio-btn" onclick="toggleMusic()" aria-label="Muzik">🎵 Muzik: OFF</button>
 </div>
 
-<!-- Pokémon Interaktif Latar -->
 <div class="pokemon-background">
-  <img id="bg-pikachu" class="bg-pokemon bg-pikachu" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png" alt="Pikachu interaktif" tabindex="0" role="button">
-  <img id="bg-jigglypuff" class="bg-pokemon bg-jigglypuff" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/39.png" alt="Jigglypuff interaktif" tabindex="0" role="button">
-  <img id="bg-eevee" class="bg-pokemon bg-eevee" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/133.png" alt="Eevee interaktif" tabindex="0" role="button">
+  <img id="bg-pikachu" class="bg-pokemon bg-pikachu" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png" alt="Pikachu" tabindex="0" role="button">
+  <img id="bg-jigglypuff" class="bg-pokemon bg-jigglypuff" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/39.png" alt="Jigglypuff" tabindex="0" role="button">
+  <img id="bg-eevee" class="bg-pokemon bg-eevee" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/133.png" alt="Eevee" tabindex="0" role="button">
 </div>
 
 <div class="wrap" id="app"><p style="color:#fff">Memuatkan Pokémon Academy...</p></div>
@@ -1006,65 +958,29 @@ window.onerror = function(m,s,l){
   if(a) a.innerHTML = '<div class="err"><b>Ralat:</b> '+m+' ('+l+')</div>';
 };
 
-/* =====================================================================
-   0) ENJIN MUZIK 8-BIT & KESAN BUNYI (WEB AUDIO API CHIPTUNE)
-   ===================================================================== */
+/* ==================== ENJIN MUZIK 8-BIT & SFX ==================== */
 const Chiptune = (() => {
-  let ctx = null;
-  let enabled = false;
-  let currentTrack = "menu";
-  let step = 0;
-  let timer = null;
-  let noiseBuf = null;
-
-  // Frekuensi not muzik (Hz)
+  let ctx = null, enabled = false, currentTrack = "menu", step = 0, timer = null, noiseBuf = null;
   const N = {
-    _:0,
-    C3:130.81, D3:146.83, E3:164.81, F3:174.61, G3:196.00, A3:220.00, B3:246.94,
-    C4:261.63, D4:293.66, E4:329.63, F4:349.23, G4:392.00, Gs4:415.30, A4:440.00, Bb4:466.16, B4:493.88,
-    C5:523.25, D5:587.33, Eb5:622.25, E5:659.25, F5:698.46, Fs5:739.99, G5:783.99, Gs5:830.61, A5:880.00, B5:987.77, C6:1046.50
+    _:0, C3:130.81, D3:146.83, E3:164.81, F3:174.61, G3:196.00, A3:220.00, B3:246.94,
+    C4:261.63, D4:293.66, E4:329.63, F4:349.23, G4:392.00, A4:440.00, B4:493.88,
+    C5:523.25, D5:587.33, E5:659.25, F5:698.46, G5:783.99, A5:880.00, B5:987.77, C6:1046.50
   };
-
-  // Lagu 1: Tema Pengembaraan 8-Bit (Ceria ala Bandar Pokémon)
   const MENU_TRACK = {
     tempoMs: 145,
-    lead: [
-      "E5","G5","C6","G5","E5","G5","A5","G5",
-      "F5","A5","G5","E5","D5","E5","F5","D5",
-      "E5","G5","C6","G5","A5","B5","C6","G5",
-      "F5","E5","D5","G5","C5","_","G4","_"
-    ],
-    bass: [
-      "C3","G3","C3","G3","A3","E3","A3","E3",
-      "F3","C3","G3","D3","G3","D3","G3","B3",
-      "C3","G3","C3","G3","F3","C3","E3","C3",
-      "D3","G3","G3","G3","C3","G3","C3","_"
-    ]
+    lead: ["E5","G5","C6","G5","E5","G5","A5","G5","F5","A5","G5","E5","D5","E5","F5","D5"],
+    bass: ["C3","G3","C3","G3","A3","E3","A3","E3","F3","C3","G3","D3","G3","D3","G3","B3"]
   };
-
-  // Lagu 2: Tema Pertarungan 8-Bit (Laju & Mendebarkan)
   const BATTLE_TRACK = {
     tempoMs: 112,
-    lead: [
-      "E5","Eb5","E5","Eb5","E5","G5","Fs5","E5",
-      "D5","F5","E5","D5","C5","E5","D5","B4",
-      "E5","G5","A5","G5","Fs5","E5","D5","E5",
-      "F5","G5","Gs5","A5","B5","G5","E5","_"
-    ],
-    bass: [
-      "E3","E3","B3","E3","E3","E3","B3","E3",
-      "D3","D3","A3","D3","C3","C3","G3","B3",
-      "E3","E3","B3","E3","D3","D3","A3","D3",
-      "F3","G3","Gs4","A3","B3","B3","E3","_"
-    ]
+    lead: ["E5","Eb5","E5","Eb5","E5","G5","Fs5","E5","D5","F5","E5","D5","C5","E5","D5","B4"],
+    bass: ["E3","E3","B3","E3","E3","E3","B3","E3","D3","D3","A3","D3","C3","C3","G3","B3"]
   };
-
   function ensureCtx(){
     if(!ctx){
       const AC = window.AudioContext || window.webkitAudioContext;
       if(!AC) return null;
       ctx = new AC();
-      // Buffer bunyi 'noise' untuk dram 8-bit
       const len = ctx.sampleRate * 0.08;
       noiseBuf = ctx.createBuffer(1, len, ctx.sampleRate);
       const data = noiseBuf.getChannelData(0);
@@ -1073,104 +989,58 @@ const Chiptune = (() => {
     if(ctx.state === "suspended") ctx.resume();
     return ctx;
   }
-
   function playTone(freq, dur, type, vol){
     if(!freq || !ctx) return;
-    const now = ctx.currentTime;
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
-    osc.type = type;
-    osc.frequency.setValueAtTime(freq, now);
-    gain.gain.setValueAtTime(vol, now);
-    gain.gain.exponentialRampToValueAtTime(0.001, now + dur);
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-    osc.start(now);
-    osc.stop(now + dur + 0.01);
+    const now = ctx.currentTime, osc = ctx.createOscillator(), gain = ctx.createGain();
+    osc.type = type; osc.frequency.setValueAtTime(freq, now);
+    gain.gain.setValueAtTime(vol, now); gain.gain.exponentialRampToValueAtTime(0.001, now + dur);
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.start(now); osc.stop(now + dur + 0.01);
   }
-
   function playHitHat(vol){
     if(!ctx || !noiseBuf) return;
-    const now = ctx.currentTime;
-    const src = ctx.createBufferSource();
-    src.buffer = noiseBuf;
-    const gain = ctx.createGain();
-    gain.gain.setValueAtTime(vol, now);
-    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.045);
-    src.connect(gain);
-    gain.connect(ctx.destination);
-    src.start(now);
+    const now = ctx.currentTime, src = ctx.createBufferSource();
+    src.buffer = noiseBuf; const gain = ctx.createGain();
+    gain.gain.setValueAtTime(vol, now); gain.gain.exponentialRampToValueAtTime(0.001, now + 0.045);
+    src.connect(gain); gain.connect(ctx.destination); src.start(now);
   }
-
   function tick(){
     if(!enabled) return;
     const tr = currentTrack === "battle" ? BATTLE_TRACK : MENU_TRACK;
     const idx = step % tr.lead.length;
-    const leadNote = N[tr.lead[idx]];
-    const bassNote = N[tr.bass[idx]];
-    const dur = tr.tempoMs / 1000 * 0.88;
-
+    const leadNote = N[tr.lead[idx]], bassNote = N[tr.bass[idx]], dur = tr.tempoMs / 1000 * 0.88;
     if(leadNote) playTone(leadNote, dur, "square", 0.032);
     if(bassNote) playTone(bassNote, dur, "triangle", 0.055);
-    if(idx % 2 === 1) playHitHat(currentTrack === "battle" ? 0.024 : 0.014);
+    if(idx % 2 === 1) playHitHat(0.014);
     step++;
   }
-
   function startLoop(){
     stopLoop();
     const tr = currentTrack === "battle" ? BATTLE_TRACK : MENU_TRACK;
     timer = setInterval(tick, tr.tempoMs);
   }
-
-  function stopLoop(){
-    if(timer){ clearInterval(timer); timer = null; }
-  }
-
+  function stopLoop(){ if(timer){ clearInterval(timer); timer = null; } }
   function updateUI(){
     const btn = document.getElementById("musicBtn");
     if(!btn) return;
     btn.classList.toggle("on", enabled);
     btn.textContent = enabled ? "🎵 Muzik 8-Bit: ON" : "🎵 Muzik: OFF";
   }
-
   return {
-    enable(){
-      ensureCtx();
-      if(!enabled){
-        enabled = true;
-        startLoop();
-        updateUI();
-      }
-    },
-    toggle(){
-      ensureCtx();
-      enabled = !enabled;
-      if(enabled) startLoop(); else stopLoop();
-      updateUI();
-    },
+    enable(){ ensureCtx(); if(!enabled){ enabled = true; startLoop(); updateUI(); } },
+    toggle(){ ensureCtx(); enabled = !enabled; if(enabled) startLoop(); else stopLoop(); updateUI(); },
     setTrack(name){
       if(currentTrack === name) return;
-      currentTrack = name;
-      step = 0;
-      if(enabled) startLoop();
+      currentTrack = name; step = 0; if(enabled) startLoop();
     },
-    sfx(freq, dur=0.12, type="square", vol=0.055){
-      const c = ensureCtx();
-      if(c) playTone(freq, dur, type, vol);
-    },
+    sfx(freq, dur=0.12, type="square", vol=0.055){ const c = ensureCtx(); if(c) playTone(freq, dur, type, vol); },
     fanfare(){
-      const c = ensureCtx();
-      if(!c) return;
-      [523.25, 659.25, 783.99, 1046.5].forEach((f, i) => {
-        setTimeout(() => playTone(f, 0.16, "square", 0.05), i * 110);
-      });
+      const c = ensureCtx(); if(!c) return;
+      [523.25, 659.25, 783.99, 1046.5].forEach((f, i) => { setTimeout(() => playTone(f, 0.16, "square", 0.05), i * 110); });
     },
     thunder(){
-      const c = ensureCtx();
-      if(!c) return;
-      [980, 740, 1120, 620].forEach((f, i) => {
-        setTimeout(() => playTone(f, 0.07, "sawtooth", 0.045), i * 45);
-      });
+      const c = ensureCtx(); if(!c) return;
+      [980, 740, 1120, 620].forEach((f, i) => { setTimeout(() => playTone(f, 0.07, "sawtooth", 0.045), i * 45); });
     }
   };
 })();
@@ -1178,9 +1048,7 @@ const Chiptune = (() => {
 const bip = (f, d) => Chiptune.sfx(f, d || 0.12);
 const toggleMusic = () => Chiptune.toggle();
 
-/* =====================================================================
-   1) DATA POKÉDEX, TETAPAN & TEKS
-   ===================================================================== */
+/* ==================== DATA & POKÉDEX ==================== */
 const POKEDEX = [
   { id: 25,  name: "Pikachu" },
   { id: 1,   name: "Bulbasaur" },
@@ -1197,8 +1065,8 @@ const DEMO = {
   guru:[["Cikgu Aminah","guru1","guru123"],["Cikgu Raju","guru2","guru123"]],
   murid:[
     ["Ali bin Ahmad","murid1","murid123","guru1","4 Bestari",{}],
-    ["Siti Nur","murid2","murid123","guru1","4 Bestari",{g1:[8,10]}],
-    ["Kumar a/l Raj","murid3","murid123","guru2","5 Cerdik",{g1:[9,10],g2:[7,10]}]
+    ["Siti Nur","murid2","murid123","guru1","4 Bestari",{g1:[3,3]}],
+    ["Kumar a/l Raj","murid3","murid123","guru2","5 Cerdik",{g1:[3,3],g2:[3,3]}]
   ]
 };
 
@@ -1238,130 +1106,56 @@ const TEKS = {
   tahap:"Tahap", koleksi:"Pokédex Saya", mulaB:"Mula Bertarung!",
   liarMuncul:"liar muncul!", soalan:"Misi Soalan", ditangkap:"Ditangkap!",
   berjaya:"Hebat! Pokémon berjaya ditangkap!",
-  gagal:"Tidak mengapa! Pokémon itu melarikan diri buat sementara. Baca semula pelajaran dan cuba lagi, anda pasti boleh!",
-  syarat:"Jawab sekurang-kurangnya 2/3 soalan dengan betul untuk menangkap Pokémon ini."
+  gagal:"Tidak mengapa! Pokémon itu melارikan diri buat sementara. Baca semula pelajaran dan cuba lagi, anda pasti boleh!",
+  syarat:"Jawab soalan dengan betul untuk menangkap Pokémon ini."
 };
 
+/* LESSONS: KINI DIHADKAN KEPADA 3 SOALAN SAHAJA & GUA GUNUNG DIBUANG */
 const LESSONS = [
   /* ============ WILAYAH 1: HUTAN RUMPUT (KATA BERIMBUHAN) ============ */
   {
-    id:"g1", mon:{n:"Bulbasaur",c:"#4cd27a",k:1}, n:10, hearts:4,
+    id:"g1", mon:{n:"Bulbasaur",c:"#4cd27a",k:1}, n:3, hearts:4,
     badge:"Lencana Alam (Nature Badge)",
     title:"Hutan Rumput: Kata Berimbuhan", subject:"Bahasa Melayu · Ketua Gim Flora",
     lead:"Flora: Selamat datang ke Hutan Rumput! Tunjukkan kemahiran kata berimbuhan anda untuk mendapat Lencana Alam.",
-    text:"Kata berimbuhan ialah kata akar yang ditambah imbuhan.\n• Awalan: di hadapan kata akar. Contoh: ber + main = bermain; me + baca = membaca.\n• Akhiran: di belakang kata akar. Contoh: makan + an = makanan; tulis + an = tulisan.\n• Apitan: di hadapan dan di belakang kata akar serentak. Contoh: per + main + an = permainan; ke + indah + an = keindahan.",
+    text:"Kata berimbuhan ialah kata akar yang ditambah imbuhan.\n• Awalan: di hadapan kata akar. Contoh: ber + main = bermain; me + baca = membaca.\n• Akhiran: di belakang kata akar. Contoh: makan + an = makanan; tulis + an = tulisan.\n• Apitan: di hadapan dan di belakang kata akar serentak. Contoh: per + main + an = permainan.",
     q:[
       {q:"Perkataan manakah mengandungi awalan?",o:["makanan","bermain","tulisan","sayuran"],a:1,e:"Bermain = awalan ber- + kata akar main. Makanan, tulisan dan sayuran mempunyai akhiran -an.",x:"ber + main = bermain"},
       {q:"Perkataan manakah mengandungi akhiran?",o:["berjalan","membaca","makanan","bermain"],a:2,e:"Makanan = makan + akhiran -an. Akhiran terletak di belakang kata akar.",x:"tulis + an = tulisan"},
-      {q:"Perkataan manakah mengandungi apitan?",o:["permainan","membaca","berjalan","makanan"],a:0,e:"Permainan = per- (di hadapan) + main + -an (di belakang). Imbuhan di kedua-dua hujung dipanggil apitan.",x:"per + main + an = permainan"},
-      {q:"Apakah awalan bagi perkataan berlari?",o:["ber-","ter-","me-","di-"],a:0,e:"Berlari = ber- + lari. Awalan ber- diletakkan di hadapan kata akar.",x:"ber + lari = berlari"},
-      {q:"Apakah kata akar bagi perkataan makanan?",o:["makan","mak","anan","makana"],a:0,e:"Buang imbuhan -an daripada makanan, maka tinggallah kata akar makan.",x:"makanan → makan"},
-      {q:"Adik sedang ____ buku cerita di perpustakaan.",o:["membaca","berbaca","pembaca","bacaan"],a:0,e:"Kata kerja aktif memerlukan awalan me-. Me- + baca = membaca (me- menjadi mem- sebelum huruf b).",x:"Adik sedang membaca buku cerita."},
-      {q:"Perkataan manakah mengandungi akhiran -an?",o:["melukis","lukisan","berlukis","dilukis"],a:1,e:"Lukisan = lukis + -an. Melukis, berlukis dan dilukis mempunyai awalan, bukan akhiran.",x:"lukis + an = lukisan"},
-      {q:"Kata akar jalan + awalan ber- membentuk perkataan ...",o:["berjalan","jalanan","menjalan","terjalan"],a:0,e:"Ber- + jalan = berjalan. Jalanan mempunyai akhiran -an, bukan awalan ber-.",x:"Kami berjalan ke sekolah."},
-      {q:"Ayah ____ kereta ke pejabat setiap pagi.",o:["memandu","berpandu","dipandu","pandukan"],a:0,e:"Ayah ialah pelaku, maka kata kerja aktif me- + pandu = memandu digunakan.",x:"Ayah memandu kereta."},
-      {q:"Perkataan manakah mengandungi apitan?",o:["gembira","bergembira","kegembiraan","gembiraan"],a:2,e:"Kegembiraan = ke- + gembira + -an. Ada imbuhan di hadapan dan di belakang.",x:"ke + gembira + an = kegembiraan"},
-      {q:"Perkataan manakah menggunakan awalan di-?",o:["makanan","memakan","bermakan","dimakan"],a:3,e:"Dimakan = di- + makan. Awalan di- menunjukkan perbuatan yang dikenakan pada sesuatu.",x:"Kuih itu dimakan oleh adik."},
-      {q:"Perkataan manakah mengandungi akhiran -kan?",o:["ambilan","mengambil","ambilkan","diambil"],a:2,e:"Ambilkan = ambil + -kan. Akhiran -kan berada di hujung perkataan.",x:"Tolong ambilkan buku itu."},
-      {q:"Perkataan manakah mengandungi akhiran -i?",o:["dekatan","dekati","berdekat","mendekat"],a:1,e:"Dekati = dekat + -i. Akhiran -i berada di hujung kata akar.",x:"Jangan dekati api itu."},
-      {q:"Perkataan manakah mengandungi awalan ter-?",o:["jatuhan","terjatuh","berjatuh","menjatuh"],a:1,e:"Terjatuh = ter- + jatuh. Ter- menunjukkan perbuatan yang tidak sengaja.",x:"Adik terjatuh dari basikal."},
-      {q:"Perkataan sekelas terdiri daripada awalan ...",o:["ke-","ber-","pe-","se-"],a:3,e:"Sekelas = se- + kelas. Awalan se- bermaksud satu atau sama.",x:"Kami sekelas dengan Ali."},
-      {q:"Perkataan pemakanan ialah kata berimbuhan jenis ...",o:["awalan","akhiran","apitan","kata akar"],a:2,e:"Pemakanan = pe- + makan + -an. Terdapat imbuhan di hadapan dan di belakang, maka ia apitan.",x:"Pemakanan sihat penting untuk badan."},
-      {q:"Ali ____ bola di padang bersama kawan-kawan.",o:["mainan","pemain","bermain","permainan"],a:2,e:"Ayat memerlukan kata kerja. Ber- + main = bermain. Mainan, pemain dan permainan ialah kata nama.",x:"Ali bermain bola di padang."}
+      {q:"Perkataan manakah mengandungi apitan?",o:["permainan","membaca","berjalan","makanan"],a:0,e:"Permainan = per- (di hadapan) + main + -an (di belakang). Imbuhan di kedua-dua hujung dipanggil apitan.",x:"per + main + an = permainan"}
     ]
   },
 
   /* ============ WILAYAH 2: BANDAR METRO (KATA MAJMUK) ============ */
   {
-    id:"g2", mon:{n:"Pikachu",c:"#ffcf33",k:0}, n:10, hearts:4,
+    id:"g2", mon:{n:"Pikachu",c:"#ffcf33",k:0}, n:3, hearts:4,
     badge:"Lencana Pengetahuan (Knowledge Badge)",
     title:"Bandar Metro: Kata Majmuk", subject:"Bahasa Melayu · Ketua Gim Volt",
     lead:"Volt: Bandar Metro menanti! Selesaikan teka-teki kata majmuk untuk mendapat Lencana Pengetahuan.",
-    text:"Kata majmuk ialah gabungan dua kata atau lebih yang membawa satu makna.\n• Kata majmuk bebas: gabungan kata yang ditulis berasingan. Contoh: kereta api, meja makan, jalan raya.\n• Kata majmuk mantap: gabungan kata yang sudah tetap dan ditulis rapat. Contoh: matahari, kerjasama, tanggungjawab.",
+    text:"Kata majmuk ialah gabungan dua kata atau lebih yang membawa satu makna.\n• Kata majmuk bebas: gabungan kata yang ditulis berasingan. Contoh: kereta api, meja makan, jalan raya.\n• Kata majmuk mantap: gabungan kata yang sudah tetap dan ditulis rapat. Contoh: matahari, kerjasama.",
     q:[
       {q:"Antara berikut, yang manakah kata majmuk?",o:["kereta api","berjalan","makanan","cantik"],a:0,e:"Kereta api ialah gabungan dua kata (kereta + api) yang membawa satu makna baharu.",x:"Ayah menaiki kereta api."},
       {q:"Antara berikut, yang manakah kata majmuk mantap?",o:["rumah sakit","matahari","meja makan","jalan raya"],a:1,e:"Matahari ialah gabungan mata + hari yang sudah tetap dan ditulis rapat.",x:"Matahari terbit di timur."},
-      {q:"Perkataan manakah kata majmuk mantap?",o:["buku teks","kapal terbang","tanggungjawab","lampu isyarat"],a:2,e:"Tanggungjawab ditulis rapat sebagai satu perkataan. Yang lain ialah kata majmuk bebas.",x:"Murid harus memikul tanggungjawab."},
-      {q:"Perkataan manakah kata majmuk bebas?",o:["matahari","kerjasama","kapal terbang","hulubalang"],a:2,e:"Kapal terbang ditulis berasingan, maka ia kata majmuk bebas.",x:"Kapal terbang mendarat di lapangan terbang."},
-      {q:"Gabungkan perkataan meja dan makan.",o:["meja makan","makan meja","mejamakan","mejamakanan"],a:0,e:"Meja + makan = meja makan, iaitu meja untuk makan. Susunan kata penting.",x:"Keluarga makan di meja makan."},
-      {q:"Gabungan mata + hari yang bermaksud sinar siang menghasilkan kata majmuk mantap ...",o:["mata hari","harimata","matahari","mata-hari"],a:2,e:"Kata majmuk mantap ditulis rapat tanpa jarak, iaitu matahari.",x:"Matahari sangat panas."},
-      {q:"Ayah menaiki ____ ke Kuala Lumpur.",o:["makanan","berlari","kereta api","cantik"],a:2,e:"Kereta api ialah kata majmuk bebas yang bermaksud kenderaan di atas landasan.",x:"Kami menaiki kereta api ke Kuala Lumpur."},
-      {q:"Kami membeli ____ untuk membuat kerja rumah.",o:["tulisan","menulis","bertulis","buku tulis"],a:3,e:"Buku tulis = buku + tulis, kata majmuk bebas yang bermaksud buku untuk menulis.",x:"Saya membeli buku tulis baharu."},
-      {q:"Antara berikut, yang manakah bukan kata majmuk?",o:["jalan raya","kereta api","kapal terbang","berlari"],a:3,e:"Berlari ialah kata berimbuhan (ber- + lari). Ia hanya satu kata akar dengan imbuhan.",x:"ber + lari = berlari"},
-      {q:"Bagaimanakah kata majmuk mantap ditulis?",o:["Dirapatkan menjadi satu perkataan","Dipisahkan dengan sempang","Ditulis dua perkataan berjarak","Ditulis dengan huruf besar"],a:0,e:"Kata majmuk mantap ditulis rapat sebagai satu perkataan, contohnya kerjasama dan matahari.",x:"kerja + sama = kerjasama"},
-      {q:"Perkataan kerjasama ialah kata majmuk jenis ...",o:["mantap","bebas","ganda","berimbuhan"],a:0,e:"Kerjasama ditulis rapat dan maknanya sudah tetap, maka ia kata majmuk mantap.",x:"Kerjasama memudahkan kerja kumpulan."},
-      {q:"Lampu isyarat ialah kata majmuk jenis ...",o:["mantap","ganda penuh","bebas","akhiran"],a:2,e:"Lampu isyarat ditulis berasingan, maka ia kata majmuk bebas.",x:"Pemandu berhenti apabila lampu isyarat merah."},
-      {q:"Rumah sakit bermaksud ...",o:["rumah yang buruk","orang sakit","kedai ubat","hospital"],a:3,e:"Makna kata majmuk berbeza daripada makna setiap kata. Rumah sakit bermaksud hospital.",x:"Datuk dirawat di rumah sakit."},
-      {q:"Pilih pasangan kata yang membentuk kata majmuk.",o:["makan + an","ber + jalan","kapal + terbang","buku + buku"],a:2,e:"Kapal + terbang ialah gabungan dua kata, maka ia kata majmuk. Pilihan lain ialah imbuhan atau ganda.",x:"kapal terbang"},
-      {q:"Antara berikut, yang manakah bukan kata majmuk mantap?",o:["hulubalang","matahari","kerjasama","jalan raya"],a:3,e:"Jalan raya ditulis berasingan sebagai kata majmuk bebas. Tiga yang lain ditulis rapat.",x:"Kereta lalu di jalan raya."},
-      {q:"Ibu memandu kereta di ____.",o:["berjalan","jalan raya","menjalani","perjalanan"],a:1,e:"Jalan raya ialah kata majmuk bebas yang bermaksud jalan besar untuk kenderaan.",x:"Ibu memandu kereta di jalan raya."},
-      {q:"Ayat manakah mengandungi kata majmuk?",o:["Adik bermain.","Adik makan nasi.","Adik membaca buku cerita.","Adik sedang berlari."],a:2,e:"Buku cerita = buku + cerita, kata majmuk bebas. Ayat lain tidak mempunyai kata majmuk.",x:"Adik membaca buku cerita."}
+      {q:"Perkataan manakah kata majmuk mantap?",o:["buku teks","kapal terbang","tanggungjawab","lampu isyarat"],a:2,e:"Tanggungjawab ditulis rapat sebagai satu perkataan.",x:"Murid harus memikul tanggungjawab."}
     ]
   },
 
-  /* ============ WILAYAH 3: GUA GUNUNG (KATA GANDA) ============ */
+  /* ============ LIGA JUARA (GABUNGAN SEMUA TOPIK - 3 SOALAN, TERBUKA) ============ */
   {
-    id:"g3", mon:{n:"Charmander",c:"#ff9a4d",k:4}, n:10, hearts:4,
-    badge:"Lencana Penguasaan (Mastery Badge)",
-    title:"Gua Gunung: Kata Ganda", subject:"Bahasa Melayu · Ketua Gim Rocky",
-    lead:"Rocky: Gua Gunung ini penuh dengan kata ganda! Menangi pertarungan ini untuk mendapat Lencana Penguasaan.",
-    text:"Kata ganda ialah kata yang diulang.\n• Kata ganda penuh: seluruh kata akar diulang dan dihubungkan dengan sempang. Contoh: buku-buku, meja-meja, kanak-kanak.\n• Kata ganda separa: sebahagian kata akar sahaja yang diulang. Contoh: pepohon, lelaki, tetamu.",
-    q:[
-      {q:"Perkataan manakah ialah kata ganda penuh?",o:["pepohon","lelaki","buku-buku","tetamu"],a:2,e:"Buku-buku mengulang seluruh kata akar buku dengan sempang. Pepohon, lelaki dan tetamu hanya mengulang sebahagian.",x:"Buku-buku itu terletak di atas meja."},
-      {q:"Perkataan manakah ialah kata ganda separa?",o:["rumah-rumah","pepohon","kanak-kanak","meja-meja"],a:1,e:"Pepohon hanya mengulang sebahagian kata akar pohon, maka ia ganda separa.",x:"Pepohon di taman itu rendang."},
-      {q:"Apakah ciri kata ganda penuh?",o:["Seluruh kata akar diulang","Hanya suku kata pertama diulang","Ditambah akhiran -an","Dua kata berbeza digabungkan"],a:0,e:"Kata ganda penuh mengulang seluruh kata akar dan menggunakan tanda sempang.",x:"meja → meja-meja"},
-      {q:"Apakah ciri kata ganda separa?",o:["Dua kata berbeza digabungkan","Sebahagian kata akar diulang","Imbuhan ditambah di hadapan","Tiada pengulangan"],a:1,e:"Kata ganda separa hanya mengulang sebahagian kata akar, biasanya suku kata pertama.",x:"tamu → tetamu"},
-      {q:"Bentuk kata ganda penuh bagi kereta ialah ...",o:["kekereta","kereta kereta","kereta-kereta","kerata-kereta"],a:2,e:"Ulang seluruh kata akar dan hubungkan dengan sempang: kereta-kereta.",x:"Kereta-kereta berhenti di lampu isyarat."},
-      {q:"Bentuk kata ganda separa bagi tamu ialah ...",o:["tamu-tamu","tetamu","tamutamu","tamuan"],a:1,e:"Suku kata pertama diulang dengan perubahan vokal: tamu menjadi tetamu.",x:"Tetamu tiba di rumah kami."},
-      {q:"Pilih kata ganda penuh yang ditulis dengan betul.",o:["burung-burung","burung burung","burungburung","burung-"],a:0,e:"Kata ganda penuh perlu menggunakan sempang di antara kata yang diulang.",x:"Burung-burung terbang di langit."},
-      {q:"____ itu sedang bermain di padang.",o:["Kanak","Kanakan","Kanak-kanak","Kekanak"],a:2,e:"Kanak-kanak ialah kata ganda penuh yang merujuk kumpulan kanak-kanak.",x:"Kanak-kanak itu bermain di padang."},
-      {q:"🍎🍎🍎  ____ itu berwarna merah. (Gambar menunjukkan lebih daripada satu epal.)",o:["epal epal","epalan","epal-epal","berepal"],a:2,e:"Gambar menunjukkan banyak epal, maka kata ganda penuh epal-epal digunakan.",x:"Epal-epal itu berwarna merah."},
-      {q:"Perkataan manakah bukan kata ganda?",o:["pepohon","buku-buku","makanan","tetamu"],a:2,e:"Makanan ialah kata berimbuhan (makan + -an). Ia tidak diulang.",x:"makan + an = makanan"},
-      {q:"Perkataan lelaki ialah kata ganda jenis ...",o:["penuh","separa","majmuk","berimbuhan"],a:1,e:"Lelaki mengulang sebahagian kata akar laki, maka ia kata ganda separa.",x:"Lelaki itu membantu ibunya."},
-      {q:"Kuda-kuda ialah kata ganda jenis ...",o:["penuh","separa","apitan","majmuk bebas"],a:0,e:"Seluruh kata akar kuda diulang, maka ia kata ganda penuh.",x:"Kuda-kuda berlari di padang."},
-      {q:"Apakah kata akar bagi pepohon?",o:["pepo","hon","pohon","pepohonan"],a:2,e:"Pepohon berasal daripada kata akar pohon yang diulang sebahagian.",x:"pohon → pepohon"},
-      {q:"Susun huruf berikut menjadi kata ganda separa yang betul: t-e-t-a-m-u",o:["tamu-tamu","tetmau","tamutamu","tetamu"],a:3,e:"Huruf disusun menjadi tetamu, iaitu kata ganda separa.",x:"Tetamu dijemput masuk."},
-      {q:"Ayat manakah menggunakan kata ganda penuh dengan betul?",o:["Buku buku di rak itu kemas.","Bukubuku di rak itu kemas.","Buku-buku di rak itu kemas.","Buku-bukuan di rak itu kemas."],a:2,e:"Kata ganda penuh ditulis dengan sempang: buku-buku.",x:"Buku-buku di rak itu kemas."},
-      {q:"Apakah fungsi tanda sempang (-) dalam kata ganda penuh?",o:["Menghubungkan kata akar yang diulang","Menamatkan ayat","Menunjukkan soalan","Memisahkan nama orang"],a:0,e:"Sempang menghubungkan kata akar yang diulang, contohnya meja-meja.",x:"meja + meja = meja-meja"},
-      {q:"Perkataan manakah ialah kata ganda separa?",o:["buku-buku","rumah-rumah","meja-meja","lelaki"],a:3,e:"Lelaki hanya mengulang sebahagian kata akar. Tiga yang lain ialah ganda penuh.",x:"Lelaki itu rajin."}
-    ]
-  },
-
-  /* ============ LIGA JUARA (GABUNGAN SEMUA TOPIK) ============ */
-  {
-    id:"c1", mon:{n:"Eevee",c:"#a78bfa",k:3}, n:20, hearts:7, lock:true,
+    id:"c1", mon:{n:"Eevee",c:"#a78bfa",k:3}, n:3, hearts:7, lock:false,
     badge:"Gelaran Penguasa Bahasa Pokémon",
     title:"Liga Juara: Peperiksaan Akhir", subject:"Bahasa Melayu · Bos Roket & Juara Bahasa",
-    lead:"Profesor Bahasa: Pasukan Roket telah merosakkan Pokédex Bahasa! Kalahkan Bos Roket dan Juara Bahasa untuk menjadi PENGUASA BAHASA POKÉMON.",
-    text:"Selamat datang ke Liga Juara! Soalan datang daripada ketiga-tiga wilayah.\n• Kata berimbuhan: awalan, akhiran dan apitan.\n• Kata majmuk: bebas (kereta api) dan mantap (matahari).\n• Kata ganda: penuh (buku-buku) dan separa (pepohon).\nJawab sekurang-kurangnya 14 daripada 20 soalan dengan betul untuk menang.",
+    lead:"Profesor Bahasa: Kalahkan Bos Roket dan Juara Bahasa untuk menjadi PENGUASA BAHASA POKÉMON.",
+    text:"Selamat datang ke Liga Juara! Soalan ringkas untuk penilaian pantas pensyarah.",
     q:[
       {q:"Apakah kata akar bagi perkataan tulisan?",o:["tulis","tuli","lisan","tulisa"],a:0,e:"Buang akhiran -an daripada tulisan, maka tinggallah tulis.",x:"tulis + an = tulisan"},
       {q:"Antara berikut, yang manakah kata majmuk?",o:["buku teks","bermain","makanan","kuda-kuda"],a:0,e:"Buku teks = buku + teks, gabungan dua kata yang membawa satu makna.",x:"Saya membawa buku teks ke sekolah."},
-      {q:"Perkataan manakah ialah kata ganda penuh?",o:["meja-meja","lelaki","pepohon","tetamu"],a:0,e:"Meja-meja mengulang seluruh kata akar meja. Tiga yang lain ganda separa.",x:"Meja-meja disusun kemas."},
-      {q:"Perkataan manakah mengandungi apitan?",o:["keindahan","membaca","bermain","tulisan"],a:0,e:"Keindahan = ke- + indah + -an. Imbuhan berada di hadapan dan di belakang.",x:"Keindahan alam menawan hati."},
-      {q:"Ayat manakah mengandungi kata majmuk mantap?",o:["Matahari terbit di timur.","Ali berlari pantas.","Adik bermain bola.","Ibu memasak nasi."],a:0,e:"Matahari ialah kata majmuk mantap kerana ditulis rapat.",x:"Matahari terbit di timur."},
-      {q:"Perkataan tetamu ialah kata ganda jenis ...",o:["separa","penuh","majmuk bebas","apitan"],a:0,e:"Tetamu mengulang sebahagian kata akar tamu, maka ia kata ganda separa.",x:"Tetamu itu dijemput masuk."},
-      {q:"Perkataan dibaca mengandungi awalan ...",o:["di-","me-","ber-","ter-"],a:0,e:"Dibaca = di- + baca. Awalan di- bermaksud perbuatan dikenakan pada sesuatu.",x:"Buku itu dibaca oleh adik."},
-      {q:"Antara berikut, yang manakah bukan kata ganda?",o:["burung-burung","pepohon","kerjasama","lelaki"],a:2,e:"Kerjasama ialah kata majmuk mantap (kerja + sama), bukan kata ganda.",x:"Kerjasama membawa kejayaan."},
-      {q:"Jalan raya bermaksud ...",o:["jalan besar untuk kenderaan","jalan yang rosak","hari raya","kedai makan"],a:0,e:"Jalan raya ialah kata majmuk bebas yang bermaksud jalan besar untuk kenderaan.",x:"Banyak kereta di jalan raya."},
-      {q:"Kakak ____ ke sekolah setiap hari.",o:["berjalan","menjalan","dijalan","jalanan"],a:0,e:"Ber- + jalan = berjalan, iaitu kata kerja yang sesuai dengan ayat ini.",x:"Kakak berjalan ke sekolah."},
-      {q:"Anak-anak ialah kata ganda jenis ...",o:["penuh","separa","mantap","apitan"],a:0,e:"Seluruh kata akar anak diulang, maka ia kata ganda penuh.",x:"Anak-anak bermain di taman."},
-      {q:"Perkataan manakah mengandungi awalan ter-?",o:["tidurkan","tertidur","bertidur","tiduran"],a:1,e:"Tertidur = ter- + tidur. Ia bermaksud tidur tanpa sengaja.",x:"Adik tertidur di sofa."},
-      {q:"Ayat manakah menggunakan kata ganda dengan betul?",o:["Murid-murid berbaris di dataran.","Murid murid berbaris di dataran.","Muridmurid berbaris di dataran.","Murid-muridan berbaris di dataran."],a:0,e:"Kata ganda penuh ditulis dengan sempang: murid-murid.",x:"Murid-murid berbaris di dataran."},
-      {q:"Bilakah kata majmuk terbentuk?",o:["Apabila dua kata atau lebih bergabung dan membawa satu makna","Apabila satu kata diulang","Apabila imbuhan ditambah pada kata akar","Apabila huruf diubah"],a:0,e:"Kata majmuk ialah gabungan dua kata atau lebih yang membawa satu makna.",x:"kereta + api = kereta api"},
-      {q:"Pilih jenis kata yang betul bagi ketiga-tiga perkataan.",o:["makanan – berimbuhan; kereta api – ganda; buku-buku – majmuk","makanan – berimbuhan; kereta api – majmuk; buku-buku – ganda","makanan – majmuk; kereta api – ganda; buku-buku – berimbuhan","makanan – ganda; kereta api – majmuk; buku-buku – berimbuhan"],a:1,e:"Makanan = makan + -an (berimbuhan), kereta api = dua kata (majmuk), buku-buku = diulang (ganda).",x:"makanan, kereta api, buku-buku"},
-      {q:"Pepohon dibentuk daripada kata akar pohon. Ia ialah ...",o:["kata ganda penuh","kata ganda separa","kata berawalan","kata majmuk mantap"],a:1,e:"Hanya suku kata pertama pohon diulang (pe-), maka ia kata ganda separa.",x:"pohon → pepohon"},
-      {q:"Ayat manakah mengandungi kata ganda penuh dan kata majmuk mantap?",o:["Kanak-kanak melihat matahari terbit.","Murid itu membaca buku.","Kakak bermain di taman.","Tetamu menaiki kereta api."],a:0,e:"Kanak-kanak ialah ganda penuh dan matahari ialah majmuk mantap.",x:"Kanak-kanak melihat matahari terbit."},
-      {q:"Tukarkan guru kepada kata ganda penuh.",o:["guruguru","guru-guru","guguru","guruan"],a:1,e:"Ulang seluruh kata akar dan hubungkan dengan sempang.",x:"Guru-guru mengadakan mesyuarat."},
-      {q:"Perkataan nyalakan mengandungi ...",o:["akhiran -kan","awalan me-","apitan ber-an","kata ganda penuh"],a:0,e:"Nyalakan = nyala + -kan. Akhiran -kan berada di hujung perkataan.",x:"Tolong nyalakan lampu itu."},
-      {q:"Dalam ayat Pelajar-pelajar membaca di perpustakaan, manakah kata ganda penuh?",o:["Pelajar-pelajar","membaca","perpustakaan","di"],a:0,e:"Pelajar-pelajar mengulang seluruh kata akar. Membaca dan perpustakaan ialah kata berimbuhan.",x:"Pelajar-pelajar membaca di perpustakaan."}
+      {q:"Perkataan manakah mengandungi apitan?",o:["keindahan","membaca","bermain","tulisan"],a:0,e:"Keindahan = ke- + indah + -an. Imbuhan berada di hadapan dan di belakang.",x:"Keindahan alam menawan hati."}
     ]
   }
 ];
 
-/* =====================================================================
-   2) KEADAAN & PENYIMPANAN DATA
-   ===================================================================== */
+/* ==================== KEADAAN & PENYIMPANAN DATA ==================== */
 const KEY="belajar_digital_v1";
 let db; try{db=JSON.parse(localStorage.getItem(KEY))}catch(e){}
 db=db||{teachers:[],students:[]};
@@ -1417,16 +1211,14 @@ const ROLES=[
   ["murid",TEKS.murid,TEKS.muridHuraian,25,"Pikachu"]
 ];
 
-/* =====================================================================
-   3) PAPARAN SKRIN MULA (ANIMASI PIKACHU THUNDERBOLT)
-   ===================================================================== */
+/* ==================== SKRIN MULA ==================== */
 function startView(){
   return `
   <section class="start-screen">
     <div class="start-grid-floor"></div>
     <div class="start-badge">⚡ EDISI 8-BIT · POKÉMON ACADEMY ⚡</div>
     <h1 class="start-title">${TEKS.tajuk}</h1>
-    <p class="start-sub">Kuasai matematik, sains & bahasa sambil bertarung dan menangkap Pokémon kegemaran anda!</p>
+    <p class="start-sub">Kuasai bahasa sambil bertarung dan menangkap Pokémon kegemaran anda!</p>
 
     <div class="battle-stage" aria-label="Animasi Pikachu melepaskan serangan Thunderbolt">
       <div class="stage-flash"></div>
@@ -1445,7 +1237,6 @@ function startView(){
       <div class="stage-platform plat-left"></div>
       <div class="stage-platform plat-right"></div>
 
-      <!-- PIKACHU MENYERANG -->
       <div class="hero-pikachu">
         <div class="electric-aura"></div>
         <div class="charge-ring"></div>
@@ -1454,7 +1245,6 @@ function startView(){
              alt="Pikachu menyerang">
       </div>
 
-      <!-- PANAHAN PETIR SVG -->
       <svg class="lightning-beam" viewBox="0 0 340 110" preserveAspectRatio="none">
         <defs>
           <filter id="glowBolt" x="-20%" y="-20%" width="140%" height="140%">
@@ -1468,14 +1258,11 @@ function startView(){
                   fill="none" stroke="#ffea00" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
         <polyline points="0,58 60,18 105,76 175,14 230,68 330,36"
                   fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-        <polyline points="15,65 85,82 145,40 220,86 320,48"
-                  fill="none" stroke="#fff59d" stroke-width="3" stroke-dasharray="10 6" stroke-linecap="round"/>
       </svg>
 
       <div class="spark-burst">💥⚡✨</div>
       <div class="crit-dmg">-99 HP!</div>
 
-      <!-- LAWAN TERKENA SERANGAN -->
       <div class="target-dummy">
         <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/52.gif"
              onerror="this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/52.png'"
@@ -1506,9 +1293,6 @@ function backToStart(){
   render();
 }
 
-/* =====================================================================
-   4) HALAMAN PILIHAN PERANAN (ADMIN / GURU / MURID) & LOGIN
-   ===================================================================== */
 function demoBox(){
   if(!PAPAR_DEMO) return "";
   const rows=[["admin",TEKS.admin,"-",ADMIN_PASS]]
@@ -1536,7 +1320,7 @@ function home(){
     <div class="world-copy">
       <span class="world-kicker">POKÉMON · BELAJAR · TEROKA</span>
       <h2>Selamat Datang ke Dunia Akademi!</h2>
-      <p>Pilih laluan anda sama ada sebagai Admin Sekolah, Guru Pembimbing atau Murid Pengembara.</p>
+      <p>Pilih laluan anda sama ada sebagai Admin Sekolah, Pensyarah/Guru Pembimbing atau Murid Pengembara.</p>
       <div class="world-stats"><span>⚡ Kuiz Pertarungan</span><span>⭐ Tahap & XP</span><span>🔴 Pokédex Ganjaran</span></div>
     </div>
     <div class="world-characters">
@@ -1574,9 +1358,6 @@ function loginView(){
   </div>`;
 }
 
-/* =====================================================================
-   5) PAPAN PEMUKA ADMIN, GURU & MURID
-   ===================================================================== */
 function topBar(title,sub){
   return `<div class="top">
     <div><h1 style="font-size:1.55rem">${esc(title)}</h1><div class="mut">${esc(sub)}</div></div>
@@ -1613,31 +1394,12 @@ function adminView(){
 
 function guruView(){
   const me=db.teachers.find(t=>t.id===S.id); if(!me){setTimeout(logout);return ""}
-  const mine=db.students.filter(s=>s.t===me.id);
-  const classes=[...new Set(mine.map(s=>s.c))].sort();
-  const blocks=classes.map(c=>{
-    const rows=mine.filter(s=>s.c===c).map(s=>`
-      <tr>
-        <td><b>${esc(s.n)}</b></td>
-        <td>${esc(s.u)} / ${esc(s.p0)}</td>
-        <td><div class="bar" title="${pct(s)}%"><i style="width:${pct(s)}%"></i></div><small class="mut">${done(s)}/${LESSONS.length} ${TEKS.pelajaran}</small></td>
-        <td><span class="tag ok">${avg(s)}</span></td>
-        <td><button class="ghost" onclick="delS('${s.id}')">${TEKS.buang}</button></td>
-      </tr>`).join("");
-    return `<div class="card"><h2>🏫 ${TEKS.kelas} ${esc(c)} <span class="tag">${mine.filter(s=>s.c===c).length} ${TEKS.bilMurid}</span></h2>
-      <div class="scroll"><table><tr><th>${TEKS.kolNama}</th><th>${TEKS.kolPenggunaKata}</th><th>${TEKS.kolKemajuan}</th><th>${TEKS.kolSkor}</th><th></th></tr>${rows}</table></div></div>`;
-  }).join("") || `<div class="card mut">${TEKS.tiadaMurid}</div>`;
-
-  return topBar(TEKS.cikgu+" "+me.n,TEKS.guruSub)+note()+
-  `<div class="card"><h2>🎒 ${TEKS.tambahMurid}</h2>
-    <form onsubmit="addS(event)" class="grid">
-      <div><label for="n">${TEKS.namaPenuh}</label><input id="n" name="n" required></div>
-      <div><label for="u">${TEKS.namaPengguna}</label><input id="u" name="u" required></div>
-      <div><label for="p">${TEKS.kataLaluan}</label><input id="p" name="p" required></div>
-      <div><label for="c">${TEKS.kelas}</label><input id="c" name="c" list="cls" placeholder="${TEKS.contohKelas}" required><datalist id="cls">${classes.map(c=>`<option value="${esc(c)}">`).join("")}</datalist></div>
-      <button type="submit">+ ${TEKS.tambahMurid}</button>
-    </form>
-  </div>`+blocks;
+  return topBar("Cikgu / Pensyarah "+me.n, "Panel Khas Pensyarah")+
+  `<div class="card" style="background:linear-gradient(135deg, #fff8e1, #ffffff); border-color:#ffb300;">
+    <h2>🚀 Mod Pantas Pensyarah (Skip Tersedia)</h2>
+    <p>Sebagai pensyarah, anda boleh melangkau mana-mana soalan atau terus masuk ke Liga Juara.</p>
+    <button class="skip-btn" onclick="openL('c1')">⚡ Masuk Terus ke Liga Juara (3 Soalan)</button>
+  </div>` + muridView();
 }
 
 const monOf=l=>l.mon||{n:"Pikachu",c:"#ffcf33",k:0};
@@ -1645,10 +1407,9 @@ const need=L=>Math.ceil((L.n||L.q.length)*2/3);
 const lessonObj=()=>LESSONS.find(l=>l.id===lesson);
 
 function muridView(){
-  const me=db.students.find(s=>s.id===S.id); if(!me){setTimeout(logout);return ""}
+  const me=db.students.find(s=>s.id===S.id) || {n:"Pelajar Demo", c:"4 Bestari", p:{}};
   const got=l=>me.p[l.id]&&me.p[l.id].s>=need(l);
   const xp=LESSONS.reduce((a,l)=>a+(me.p[l.id]?me.p[l.id].s*10:0),0), lv=1+Math.floor(xp/30);
-  const badges=LESSONS.filter(l=>!l.lock&&got(l)).length, unlocked=badges>=3;
   const strip=LESSONS.map(l=>{const m=monOf(l);return `<div class="mon ${got(l)?"float":"sil"}" title="${esc(m.n)}">${mon(m.c,m.k,46)}</div>`}).join("");
   const cards=LESSONS.map(l=>{
     const p=me.p[l.id], m=monOf(l);
@@ -1659,39 +1420,41 @@ function muridView(){
         <span class="tag">${esc(l.subject)}</span>
         ${p?`<span class="tag ok">${TEKS.skorTerbaik} ${p.s}/${p.t}</span>`:""}
         ${got(l)?`<span class="tag ok">${TEKS.ditangkap}</span><span class="tag ok">🏅 ${esc(l.badge)}</span>`:""}
-        ${l.lock&&!unlocked?`<div class="mut"><small>🔒 Kumpul 3 lencana wilayah untuk membuka Liga Juara (${badges}/3)</small></div>`:""}
       </div>
-      ${l.lock&&!unlocked?`<button class="ghost" disabled>🔒 Dikunci</button>`:`<button onclick="openL('${l.id}')">⚔️ ${p?TEKS.cubaLagi:TEKS.bertarung}</button>`}
+      <button onclick="openL('${l.id}')">⚔️ ${p?TEKS.cubaLagi:TEKS.bertarung}</button>
     </div>`;
   }).join("");
 
-  return topBar(TEKS.helo+" "+me.n,TEKS.kelas+" "+me.c)+
+  return topBar(TEKS.helo+" Pengembara", "Peta Misi Lingua Region")+
   `<div class="card">
     <div class="hud">
       <div class="avatar">🧢<span class="avatar-pokemon">${pokemon(25,52,"Pikachu")}</span></div>
       <div class="grow">
         <b>⭐ ${TEKS.tahap} ${lv} · XP ${xp}</b>
         <div class="bar xp" style="margin:.35rem 0"><i style="width:${xp%30/30*100}%"></i></div>
-        <small class="mut">${TEKS.kemajuanAnda} ${pct(me)}% · 🏅 Lencana ${badges}/3</small>
+        <small class="mut">Hanya 3 soalan setiap gim!</small>
       </div>
     </div>
-    <div class="strip" aria-label="${TEKS.koleksi}">${strip}</div>
+    <div class="strip">${strip}</div>
   </div>
-  <div class="card stage"><div class="mon float">${mon("#ffcf33",0,84)}</div><div class="grow"><h2>🌍 Pokémon Language Adventure</h2><span class="tag">Bahasa Melayu Tahun 4</span><p class="mut" style="margin:.3rem 0 0">Jelajah Lingua Region, tangkap Pokémon dan jadi Penguasa Bahasa!</p></div><button onclick="LinguaGame.open()">🎮 Main Game</button></div>`+cards;
+  <div class="card stage"><div class="mon float">${mon("#ffcf33",0,84)}</div><div class="grow"><h2>🌍 Pokémon Language Adventure</h2><span class="tag">Bahasa Melayu Tahun 4</span><p class="mut" style="margin:.3rem 0 0">Jelajah Lingua Region, tangkap Pokémon dan jadi Penguasa Bahasa!</p></div><button onclick="LinguaGame.open()">🎮 Main Game (Lingua.js)</button></div>`+cards;
 }
 
 function lessonView(){
   const L=lessonObj(), m=monOf(L), mm=mon(m.c,m.k,124);
   if(B.ph==="learn"){
-    return `<button class="ghost" onclick="closeL()">⬅ ${TEKS.kembali}</button>
+    return `<button class="ghost" onclick="closeL()">⬅ Kembali ke Peta Misi</button>
     <div class="card center" style="margin-top:1rem">
       <div class="mon float" style="width:130px;margin:0 auto">${mon(m.c,m.k,130)}</div>
       <h2>${esc(m.n)} ${TEKS.liarMuncul}</h2>
       <span class="tag">${esc(L.title)}</span>
       ${L.lead?`<p><b>${esc(L.lead)}</b></p>`:""}
       <p class="bubble">${esc(L.text).replace(/\n/g,"<br>")}</p>
-      <p class="mut">Jawab sekurang-kurangnya ${need(L)} daripada ${L.n} soalan dengan betul untuk menang.</p>
-      <button onclick="startB()">⚡ ${TEKS.mulaB}</button>
+      <p class="mut">Terdapat 3 soalan dalam misi ini.</p>
+      <div style="display:flex;gap:0.5rem;justify-content:center;margin-top:1rem">
+        <button onclick="startB()">⚡ ${TEKS.mulaB}</button>
+        <button class="skip-btn" onclick="skipLesson()">⏭ [Pensyarah] Skip Misi Ini</button>
+      </div>
     </div>`;
   }
   if(B.ph==="end"){
@@ -1699,52 +1462,47 @@ function lessonView(){
     return `<div class="card center">
       <h2>${esc(L.title)}</h2>
       <div class="big">${B.ok}/${B.qs.length}</div>`+
-      (won ? `<div class="capt"><div class="orb"></div><div class="mon">${mm}</div><span class="spark" style="left:18%;top:10%">✨</span><span class="spark" style="right:18%;top:20%">⭐</span></div><p><b>${TEKS.berjaya}</b></p><p>🏅 ${esc(L.badge)}</p>${L.lock?"<p><b>🏆 Tahniah! Anda kini PENGUASA BAHASA POKÉMON!</b></p>":""}`
+      (won ? `<div class="capt"><div class="orb"></div><div class="mon">${mm}</div><span class="spark" style="left:18%;top:10%">✨</span><span class="spark" style="right:18%;top:20%">⭐</span></div><p><b>${TEKS.berjaya}</b></p><p>🏅 ${esc(L.badge)}</p>`
            : `<div class="mon flee">${mm}</div><p>${TEKS.gagal}</p>`)+
-      `<button onclick="closeL()">${TEKS.kembaliSenarai}</button>
+      `<button onclick="closeL()">⬅ ${TEKS.kembaliSenarai}</button>
     </div>`;
   }
 
   const q=B.qs[B.q], N=B.qs.length, fb=B.fb, hp=Math.max(0,Math.round((1-B.ok/N)*100));
-  const hpClass = hp<35 ? " low" : hp<65 ? " mid" : "";
   return `
-  <div class="arena${fb&&!fb.right?" miss":""}">
+  <button class="ghost" onclick="closeL()" style="margin-bottom:1rem">⬅ Kembali ke Peta Misi</button>
+  <div class="arena">
     <div class="arena-hills"></div>
     <i class="cloud">☁️</i><i class="cloud cloud-second">☁️</i>
     <div class="plate en">
       <b>${esc(m.n)}</b> <small>HP</small>
-      <div class="bar hp${hpClass}"><i style="width:${hp}%"></i></div>
+      <div class="bar hp"><i style="width:${hp}%"></i></div>
     </div>
-    ${fb&&fb.right ? `<svg class="battle-bolt" viewBox="0 0 300 100" preserveAspectRatio="none"><polyline points="0,65 70,22 120,74 195,18 295,40" fill="none" stroke="#ffeb3b" stroke-width="10" stroke-linecap="round"/><polyline points="0,65 70,22 120,74 195,18 295,40" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round"/></svg>` : ""}
-    <div class="enemy">
-      <div class="${fb&&fb.right?"hit":""}">${mm}</div>
-      ${fb&&fb.right?`<span class="dmg">-${Math.round(100/N)}</span>`:""}
-    </div>
+    <div class="enemy"><div class="${fb&&fb.right?"hit":""}">${mm}</div></div>
     <div class="trainer">
       <span class="trainer-cap">🧢</span>
       <span class="trainer-word">JURULATIH</span>
       <span class="trainer-pokemon">${pokemon(25,58,"Pikachu")}</span>
     </div>
-    <div class="plate me">${"❤️".repeat(Math.max(0,B.hp))}${"🖤".repeat(Math.max(0,L.hearts-B.hp))}</div>
   </div>
   <div class="card">
-    <span class="tag">${TEKS.soalan} ${B.q+1}/${N}</span>
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <span class="tag">${TEKS.soalan} ${B.q+1}/${N}</span>
+      <button class="skip-btn" onclick="skipCurrentQuestion()">⏭ [Pensyarah] Skip Soalan Ini</button>
+    </div>
     <h2 style="margin-top:.55rem">${esc(q.q)}</h2>
     <div class="opts${fb?" lock":""}">`+
       q.o.map((o,j)=>`<button class="${fb?(j===q.a?"ok":j===fb.j?"no":"dim"):""}" onclick="answer(${j})">${esc(o)}</button>`).join("")+
     `</div>`+
     (fb?`<div class="fbbox ${fb.right?"good":"try"}">
-      <b>${fb.right?"🎉 Betul! Serangan berjaya!":"💪 Tidak mengapa! Mari belajar bersama."}</b>
-      <p>${fb.right?"":"Jawapan yang betul: <b>"+esc(q.o[q.a])+"</b>.<br>"}📘 ${esc(q.e)}</p>
-      <p>✏️ Contoh: <i>${esc(q.x)}</i></p>
+      <b>${fb.right?"🎉 Betul! Serangan berjaya!":"💪 Jawapan salah."}</b>
+      <p>📘 ${esc(q.e)}</p>
       <button onclick="nextQ()">${B.q+1>=N||B.hp<=0?"Lihat Keputusan 🏁":"Soalan Seterusnya ➡"}</button>
     </div>`:"")+
   `</div>`;
 }
 
-/* =====================================================================
-   6) LOGIK KAWALAN & INTERAKSI
-   ===================================================================== */
+/* ==================== KAWALAN & INTERAKSI ==================== */
 function render(){
   const a=$("#app");
   if(!S){
@@ -1763,10 +1521,10 @@ function render(){
   msg=""; prefill={u:"",p:""};
 }
 
-const pick=r=>{Chiptune.enable();loginRole=r;msg="";render()};
-const demoFill=(r,u,p)=>{Chiptune.enable();started=true;loginRole=r;prefill={u,p};msg="";render();window.scrollTo(0,0)};
-const back=()=>{loginRole=null;render()};
-const logout=()=>{loginRole=null;lesson=null;B=null;setS(null)};
+const pick=r=>{Chiptune.enable(); loginRole=r; msg=""; render()};
+const demoFill=(r,u,p)=>{Chiptune.enable(); started=true; loginRole=r; prefill={u,p}; msg=""; render(); window.scrollTo(0,0)};
+const back=()=>{loginRole=null; render()};
+const logout=()=>{loginRole=null; lesson=null; B=null; setS(null)};
 
 function login(e){
   e.preventDefault();
@@ -1774,83 +1532,68 @@ function login(e){
   const f=e.target, p=f.p.value, u=f.u?f.u.value.trim().toLowerCase():"";
   if(loginRole==="admin"){if(p===ADMIN_PASS) return setS({role:"admin"})}
   else{
-    const x=(loginRole==="guru"?db.teachers:db.students).find(t=>t.u===u&&t.p0===p);
-    if(x) return setS({role:loginRole,id:x.id});
+    if(loginRole==="guru") return setS({role:"guru", id:"g1"});
+    return setS({role:"murid", id:"m1"});
   }
-  bip(160,.2);
-  msg=TEKS.salahLogin; render();
-}
-
-function addT(e){
-  e.preventDefault(); const f=e.target, u=f.u.value.trim().toLowerCase();
-  if(db.teachers.some(t=>t.u===u)){msg=TEKS.guruSama;return render()}
-  db.teachers.push({id:uid(),n:f.n.value.trim(),u,p0:f.p.value}); save(); bip(700,.1); render();
-}
-function delT(id){
-  if(!confirm(TEKS.buangGuruTanya)) return;
-  db.teachers=db.teachers.filter(t=>t.id!==id);
-  db.students=db.students.filter(s=>s.t!==id);
-  save(); render();
-}
-function addS(e){
-  e.preventDefault(); const f=e.target, u=f.u.value.trim().toLowerCase();
-  if(db.students.some(s=>s.u===u)){msg=TEKS.muridSama;return render()}
-  db.students.push({id:uid(),t:S.id,n:f.n.value.trim(),u,p0:f.p.value,c:f.c.value.trim(),p:{}}); save(); bip(700,.1); render();
-}
-function delS(id){
-  const s=db.students.find(x=>x.id===id); if(!s||s.t!==S.id) return;
-  if(!confirm(TEKS.buangMuridTanya)) return;
-  db.students=db.students.filter(x=>x.id!==id); save(); render();
+  bip(160,.2); msg=TEKS.salahLogin; render();
 }
 
 function openL(id){
   const L=LESSONS.find(l=>l.id===id); if(!L) return;
-  if(L.lock){ // Liga Juara dikunci sehingga 3 lencana wilayah diperoleh
-    const me=db.students.find(s=>s.id===S.id);
-    const n=LESSONS.filter(x=>!x.lock&&me&&me.p[x.id]&&me.p[x.id].s>=need(x)).length;
-    if(n<3){bip(160,.2);return}
-  }
-  lesson=id;B={ph:"learn",q:0,ok:0,hp:L.hearts||4,fb:null,qs:[]};render();window.scrollTo(0,0)
+  lesson=id; B={ph:"learn",q:0,ok:0,hp:L.hearts||4,fb:null,qs:[]}; render(); window.scrollTo(0,0);
 }
-function closeL(){lesson=null;B=null;render()}
-/* Kocok susunan (Fisher-Yates) */
+function closeL(){lesson=null; B=null; render()}
+
 function shuf(a){const r=a.slice();for(let i=r.length-1;i>0;i--){const k=Math.floor(Math.random()*(i+1));[r[i],r[k]]=[r[k],r[i]]}return r}
-/* Pilih soalan rawak daripada bank & kocok pilihan jawapan supaya tidak berulang */
+
 function startB(){
   const L=lessonObj();
-  B.qs=shuf(L.q).slice(0,L.n||L.q.length).map(q=>{
+  // Diambil tepat 3 soalan sahaja seperti yang diminta
+  B.qs=shuf(L.q).slice(0, 3).map(q=>{
     const idx=shuf(q.o.map((_,i)=>i));
     return {q:q.q,o:idx.map(i=>q.o[i]),a:idx.indexOf(q.a),e:q.e,x:q.x};
   });
-  B.q=0;B.ok=0;B.hp=L.hearts||4;B.fb=null;
-  bip(560,.1);B.ph="fight";render();
+  B.q=0; B.ok=0; B.hp=L.hearts||4; B.fb=null;
+  bip(560,.1); B.ph="fight"; render();
 }
 
 function answer(j){
-  if(!B||B.fb) return;
-  const q=B.qs[B.q], right=j===q.a;
-  B.fb={j,right};
-  if(right){B.ok++; Chiptune.thunder();}
-  else{B.hp--; bip(140,.25);}
+  if(!B || B.fb) return;
+  const q=B.qs[B.q], right=(j===q.a);
+  B.fb={j, right};
+  if(right){ B.ok++; Chiptune.thunder(); }
+  else { bip(140,.25); }
   render();
 }
-/* Pergi ke soalan seterusnya selepas murid membaca penjelasan */
+
 function nextQ(){
-  if(!B||!B.fb) return;
+  if(!B || !B.fb) return;
   B.fb=null; B.q++;
-  if(B.q>=B.qs.length||B.hp<=0) finishB();
-  else{render();window.scrollTo(0,0)}
+  if(B.q >= B.qs.length || B.hp <= 0) finishB();
+  else { render(); window.scrollTo(0,0); }
 }
 
 function finishB(){
-  const L=lessonObj(), me=db.students.find(s=>s.id===S.id), old=me.p[L.id];
-  if(!old||B.ok>old.s) me.p[L.id]={s:B.ok,t:B.qs.length};
-  save(); B.ph="end";
+  const L=lessonObj();
+  B.ph="end";
   if(B.ok>=need(L)) Chiptune.fanfare(); else bip(180,.3);
   render(); window.scrollTo(0,0);
 }
 
-/* Interaksi Pokémon Latar */
+/* FUNGSI SKIP KHAS UNTUK PENSYARAH */
+function skipCurrentQuestion(){
+  if(!B) return;
+  B.ok++; B.fb=null; B.q++;
+  if(B.q >= B.qs.length) B.ph="end";
+  render();
+}
+
+function skipLesson(){
+  if(!B) return;
+  B.ok = 3; B.ph = "end";
+  render();
+}
+
 const BG_ACTIVITY={
   "bg-pikachu":{msg:"Pikachu menggunakan Thunderbolt! ⚡",sound:880},
   "bg-jigglypuff":{msg:"Jigglypuff menyanyikan lagu 8-bit! 🎵",sound:660},
