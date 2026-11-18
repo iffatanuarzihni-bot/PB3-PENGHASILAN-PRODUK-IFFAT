@@ -1245,7 +1245,7 @@ const TEKS = {
 const LESSONS = [
   /* ============ WILAYAH 1: HUTAN RUMPUT (KATA BERIMBUHAN) ============ */
   {
-    id:"g1", mon:{n:"Bulbasaur",c:"#4cd27a",k:1}, n:3, hearts:4,
+    id:"g1", mon:{n:"Bulbasaur",c:"#4cd27a",k:1}, n:10, hearts:4,
     badge:"Lencana Alam (Nature Badge)",
     title:"Hutan Rumput: Kata Berimbuhan", subject:"Bahasa Melayu · Ketua Gim Flora",
     lead:"Flora: Selamat datang ke Hutan Rumput! Tunjukkan kemahiran kata berimbuhan anda untuk mendapat Lencana Alam.",
@@ -1273,7 +1273,7 @@ const LESSONS = [
 
   /* ============ WILAYAH 2: BANDAR METRO (KATA MAJMUK) ============ */
   {
-    id:"g2", mon:{n:"Pikachu",c:"#ffcf33",k:0}, n:3, hearts:4,
+    id:"g2", mon:{n:"Pikachu",c:"#ffcf33",k:0}, n:10, hearts:4,
     badge:"Lencana Pengetahuan (Knowledge Badge)",
     title:"Bandar Metro: Kata Majmuk", subject:"Bahasa Melayu · Ketua Gim Volt",
     lead:"Volt: Bandar Metro menanti! Selesaikan teka-teki kata majmuk untuk mendapat Lencana Pengetahuan.",
@@ -1299,17 +1299,62 @@ const LESSONS = [
     ]
   },
 
+  /* ============ WILAYAH 3: GUA GUNUNG (KATA GANDA) ============ */
+  {
+    id:"g3", mon:{n:"Charmander",c:"#ff9a4d",k:4}, n:10, hearts:4,
+    badge:"Lencana Penguasaan (Mastery Badge)",
+    title:"Gua Gunung: Kata Ganda", subject:"Bahasa Melayu · Ketua Gim Rocky",
+    lead:"Rocky: Gua Gunung ini penuh dengan kata ganda! Menangi pertarungan ini untuk mendapat Lencana Penguasaan.",
+    text:"Kata ganda ialah kata yang diulang.\n• Kata ganda penuh: seluruh kata akar diulang dan dihubungkan dengan sempang. Contoh: buku-buku, meja-meja, kanak-kanak.\n• Kata ganda separa: sebahagian kata akar sahaja yang diulang. Contoh: pepohon, lelaki, tetamu.",
+    q:[
+      {q:"Perkataan manakah ialah kata ganda penuh?",o:["pepohon","lelaki","buku-buku","tetamu"],a:2,e:"Buku-buku mengulang seluruh kata akar buku dengan sempang. Pepohon, lelaki dan tetamu hanya mengulang sebahagian.",x:"Buku-buku itu terletak di atas meja."},
+      {q:"Perkataan manakah ialah kata ganda separa?",o:["rumah-rumah","pepohon","kanak-kanak","meja-meja"],a:1,e:"Pepohon hanya mengulang sebahagian kata akar pohon, maka ia ganda separa.",x:"Pepohon di taman itu rendang."},
+      {q:"Apakah ciri kata ganda penuh?",o:["Seluruh kata akar diulang","Hanya suku kata pertama diulang","Ditambah akhiran -an","Dua kata berbeza digabungkan"],a:0,e:"Kata ganda penuh mengulang seluruh kata akar dan menggunakan tanda sempang.",x:"meja → meja-meja"},
+      {q:"Apakah ciri kata ganda separa?",o:["Dua kata berbeza digabungkan","Sebahagian kata akar diulang","Imbuhan ditambah di hadapan","Tiada pengulangan"],a:1,e:"Kata ganda separa hanya mengulang sebahagian kata akar, biasanya suku kata pertama.",x:"tamu → tetamu"},
+      {q:"Bentuk kata ganda penuh bagi kereta ialah ...",o:["kekereta","kereta kereta","kereta-kereta","kerata-kereta"],a:2,e:"Ulang seluruh kata akar dan hubungkan dengan sempang: kereta-kereta.",x:"Kereta-kereta berhenti di lampu isyarat."},
+      {q:"Bentuk kata ganda separa bagi tamu ialah ...",o:["tamu-tamu","tetamu","tamutamu","tamuan"],a:1,e:"Suku kata pertama diulang dengan perubahan vokal: tamu menjadi tetamu.",x:"Tetamu tiba di rumah kami."},
+      {q:"Pilih kata ganda penuh yang ditulis dengan betul.",o:["burung-burung","burung burung","burungburung","burung-"],a:0,e:"Kata ganda penuh perlu menggunakan sempang di antara kata yang diulang.",x:"Burung-burung terbang di langit."},
+      {q:"____ itu sedang bermain di padang.",o:["Kanak","Kanakan","Kanak-kanak","Kekanak"],a:2,e:"Kanak-kanak ialah kata ganda penuh yang merujuk kumpulan kanak-kanak.",x:"Kanak-kanak itu bermain di padang."},
+      {q:"🍎🍎🍎  ____ itu berwarna merah. (Gambar menunjukkan lebih daripada satu epal.)",o:["epal epal","epalan","epal-epal","berepal"],a:2,e:"Gambar menunjukkan banyak epal, maka kata ganda penuh epal-epal digunakan.",x:"Epal-epal itu berwarna merah."},
+      {q:"Perkataan manakah bukan kata ganda?",o:["pepohon","buku-buku","makanan","tetamu"],a:2,e:"Makanan ialah kata berimbuhan (makan + -an). Ia tidak diulang.",x:"makan + an = makanan"},
+      {q:"Perkataan lelaki ialah kata ganda jenis ...",o:["penuh","separa","majmuk","berimbuhan"],a:1,e:"Lelaki mengulang sebahagian kata akar laki, maka ia kata ganda separa.",x:"Lelaki itu membantu ibunya."},
+      {q:"Kuda-kuda ialah kata ganda jenis ...",o:["penuh","separa","apitan","majmuk bebas"],a:0,e:"Seluruh kata akar kuda diulang, maka ia kata ganda penuh.",x:"Kuda-kuda berlari di padang."},
+      {q:"Apakah kata akar bagi pepohon?",o:["pepo","hon","pohon","pepohonan"],a:2,e:"Pepohon berasal daripada kata akar pohon yang diulang sebahagian.",x:"pohon → pepohon"},
+      {q:"Susun huruf berikut menjadi kata ganda separa yang betul: t-e-t-a-m-u",o:["tamu-tamu","tetmau","tamutamu","tetamu"],a:3,e:"Huruf disusun menjadi tetamu, iaitu kata ganda separa.",x:"Tetamu dijemput masuk."},
+      {q:"Ayat manakah menggunakan kata ganda penuh dengan betul?",o:["Buku buku di rak itu kemas.","Bukubuku di rak itu kemas.","Buku-buku di rak itu kemas.","Buku-bukuan di rak itu kemas."],a:2,e:"Kata ganda penuh ditulis dengan sempang: buku-buku.",x:"Buku-buku di rak itu kemas."},
+      {q:"Apakah fungsi tanda sempang (-) dalam kata ganda penuh?",o:["Menghubungkan kata akar yang diulang","Menamatkan ayat","Menunjukkan soalan","Memisahkan nama orang"],a:0,e:"Sempang menghubungkan kata akar yang diulang, contohnya meja-meja.",x:"meja + meja = meja-meja"},
+      {q:"Perkataan manakah ialah kata ganda separa?",o:["buku-buku","rumah-rumah","meja-meja","lelaki"],a:3,e:"Lelaki hanya mengulang sebahagian kata akar. Tiga yang lain ialah ganda penuh.",x:"Lelaki itu rajin."}
+    ]
+  },
+
   /* ============ LIGA JUARA (GABUNGAN SEMUA TOPIK) ============ */
   {
-    id:"c1", mon:{n:"Eevee",c:"#a78bfa",k:3}, n:3, hearts:4,
+    id:"c1", mon:{n:"Eevee",c:"#a78bfa",k:3}, n:20, hearts:7, lock:true,
     badge:"Gelaran Penguasa Bahasa Pokémon",
     title:"Liga Juara: Peperiksaan Akhir", subject:"Bahasa Melayu · Bos Roket & Juara Bahasa",
     lead:"Profesor Bahasa: Pasukan Roket telah merosakkan Pokédex Bahasa! Kalahkan Bos Roket dan Juara Bahasa untuk menjadi PENGUASA BAHASA POKÉMON.",
-    text:"Selamat datang ke Liga Juara! Soalan menguji penguasaan kata berimbuhan dan kata majmuk.\n• Kata berimbuhan: awalan, akhiran dan apitan.\n• Kata majmuk: bebas (kereta api) dan mantap (matahari).\nJawab sekurang-kurangnya 2 daripada 3 soalan dengan betul untuk menang.",
+    text:"Selamat datang ke Liga Juara! Soalan datang daripada ketiga-tiga wilayah.\n• Kata berimbuhan: awalan, akhiran dan apitan.\n• Kata majmuk: bebas (kereta api) dan mantap (matahari).\n• Kata ganda: penuh (buku-buku) dan separa (pepohon).\nJawab sekurang-kurangnya 14 daripada 20 soalan dengan betul untuk menang.",
     q:[
       {q:"Apakah kata akar bagi perkataan tulisan?",o:["tulis","tuli","lisan","tulisa"],a:0,e:"Buang akhiran -an daripada tulisan, maka tinggallah tulis.",x:"tulis + an = tulisan"},
       {q:"Antara berikut, yang manakah kata majmuk?",o:["buku teks","bermain","makanan","kuda-kuda"],a:0,e:"Buku teks = buku + teks, gabungan dua kata yang membawa satu makna.",x:"Saya membawa buku teks ke sekolah."},
-      {q:"Perkataan manakah mengandungi apitan?",o:["keindahan","membaca","bermain","tulisan"],a:0,e:"Keindahan = ke- + indah + -an. Imbuhan berada di hadapan dan di belakang.",x:"Keindahan alam menawan hati."}
+      {q:"Perkataan manakah ialah kata ganda penuh?",o:["meja-meja","lelaki","pepohon","tetamu"],a:0,e:"Meja-meja mengulang seluruh kata akar meja. Tiga yang lain ganda separa.",x:"Meja-meja disusun kemas."},
+      {q:"Perkataan manakah mengandungi apitan?",o:["keindahan","membaca","bermain","tulisan"],a:0,e:"Keindahan = ke- + indah + -an. Imbuhan berada di hadapan dan di belakang.",x:"Keindahan alam menawan hati."},
+      {q:"Ayat manakah mengandungi kata majmuk mantap?",o:["Matahari terbit di timur.","Ali berlari pantas.","Adik bermain bola.","Ibu memasak nasi."],a:0,e:"Matahari ialah kata majmuk mantap kerana ditulis rapat.",x:"Matahari terbit di timur."},
+      {q:"Perkataan tetamu ialah kata ganda jenis ...",o:["separa","penuh","majmuk bebas","apitan"],a:0,e:"Tetamu mengulang sebahagian kata akar tamu, maka ia kata ganda separa.",x:"Tetamu itu dijemput masuk."},
+      {q:"Perkataan dibaca mengandungi awalan ...",o:["di-","me-","ber-","ter-"],a:0,e:"Dibaca = di- + baca. Awalan di- bermaksud perbuatan dikenakan pada sesuatu.",x:"Buku itu dibaca oleh adik."},
+      {q:"Antara berikut, yang manakah bukan kata ganda?",o:["burung-burung","pepohon","kerjasama","lelaki"],a:2,e:"Kerjasama ialah kata majmuk mantap (kerja + sama), bukan kata ganda.",x:"Kerjasama membawa kejayaan."},
+      {q:"Jalan raya bermaksud ...",o:["jalan besar untuk kenderaan","jalan yang rosak","hari raya","kedai makan"],a:0,e:"Jalan raya ialah kata majmuk bebas yang bermaksud jalan besar untuk kenderaan.",x:"Banyak kereta di jalan raya."},
+      {q:"Kakak ____ ke sekolah setiap hari.",o:["berjalan","menjalan","dijalan","jalanan"],a:0,e:"Ber- + jalan = berjalan, iaitu kata kerja yang sesuai dengan ayat ini.",x:"Kakak berjalan ke sekolah."},
+      {q:"Anak-anak ialah kata ganda jenis ...",o:["penuh","separa","mantap","apitan"],a:0,e:"Seluruh kata akar anak diulang, maka ia kata ganda penuh.",x:"Anak-anak bermain di taman."},
+      {q:"Perkataan manakah mengandungi awalan ter-?",o:["tidurkan","tertidur","bertidur","tiduran"],a:1,e:"Tertidur = ter- + tidur. Ia bermaksud tidur tanpa sengaja.",x:"Adik tertidur di sofa."},
+      {q:"Ayat manakah menggunakan kata ganda dengan betul?",o:["Murid-murid berbaris di dataran.","Murid murid berbaris di dataran.","Muridmurid berbaris di dataran.","Murid-muridan berbaris di dataran."],a:0,e:"Kata ganda penuh ditulis dengan sempang: murid-murid.",x:"Murid-murid berbaris di dataran."},
+      {q:"Bilakah kata majmuk terbentuk?",o:["Apabila dua kata atau lebih bergabung dan membawa satu makna","Apabila satu kata diulang","Apabila imbuhan ditambah pada kata akar","Apabila huruf diubah"],a:0,e:"Kata majmuk ialah gabungan dua kata atau lebih yang membawa satu makna.",x:"kereta + api = kereta api"},
+      {q:"Pilih jenis kata yang betul bagi ketiga-tiga perkataan.",o:["makanan – berimbuhan; kereta api – ganda; buku-buku – majmuk","makanan – berimbuhan; kereta api – majmuk; buku-buku – ganda","makanan – majmuk; kereta api – ganda; buku-buku – berimbuhan","makanan – ganda; kereta api – majmuk; buku-buku – berimbuhan"],a:1,e:"Makanan = makan + -an (berimbuhan), kereta api = dua kata (majmuk), buku-buku = diulang (ganda).",x:"makanan, kereta api, buku-buku"},
+      {q:"Pepohon dibentuk daripada kata akar pohon. Ia ialah ...",o:["kata ganda penuh","kata ganda separa","kata berawalan","kata majmuk mantap"],a:1,e:"Hanya suku kata pertama pohon diulang (pe-), maka ia kata ganda separa.",x:"pohon → pepohon"},
+      {q:"Ayat manakah mengandungi kata ganda penuh dan kata majmuk mantap?",o:["Kanak-kanak melihat matahari terbit.","Murid itu membaca buku.","Kakak bermain di taman.","Tetamu menaiki kereta api."],a:0,e:"Kanak-kanak ialah ganda penuh dan matahari ialah majmuk mantap.",x:"Kanak-kanak melihat matahari terbit."},
+      {q:"Tukarkan guru kepada kata ganda penuh.",o:["guruguru","guru-guru","guguru","guruan"],a:1,e:"Ulang seluruh kata akar dan hubungkan dengan sempang.",x:"Guru-guru mengadakan mesyuarat."},
+      {q:"Perkataan nyalakan mengandungi ...",o:["akhiran -kan","awalan me-","apitan ber-an","kata ganda penuh"],a:0,e:"Nyalakan = nyala + -kan. Akhiran -kan berada di hujung perkataan.",x:"Tolong nyalakan lampu itu."},
+      {q:"Dalam ayat Pelajar-pelajar membaca di perpustakaan, manakah kata ganda penuh?",o:["Pelajar-pelajar","membaca","perpustakaan","di"],a:0,e:"Pelajar-pelajar mengulang seluruh kata akar. Membaca dan perpustakaan ialah kata berimbuhan.",x:"Pelajar-pelajar membaca di perpustakaan."}
     ]
   }
 ];
@@ -1603,7 +1648,7 @@ function muridView(){
   const me=db.students.find(s=>s.id===S.id); if(!me){setTimeout(logout);return ""}
   const got=l=>me.p[l.id]&&me.p[l.id].s>=need(l);
   const xp=LESSONS.reduce((a,l)=>a+(me.p[l.id]?me.p[l.id].s*10:0),0), lv=1+Math.floor(xp/30);
-  const badges=LESSONS.filter(l=>!l.lock&&got(l)).length, unlocked=badges>=2;
+  const badges=LESSONS.filter(l=>!l.lock&&got(l)).length, unlocked=badges>=3;
   const strip=LESSONS.map(l=>{const m=monOf(l);return `<div class="mon ${got(l)?"float":"sil"}" title="${esc(m.n)}">${mon(m.c,m.k,46)}</div>`}).join("");
   const cards=LESSONS.map(l=>{
     const p=me.p[l.id], m=monOf(l);
@@ -1614,7 +1659,7 @@ function muridView(){
         <span class="tag">${esc(l.subject)}</span>
         ${p?`<span class="tag ok">${TEKS.skorTerbaik} ${p.s}/${p.t}</span>`:""}
         ${got(l)?`<span class="tag ok">${TEKS.ditangkap}</span><span class="tag ok">🏅 ${esc(l.badge)}</span>`:""}
-        ${l.lock&&!unlocked?`<div class="mut"><small>🔒 Kumpul 2 lencana wilayah (${badges}/2)</small></div>`:""}
+        ${l.lock&&!unlocked?`<div class="mut"><small>🔒 Kumpul 3 lencana wilayah untuk membuka Liga Juara (${badges}/3)</small></div>`:""}
       </div>
       ${l.lock&&!unlocked?`<button class="ghost" disabled>🔒 Dikunci</button>`:`<button onclick="openL('${l.id}')">⚔️ ${p?TEKS.cubaLagi:TEKS.bertarung}</button>`}
     </div>`;
@@ -1627,7 +1672,7 @@ function muridView(){
       <div class="grow">
         <b>⭐ ${TEKS.tahap} ${lv} · XP ${xp}</b>
         <div class="bar xp" style="margin:.35rem 0"><i style="width:${xp%30/30*100}%"></i></div>
-        <small class="mut">${TEKS.kemajuanAnda} ${pct(me)}% · 🏅 Lencana ${badges}/2</small>
+        <small class="mut">${TEKS.kemajuanAnda} ${pct(me)}% · 🏅 Lencana ${badges}/3</small>
       </div>
     </div>
     <div class="strip" aria-label="${TEKS.koleksi}">${strip}</div>
@@ -1760,7 +1805,11 @@ function delS(id){
 
 function openL(id){
   const L=LESSONS.find(l=>l.id===id); if(!L) return;
-  // Liga Juara dibuka terus untuk membolehkan pensyarah menguji produk.
+  if(L.lock){ // Liga Juara dikunci sehingga 3 lencana wilayah diperoleh
+    const me=db.students.find(s=>s.id===S.id);
+    const n=LESSONS.filter(x=>!x.lock&&me&&me.p[x.id]&&me.p[x.id].s>=need(x)).length;
+    if(n<3){bip(160,.2);return}
+  }
   lesson=id;B={ph:"learn",q:0,ok:0,hp:L.hearts||4,fb:null,qs:[]};render();window.scrollTo(0,0)
 }
 function closeL(){lesson=null;B=null;render()}
