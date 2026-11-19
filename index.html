@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Akademi Bahasa Pokémon | Dunia Pembelajaran 8-Bit</title>
+<title>Akademi Bahasa Pokemon | Dunia Pembelajaran 8-Bit</title>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Press+Start+2P&display=swap" rel="stylesheet">
 <style>
 /* ==================== SISTEM REKA BENTUK POKÉMON RPG ==================== */
@@ -107,6 +107,16 @@ h2{font-size:1.3rem;font-weight:800;color:var(--navy)}
 .sub{color:#dce9ff;text-align:center;margin:.2rem 0 1.1rem;font-size:1.05rem}
 .mut{color:var(--mut)}
 .top .mut{color:#cfe0ff}
+
+.top-heading{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:.25rem;
+}
+.top-sub{
+  padding-left:.35rem;
+}
 
 button{
   font:inherit;
@@ -295,7 +305,7 @@ th{font-size:.82rem;color:var(--mut);text-transform:uppercase;letter-spacing:.04
 .start-title{
   position:relative;
   z-index:3;
-  font:400 clamp(1.35rem,4.2vw,2.35rem)/1.35 "Press Start 2P",monospace;
+  font:400 clamp(1.45rem,4.6vw,2.6rem)/1.35 "Press Start 2P",monospace;
   color:var(--gold);
   text-shadow:4px 4px 0 #2157c2, 7px 7px 0 #091020;
   margin:0 0 .55rem;
@@ -675,21 +685,8 @@ th{font-size:.82rem;color:var(--mut);text-transform:uppercase;letter-spacing:.04
 .role:hover .mon{animation:jump .48s}
 @keyframes jump{40%{transform:translateY(-14px) scale(1.1)}}
 .role .mon{width:90px;height:90px}
-.role-info{
-  display:flex;
-  flex-direction:column;
-  align-items:flex-start;
-  width:100%;
-}
-.role strong{font-size:1.3rem;color:var(--ink);display:block}
-.role .role-desc{
-  display:block;
-  margin-top:.2rem;
-  padding-left:.65rem;
-  font-size:.86rem;
-  line-height:1.35;
-  text-align:left;
-}
+.role strong{font-size:1.3rem;color:var(--ink)}
+.role .mut{font-size:.86rem;line-height:1.3}
 .role-arrow{
   position:absolute;
   right:12px;
@@ -1005,7 +1002,7 @@ button[disabled]{opacity:.55;cursor:not-allowed}
   <img id="bg-eevee" class="bg-pokemon bg-eevee" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/133.png" alt="Eevee interaktif" tabindex="0" role="button">
 </div>
 
-<div class="wrap" id="app"><p style="color:#fff">Memuatkan Akademi Bahasa Pokémon...</p></div>
+<div class="wrap" id="app"><p style="color:#fff">Memuatkan Akademi Bahasa Pokemon...</p></div>
 <noscript>Sila hidupkan JavaScript untuk memainkan permainan ini.</noscript>
 
 <script>
@@ -1018,14 +1015,9 @@ window.onerror = function(m,s,l){
    0) ENJIN MUZIK 8-BIT & KESAN BUNYI (WEB AUDIO API CHIPTUNE)
    ===================================================================== */
 const Chiptune = (() => {
-  const MUTE_KEY = "bd_music_muted";
   let ctx = null;
   let enabled = false;
   let userMuted = false;
-  try {
-    userMuted = sessionStorage.getItem(MUTE_KEY) === "1";
-  } catch (e) {}
-
   let currentTrack = "menu";
   let step = 0;
   let timer = null;
@@ -1069,13 +1061,6 @@ const Chiptune = (() => {
       "F3","G3","Gs4","A3","B3","B3","E3","_"
     ]
   };
-
-  function saveMuteState(){
-    try {
-      if (userMuted) sessionStorage.setItem(MUTE_KEY, "1");
-      else sessionStorage.removeItem(MUTE_KEY);
-    } catch (e) {}
-  }
 
   function ensureCtx(){
     if(!ctx){
@@ -1135,7 +1120,6 @@ const Chiptune = (() => {
 
   function startLoop(){
     stopLoop();
-    if(!enabled || userMuted) return;
     const tr = currentTrack === "battle" ? BATTLE_TRACK : MENU_TRACK;
     timer = setInterval(tick, tr.tempoMs);
   }
@@ -1154,11 +1138,11 @@ const Chiptune = (() => {
 
   return {
     enable(){
-      if(userMuted) {
+      ensureCtx();
+      if(userMuted){
         updateUI();
         return;
       }
-      ensureCtx();
       if(!enabled){
         enabled = true;
         startLoop();
@@ -1166,20 +1150,20 @@ const Chiptune = (() => {
       }
     },
     toggle(){
-      if(enabled && !userMuted){
-        userMuted = true;
-        enabled = false;
-        saveMuteState();
-        stopLoop();
-        updateUI();
-      } else {
+      ensureCtx();
+      if(!enabled){
         userMuted = false;
-        saveMuteState();
-        ensureCtx();
         enabled = true;
         startLoop();
-        updateUI();
+      } else if(userMuted){
+        userMuted = false;
+        startLoop();
+      } else {
+        userMuted = true;
+        enabled = false;
+        stopLoop();
       }
+      updateUI();
     },
     setTrack(name){
       if(currentTrack === name) return;
@@ -1188,24 +1172,21 @@ const Chiptune = (() => {
       if(enabled && !userMuted) startLoop();
     },
     sfx(freq, dur=0.12, type="square", vol=0.055){
-      if(userMuted) return;
       const c = ensureCtx();
       if(c) playTone(freq, dur, type, vol);
     },
     fanfare(){
-      if(userMuted) return;
       const c = ensureCtx();
       if(!c) return;
       [523.25, 659.25, 783.99, 1046.5].forEach((f, i) => {
-        setTimeout(() => { if(!userMuted) playTone(f, 0.16, "square", 0.05); }, i * 110);
+        setTimeout(() => playTone(f, 0.16, "square", 0.05), i * 110);
       });
     },
     thunder(){
-      if(userMuted) return;
       const c = ensureCtx();
       if(!c) return;
       [980, 740, 1120, 620].forEach((f, i) => {
-        setTimeout(() => { if(!userMuted) playTone(f, 0.07, "sawtooth", 0.045); }, i * 45);
+        setTimeout(() => playTone(f, 0.07, "sawtooth", 0.045), i * 45);
       });
     }
   };
@@ -1239,7 +1220,7 @@ const DEMO = {
 
 const TEKS = {
   ralat:"Sesuatu tidak kena:",
-  tajuk:"Akademi Bahasa Pokémon",
+  tajuk:"Akademi Bahasa Pokemon",
   pilih:"Pilih peranan anda untuk memulakan pengembaraan ilmu bersama Pokémon!",
   admin:"Admin", adminHuraian:"Urus dunia sekolah dan jemput Guru",
   guru:"Guru", guruHuraian:"Latih Murid, susun kelas dan pantau kemajuan",
@@ -1351,4 +1332,623 @@ const LESSONS = [
       {q:"Kakak ____ ke sekolah setiap hari.",o:["berjalan","menjalan","dijalan","jalanan"],a:0,e:"Ber- + jalan = berjalan, iaitu kata kerja yang sesuai dengan ayat ini.",x:"Kakak berjalan ke sekolah."},
       {q:"Perkataan manakah mengandungi awalan ter-?",o:["tidurkan","tertidur","bertidur","tiduran"],a:1,e:"Tertidur = ter- + tidur. Ia bermaksud tidur tanpa sengaja.",x:"Adik tertidur di sofa."},
       {q:"Bilakah kata majmuk terbentuk?",o:["Apabila dua kata atau lebih bergabung dan membawa satu makna","Apabila satu kata diulang","Apabila imbuhan ditambah pada kata akar","Apabila huruf diubah"],a:0,e:"Kata majmuk ialah gabungan dua kata atau lebih yang membawa satu makna.",x:"kereta + api = kereta api"},
-      {q:"Perkataan nyalakan mengandungi ...",o:["akhiran -kan","awalan me-","apitan ber-an
+      {q:"Perkataan nyalakan mengandungi ...",o:["akhiran -kan","awalan me-","apitan ber-an","kata majmuk"],a:0,e:"Nyalakan = nyala + -kan. Akhiran -kan berada di hujung perkataan.",x:"Tolong nyalakan lampu itu."}
+    ]
+  }
+];
+
+window.LESSONS = LESSONS;
+
+/* =====================================================================
+   2) KEADAAN & PENYIMPANAN DATA
+   ===================================================================== */
+const KEY="belajar_digital_v1";
+let db; try{db=JSON.parse(localStorage.getItem(KEY))}catch(e){}
+db=db||{teachers:[],students:[]};
+window.db = db;
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(db))}catch(e){}};
+window.save = save;
+const uid=()=>Math.random().toString(36).slice(2,10);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const $=s=>document.querySelector(s);
+
+let S=null; try{S=JSON.parse(sessionStorage.getItem("bd_s"))}catch(e){}
+window.S = S;
+let started=Boolean(S);
+let loginRole=null, lesson=null, msg="", prefill={u:"",p:""};
+let studentPage="video"; /* Muka surat selepas murid log masuk: "video" atau "missions" */
+let B=null;
+
+function setS(v){
+  S=v;
+  window.S = v;
+  if(v){
+    started=true;
+    if(v.role==="murid") studentPage="video";
+  }
+  try{v?sessionStorage.setItem("bd_s",JSON.stringify(v)):sessionStorage.removeItem("bd_s")}catch(e){}
+  render();
+}
+const note=()=>msg?`<div class="err" role="alert">${esc(msg)}</div>`:"";
+
+function seedDemo(){
+  if(!PAPAR_DEMO||db.demo) return;
+  const tid={};
+  DEMO.guru.forEach(g=>{
+    let t=db.teachers.find(x=>x.u===g[1]);
+    if(!t){t={id:uid(),n:g[0],u:g[1],p0:g[2]}; db.teachers.push(t);}
+    tid[g[1]]=t.id;
+  });
+  DEMO.murid.forEach(m=>{
+    if(db.students.some(x=>x.u===m[1])) return;
+    const p={};
+    for(const k in m[5]) p[k]={s:m[5][k][0],t:m[5][k][1]};
+    db.students.push({id:uid(),t:tid[m[3]],n:m[0],u:m[1],p0:m[2],c:m[4],p});
+  });
+  db.demo=1; save();
+}
+
+function pokemon(id,w,label){
+  const size=w||100;
+  const found=POKEDEX.find(p=>p.id===id);
+  const name=label||(found?found.name:"Pokémon");
+  return `<img class="pokemon-sprite" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png" alt="${esc(name)}" width="${size}" height="${size}" loading="lazy" decoding="async">`;
+}
+function mon(c,k,w){
+  const p=POKEDEX[k]||POKEDEX[0];
+  return pokemon(p.id,w,p.name);
+}
+
+const ROLES=[
+  ["admin",TEKS.admin,TEKS.adminHuraian,150,"Mewtwo"],
+  ["guru",TEKS.guru,TEKS.guruHuraian,6,"Charizard"],
+  ["murid",TEKS.murid,TEKS.muridHuraian,25,"Pikachu"]
+];
+
+/* =====================================================================
+   3) PAPARAN SKRIN MULA
+   ===================================================================== */
+function startView(){
+  return `
+  <section class="start-screen">
+    <div class="start-grid-floor"></div>
+    <div class="start-badge">⚡ EDISI 8-BIT · AKADEMI BAHASA POKEMON ⚡</div>
+    <h1 class="start-title">${TEKS.tajuk}</h1>
+    <p class="start-sub">Kuasai matematik, sains & bahasa sambil bertarung dan menangkap Pokémon kegemaran anda!</p>
+
+    <div class="battle-stage" aria-label="Animasi Pikachu melepaskan serangan Thunderbolt">
+      <div class="stage-flash"></div>
+      <span class="stage-cloud">☁️</span>
+      <span class="stage-cloud c2">☁️</span>
+
+      <div class="stage-hud hero">
+        <div>⚡ PIKACHU LV.25</div>
+        <div class="mini-hp"><i style="width:100%"></i></div>
+      </div>
+      <div class="stage-hud foe">
+        <div>😈 MEOWTH LV.18</div>
+        <div class="mini-hp"><i class="foe-hp-bar"></i></div>
+      </div>
+
+      <div class="stage-platform plat-left"></div>
+      <div class="stage-platform plat-right"></div>
+
+      <div class="hero-pikachu">
+        <div class="electric-aura"></div>
+        <div class="charge-ring"></div>
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/25.gif"
+             onerror="this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png'"
+             alt="Pikachu menyerang">
+      </div>
+
+      <svg class="lightning-beam" viewBox="0 0 340 110" preserveAspectRatio="none">
+        <defs>
+          <filter id="glowBolt" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="4.5" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+        <polyline points="0,58 60,18 105,76 175,14 230,68 330,36"
+                  fill="none" stroke="#ff9100" stroke-width="15" stroke-linecap="round" stroke-linejoin="round" filter="url(#glowBolt)"/>
+        <polyline points="0,58 60,18 105,76 175,14 230,68 330,36"
+                  fill="none" stroke="#ffea00" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+        <polyline points="0,58 60,18 105,76 175,14 230,68 330,36"
+                  fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        <polyline points="15,65 85,82 145,40 220,86 320,48"
+                  fill="none" stroke="#fff59d" stroke-width="3" stroke-dasharray="10 6" stroke-linecap="round"/>
+      </svg>
+
+      <div class="spark-burst">💥⚡✨</div>
+      <div class="crit-dmg">-99 HP!</div>
+
+      <div class="target-dummy">
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/52.gif"
+             onerror="this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/52.png'"
+             alt="Meowth terkena serangan">
+      </div>
+
+      <div class="attack-label">⚡ PIKACHU GUNAKAN THUNDERBOLT! ⚡</div>
+    </div>
+
+    <button class="btn-start-game" onclick="enterGame()">▶ MULA</button>
+    <div class="start-hint">TEKAN MULA UNTUK MASUK KE HALAMAN ADMIN, GURU &amp; PELAJAR</div>
+  </section>`;
+}
+
+function enterGame(){
+  Chiptune.thunder();
+  Chiptune.enable();
+  Chiptune.setTrack("menu");
+  started = true;
+  render();
+  window.scrollTo(0,0);
+}
+
+function backToStart(){
+  bip(440,.08);
+  started = false;
+  loginRole = null;
+  render();
+}
+
+/* =====================================================================
+   4) HALAMAN PILIHAN PERANAN (ADMIN / GURU / MURID) & LOGIN
+   ===================================================================== */
+function demoBox(){
+  if(!PAPAR_DEMO) return "";
+  const rows=[["admin",TEKS.admin,"-",ADMIN_PASS]]
+    .concat(DEMO.guru.map(g=>["guru",TEKS.guru+" ("+g[0]+")",g[1],g[2]]))
+    .concat(DEMO.murid.map(m=>["murid",TEKS.murid+" ("+m[0]+")",m[1],m[2]]));
+  return `<div class="card" style="margin-top:1.5rem">
+    <h2>🎮 ${TEKS.demoTajuk}</h2>
+    <p class="mut">${TEKS.demoHuraian}</p>
+    <div class="scroll"><table>
+      <tr><th>${TEKS.kolPeranan}</th><th>${TEKS.kolPengguna}</th><th>${TEKS.kataLaluan}</th><th></th></tr>`+
+      rows.map(r=>`<tr><td>${esc(r[1])}</td><td>${esc(r[2])}</td><td>${esc(r[3])}</td><td><button class="ghost" onclick="demoFill('${r[0]}','${r[2]==="-"?"":esc(r[2])}','${esc(r[3])}')">${TEKS.isi}</button></td></tr>`).join("")+
+    `</table></div></div>`;
+}
+
+function home(){
+  return `
+  <div class="hub-nav">
+    <button class="ghost" onclick="backToStart()">⬅ Skrin Mula</button>
+    <span class="tag">Mod Akademi 8-Bit</span>
+  </div>
+  <h1 class="logo">${TEKS.tajuk}</h1>
+  <p class="sub">${TEKS.pilih}</p>
+
+  <section class="world-banner">
+    <div class="world-copy">
+      <span class="world-kicker">POKÉMON · BELAJAR · TEROKA</span>
+      <h2>Selamat Datang ke Dunia Akademi!</h2>
+      <p>Pilih laluan anda sama ada sebagai Admin Sekolah, Guru Pembimbing atau Murid Pengembara.</p>
+      <div class="world-stats"><span>⚡ Kuiz Pertarungan</span><span>⭐ Tahap & XP</span><span>🔴 Pokédex Ganjaran</span></div>
+    </div>
+    <div class="world-characters">
+      <div class="world-poke world-eevee">${pokemon(133,86,"Eevee")}</div>
+      <div class="world-poke world-pikachu">${pokemon(25,130,"Pikachu")}</div>
+      <div class="world-poke world-bulba">${pokemon(1,94,"Bulbasaur")}</div>
+    </div>
+  </section>
+
+  <div class="section-heading"><span>🎮</span><h2>Pilih Peranan Anda</h2><span>🎒</span></div>
+  <div class="roles">`+
+  ROLES.map(r=>`
+    <button class="role role-${r[0]}" onclick="pick('${r[0]}');bip(660)">
+      <div class="mon">${pokemon(r[3],88,r[4])}</div>
+      <span><strong>${r[1]}</strong><span class="mut">${r[2]}</span></span>
+      <span class="role-arrow">➜</span>
+    </button>`).join("")+
+  `</div>`+demoBox();
+}
+
+function loginView(){
+  const r=ROLES.find(x=>x[0]===loginRole);
+  return `<button class="ghost" onclick="back()">⬅ ${TEKS.kembali}</button>
+  <div class="card" style="max-width:440px;margin:1.5rem auto">
+    <div style="display:flex;align-items:center;gap:.8rem;margin-bottom:.6rem">
+      <div class="mon" style="width:60px">${pokemon(r[3],60,r[4])}</div>
+      <div><h2 style="margin:0">${TEKS.logMasuk} ${r[1]}</h2><small class="mut">Terminal Keselamatan Akademi</small></div>
+    </div>
+    ${note()}
+    <form onsubmit="login(event)">
+      ${loginRole==="admin"?"":`<div class="q"><label for="u">${TEKS.namaPengguna}</label><input id="u" name="u" autocomplete="username" value="${esc(prefill.u)}" required></div>`}
+      <div class="q"><label for="p">${TEKS.kataLaluan}</label><input id="p" name="p" type="password" autocomplete="current-password" value="${esc(prefill.p)}" required></div>
+      <button type="submit" style="width:100%">▶ ${TEKS.logMasuk}</button>
+    </form>
+  </div>`;
+}
+
+/* =====================================================================
+   5) PAPAN PEMUKA ADMIN, GURU & MURID + MUKA SURAT VIDEO
+   ===================================================================== */
+function topBar(title,sub){
+  return `<div class="top">
+    <div class="top-heading">
+      <h1 style="font-size:1.55rem">${esc(title)}</h1>
+      <div class="mut top-sub">${esc(sub)}</div>
+    </div>
+    <button class="ghost" onclick="logout()">${TEKS.logKeluar}</button>
+  </div>`;
+}
+
+const done=s=>LESSONS.filter(l=>s.p[l.id]&&s.p[l.id].s>=need(l)).length;
+const pct=s=>Math.round(done(s)/LESSONS.length*100);
+const avg=s=>{let a=0,b=0;LESSONS.forEach(l=>{const r=s.p[l.id];if(r){a+=r.s;b+=r.t}});return b?Math.round(a/b*100)+"%":TEKS.tiadaKuiz};
+
+function adminView(){
+  const rows=db.teachers.map(t=>`
+    <tr>
+      <td><b>${esc(t.n)}</b></td>
+      <td>${esc(t.u)}</td>
+      <td><span class="tag">${db.students.filter(s=>s.t===t.id).length} murid</span></td>
+      <td><button class="ghost" onclick="delT('${t.id}')">${TEKS.buang}</button></td>
+    </tr>`).join("") || `<tr><td colspan="4" class="mut">${TEKS.tiadaGuru}</td></tr>`;
+
+  return topBar(TEKS.admin,TEKS.adminSub)+note()+
+  `<div class="card"><h2>🛠️ ${TEKS.tambahGuru}</h2>
+    <form onsubmit="addT(event)" class="grid">
+      <div><label for="n">${TEKS.namaPenuh}</label><input id="n" name="n" required></div>
+      <div><label for="u">${TEKS.namaPengguna}</label><input id="u" name="u" required></div>
+      <div><label for="p">${TEKS.kataLaluan}</label><input id="p" name="p" required></div>
+      <button type="submit">+ ${TEKS.tambahGuru}</button>
+    </form>
+  </div>
+  <div class="card"><h2>👩‍🏫 ${TEKS.senaraiGuru}</h2>
+    <div class="scroll"><table><tr><th>${TEKS.kolNama}</th><th>${TEKS.kolPengguna}</th><th>${TEKS.kolMurid}</th><th></th></tr>${rows}</table></div>
+  </div>`;
+}
+
+function guruView(){
+  const me=db.teachers.find(t=>t.id===S.id); if(!me){setTimeout(logout);return ""}
+  const mine=db.students.filter(s=>s.t===me.id);
+  const classes=[...new Set(mine.map(s=>s.c))].sort();
+  const blocks=classes.map(c=>{
+    const rows=mine.filter(s=>s.c===c).map(s=>`
+      <tr>
+        <td><b>${esc(s.n)}</b></td>
+        <td>${esc(s.u)} / ${esc(s.p0)}</td>
+        <td><div class="bar" title="${pct(s)}%"><i style="width:${pct(s)}%"></i></div><small class="mut">${done(s)}/${LESSONS.length} ${TEKS.pelajaran}</small></td>
+        <td><span class="tag ok">${avg(s)}</span></td>
+        <td><button class="ghost" onclick="delS('${s.id}')">${TEKS.buang}</button></td>
+      </tr>`).join("");
+    return `<div class="card"><h2>🏫 ${TEKS.kelas} ${esc(c)} <span class="tag">${mine.filter(s=>s.c===c).length} ${TEKS.bilMurid}</span></h2>
+      <div class="scroll"><table><tr><th>${TEKS.kolNama}</th><th>${TEKS.kolPenggunaKata}</th><th>${TEKS.kolKemajuan}</th><th>${TEKS.kolSkor}</th><th></th></tr>${rows}</table></div></div>`;
+  }).join("") || `<div class="card mut">${TEKS.tiadaMurid}</div>`;
+
+  return topBar(TEKS.cikgu+" "+me.n,TEKS.guruSub)+note()+
+  `<div class="card"><h2>🎒 ${TEKS.tambahMurid}</h2>
+    <form onsubmit="addS(event)" class="grid">
+      <div><label for="n">${TEKS.namaPenuh}</label><input id="n" name="n" required></div>
+      <div><label for="u">${TEKS.namaPengguna}</label><input id="u" name="u" required></div>
+      <div><label for="p">${TEKS.kataLaluan}</label><input id="p" name="p" required></div>
+      <div><label for="c">${TEKS.kelas}</label><input id="c" name="c" list="cls" placeholder="${TEKS.contohKelas}" required><datalist id="cls">${classes.map(c=>`<option value="${esc(c)}">`).join("")}</datalist></div>
+      <button type="submit">+ ${TEKS.tambahMurid}</button>
+    </form>
+  </div>`+blocks;
+}
+
+/* Muka Surat Video Kata Imbuhan & Kata Majmuk selepas murid log masuk */
+function videoPageView(me){
+  return topBar(TEKS.helo+" "+me.n,TEKS.kelas+" "+me.c+" · Video Pembelajaran")+
+  `<div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:.8rem;flex-wrap:wrap">
+      <div>
+        <span class="tag ok">Muka Surat Pembelajaran Video</span>
+        <h2 style="margin:.35rem 0 .2rem">🎬 Video Kata Imbuhan &amp; Kata Majmuk</h2>
+        <p class="mut" style="margin:0">Tonton video penerangan di bawah sebelum memulakan misi kuiz dan pertarungan Pokémon.</p>
+      </div>
+      <button onclick="setStudentPage('missions')">⚔️ Teruskan ke Misi &amp; Kuiz ➡</button>
+    </div>
+
+    <div class="video-grid">
+      <div class="video-box">
+        <span class="tag">Video 1 · Kata Imbuhan</span>
+        <h2 style="font-size:1.1rem;margin:0">Penerangan Kata Imbuhan</h2>
+        <div class="video-frame-wrap">
+          <iframe src="https://www.youtube.com/embed/R-vBmExJPwQ" title="Video Kata Imbuhan" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+        <small class="mut">Pautan: <a href="https://youtu.be/R-vBmExJPwQ?si=V-huzOBVYiwzPHIo" target="_blank" rel="noopener noreferrer">https://youtu.be/R-vBmExJPwQ?si=V-huzOBVYiwzPHIo</a></small>
+      </div>
+
+      <div class="video-box">
+        <span class="tag">Video 2 · Kata Majmuk</span>
+        <h2 style="font-size:1.1rem;margin:0">Penerangan Kata Majmuk</h2>
+        <div class="video-frame-wrap">
+          <iframe src="https://www.youtube.com/embed/EkVYEHeOmAg" title="Video Kata Majmuk" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+        <small class="mut">Pautan: <a href="https://youtu.be/EkVYEHeOmAg?si=aSqlxu4SALlux9Ru" target="_blank" rel="noopener noreferrer">https://youtu.be/EkVYEHeOmAg?si=aSqlxu4SALlux9Ru</a></small>
+      </div>
+    </div>
+
+    <div style="margin-top:1rem;display:flex;gap:.7rem;flex-wrap:wrap">
+      <button onclick="setStudentPage('missions')">🗺️ Mula Menjawab Level &amp; Kuiz</button>
+      <button class="ghost" onclick="LinguaGame.open()">🌍 Buka Pokémon Language Adventure</button>
+    </div>
+  </div>`;
+}
+
+const monOf=l=>l.mon||{n:"Pikachu",c:"#ffcf33",k:0};
+const need=L=>Math.ceil((L.n||L.q.length)*2/3);
+const lessonObj=()=>LESSONS.find(l=>l.id===lesson);
+
+function setStudentPage(page){
+  bip(560,.1);
+  studentPage = page;
+  render();
+  window.scrollTo(0,0);
+}
+
+function muridView(){
+  const me=db.students.find(s=>s.id===S.id); if(!me){setTimeout(logout);return ""}
+  if(studentPage==="video") return videoPageView(me);
+
+  const got=l=>me.p[l.id]&&me.p[l.id].s>=need(l);
+  const xp=LESSONS.reduce((a,l)=>a+(me.p[l.id]?me.p[l.id].s*10:0),0), lv=1+Math.floor(xp/30);
+  const regionLessons=LESSONS.filter(l=>l.id!=="c1");
+  const badges=regionLessons.filter(l=>got(l)).length;
+  const strip=LESSONS.map(l=>{const m=monOf(l);return `<div class="mon ${got(l)?"float":"sil"}" title="${esc(m.n)}">${mon(m.c,m.k,46)}</div>`}).join("");
+  const cards=LESSONS.map(l=>{
+    const p=me.p[l.id], m=monOf(l);
+    return `<div class="card stage">
+      <div class="mon ${got(l)?"":"sil"}">${mon(m.c,m.k,84)}</div>
+      <div class="grow">
+        <h2>${esc(l.title)}</h2>
+        <span class="tag">${esc(l.subject)}</span>
+        <span class="tag">3 Soalan</span>
+        ${p?`<span class="tag ok">${TEKS.skorTerbaik} ${p.s}/${p.t}</span>`:""}
+        ${got(l)?`<span class="tag ok">${TEKS.ditangkap}</span><span class="tag ok">🏅 ${esc(l.badge)}</span>`:""}
+      </div>
+      <div class="stage-actions">
+        <button onclick="openL('${l.id}')">⚔️ ${p?TEKS.cubaLagi:TEKS.bertarung}</button>
+        <button class="skip-btn" onclick="skipLevel('${l.id}')">⏭ Skip (Pensyarah)</button>
+      </div>
+    </div>`;
+  }).join("");
+
+  const certBanner = window.SijilModul ? window.SijilModul.renderBanner(me, LESSONS, db) : "";
+
+  return topBar(TEKS.helo+" "+me.n,TEKS.kelas+" "+me.c)+
+  `<div style="margin-bottom:.9rem;display:flex;gap:.6rem;flex-wrap:wrap">
+    <button class="ghost" onclick="setStudentPage('video')">🎬 Video Kata Imbuhan &amp; Kata Majmuk</button>
+    <span class="tag">Peta Misi &amp; Level</span>
+  </div>`+
+  certBanner+
+  `<div class="card">
+    <div class="hud">
+      <div class="avatar">🧢<span class="avatar-pokemon">${pokemon(25,52,"Pikachu")}</span></div>
+      <div class="grow">
+        <b>⭐ ${TEKS.tahap} ${lv} · XP ${xp}</b>
+        <div class="bar xp" style="margin:.35rem 0"><i style="width:${xp%30/30*100}%"></i></div>
+        <small class="mut">${TEKS.kemajuanAnda} ${pct(me)}% · 🏅 Lencana ${badges}/${regionLessons.length}</small>
+      </div>
+    </div>
+    <div class="strip" aria-label="${TEKS.koleksi}">${strip}</div>
+  </div>
+  <div class="card stage"><div class="mon float">${mon("#ffcf33",0,84)}</div><div class="grow"><h2>🌍 Pokémon Language Adventure</h2><span class="tag">Bahasa Melayu Tahun 4</span><p class="mut" style="margin:.3rem 0 0">Jelajah Lingua Region, tangkap Pokémon dan jadi Penguasa Bahasa!</p></div><button onclick="LinguaGame.open()">🎮 Main Game</button></div>`+cards;
+}
+
+function lessonView(){
+  const L=lessonObj(), m=monOf(L), mm=mon(m.c,m.k,124);
+  if(B.ph==="learn"){
+    return `<div class="battle-topbar">
+      <button class="ghost" onclick="closeL()">⬅ ${TEKS.kembali}</button>
+      <button class="skip-btn" onclick="skipCurrentBattle()">⏭ Skip (Pensyarah)</button>
+    </div>
+    <div class="card center" style="margin-top:.5rem">
+      <div class="mon float" style="width:130px;margin:0 auto">${mon(m.c,m.k,130)}</div>
+      <h2>${esc(m.n)} ${TEKS.liarMuncul}</h2>
+      <span class="tag">${esc(L.title)}</span>
+      ${L.lead?`<p><b>${esc(L.lead)}</b></p>`:""}
+      <p class="bubble">${esc(L.text).replace(/\n/g,"<br>")}</p>
+      <p class="mut">Jawab sekurang-kurangnya ${need(L)} daripada ${L.n} soalan dengan betul untuk menang.</p>
+      <button onclick="startB()">⚡ ${TEKS.mulaB}</button>
+    </div>`;
+  }
+  if(B.ph==="end"){
+    const won=B.ok>=need(L);
+    const me=db.students.find(s=>s.id===S.id);
+    const allDone=window.SijilModul && me && window.SijilModul.isAllCompleted(me, LESSONS);
+    return `<div class="card center">
+      <h2>${esc(L.title)}</h2>
+      <div class="big">${B.ok}/${B.qs.length}</div>`+
+      (won ? `<div class="capt"><div class="orb"></div><div class="mon">${mm}</div><span class="spark" style="left:18%;top:10%">✨</span><span class="spark" style="right:18%;top:20%">⭐</span></div><p><b>${TEKS.berjaya}</b></p><p>🏅 ${esc(L.badge)}</p>${L.id==="c1"?"<p><b>🏆 Tahniah! Anda kini PENGUASA BAHASA POKÉMON!</b></p>":""}`
+           : `<div class="mon flee">${mm}</div><p>${TEKS.gagal}</p>`)+
+      `<div style="display:flex;gap:.7rem;justify-content:center;flex-wrap:wrap;margin-top:.8rem">
+        ${allDone?`<button onclick="SijilModul.openModal()">📜 Jana &amp; Muat Turun Sijil</button>`:""}
+        <button onclick="closeL()">⬅ ${TEKS.kembali}</button>
+      </div>
+    </div>`;
+  }
+
+  const q=B.qs[B.q], N=B.qs.length, fb=B.fb, hp=Math.max(0,Math.round((1-B.ok/N)*100));
+  const hpClass = hp<35 ? " low" : hp<65 ? " mid" : "";
+  return `
+  <div class="battle-topbar">
+    <button class="ghost" onclick="closeL()">⬅ ${TEKS.kembali}</button>
+    <span class="tag">${esc(L.title)}</span>
+    <button class="skip-btn" onclick="skipCurrentBattle()">⏭ Skip (Pensyarah)</button>
+  </div>
+  <div class="arena${fb&&!fb.right?" miss":""}">
+    <div class="arena-hills"></div>
+    <i class="cloud">☁️</i><i class="cloud cloud-second">☁️</i>
+    <div class="plate en">
+      <b>${esc(m.n)}</b> <small>HP</small>
+      <div class="bar hp${hpClass}"><i style="width:${hp}%"></i></div>
+    </div>
+    ${fb&&fb.right ? `<svg class="battle-bolt" viewBox="0 0 300 100" preserveAspectRatio="none"><polyline points="0,65 70,22 120,74 195,18 295,40" fill="none" stroke="#ffeb3b" stroke-width="10" stroke-linecap="round"/><polyline points="0,65 70,22 120,74 195,18 295,40" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round"/></svg>` : ""}
+    <div class="enemy">
+      <div class="${fb&&fb.right?"hit":""}">${mm}</div>
+      ${fb&&fb.right?`<span class="dmg">-${Math.round(100/N)}</span>`:""}
+    </div>
+    <div class="trainer">
+      <span class="trainer-cap">🧢</span>
+      <span class="trainer-word">JURULATIH</span>
+      <span class="trainer-pokemon">${pokemon(25,58,"Pikachu")}</span>
+    </div>
+    <div class="plate me">${"❤️".repeat(Math.max(0,B.hp))}${"🖤".repeat(Math.max(0,L.hearts-B.hp))}</div>
+  </div>
+  <div class="card">
+    <span class="tag">${TEKS.soalan} ${B.q+1}/${N}</span>
+    <h2 style="margin-top:.55rem">${esc(q.q)}</h2>
+    <div class="opts${fb?" lock":""}">`+
+      q.o.map((o,j)=>`<button class="${fb?(j===q.a?"ok":j===fb.j?"no":"dim"):""}" onclick="answer(${j})">${esc(o)}</button>`).join("")+
+    `</div>`+
+    (fb?`<div class="fbbox ${fb.right?"good":"try"}">
+      <b>${fb.right?"🎉 Betul! Serangan berjaya!":"💪 Tidak mengapa! Mari belajar bersama."}</b>
+      <p>${fb.right?"":"Jawapan yang betul: <b>"+esc(q.o[q.a])+"</b>.<br>"}📘 ${esc(q.e)}</p>
+      <p>✏️ Contoh: <i>${esc(q.x)}</i></p>
+      <button onclick="nextQ()">${B.q+1>=N||B.hp<=0?"Lihat Keputusan 🏁":"Soalan Seterusnya ➡"}</button>
+    </div>`:"")+
+  `</div>`;
+}
+
+/* =====================================================================
+   6) LOGIK KAWALAN & INTERAKSI
+   ===================================================================== */
+function render(){
+  const a=$("#app");
+  if(!S){
+    Chiptune.setTrack("menu");
+    a.innerHTML = !started ? startView() : (loginRole ? loginView() : home());
+  } else if(S.role==="admin"){
+    Chiptune.setTrack("menu");
+    a.innerHTML=adminView();
+  } else if(S.role==="guru"){
+    Chiptune.setTrack("menu");
+    a.innerHTML=guruView();
+  } else {
+    Chiptune.setTrack(lesson && B && B.ph==="fight" ? "battle" : "menu");
+    a.innerHTML = lesson ? lessonView() : muridView();
+  }
+  msg=""; prefill={u:"",p:""};
+}
+
+const pick=r=>{Chiptune.enable();loginRole=r;msg="";render()};
+const demoFill=(r,u,p)=>{Chiptune.enable();started=true;loginRole=r;prefill={u,p};msg="";render();window.scrollTo(0,0)};
+const back=()=>{loginRole=null;render()};
+const logout=()=>{loginRole=null;lesson=null;B=null;studentPage="video";setS(null)};
+
+function login(e){
+  e.preventDefault();
+  Chiptune.enable();
+  const f=e.target, p=f.p.value, u=f.u?f.u.value.trim().toLowerCase():"";
+  if(loginRole==="admin"){if(p===ADMIN_PASS) return setS({role:"admin"})}
+  else{
+    const x=(loginRole==="guru"?db.teachers:db.students).find(t=>t.u===u&&t.p0===p);
+    if(x) return setS({role:loginRole,id:x.id});
+  }
+  bip(160,.2);
+  msg=TEKS.salahLogin; render();
+}
+
+function addT(e){
+  e.preventDefault(); const f=e.target, u=f.u.value.trim().toLowerCase();
+  if(db.teachers.some(t=>t.u===u)){msg=TEKS.guruSama;return render()}
+  db.teachers.push({id:uid(),n:f.n.value.trim(),u,p0:f.p.value}); save(); bip(700,.1); render();
+}
+function delT(id){
+  if(!confirm(TEKS.buangGuruTanya)) return;
+  db.teachers=db.teachers.filter(t=>t.id!==id);
+  db.students=db.students.filter(s=>s.t!==id);
+  save(); render();
+}
+function addS(e){
+  e.preventDefault(); const f=e.target, u=f.u.value.trim().toLowerCase();
+  if(db.students.some(s=>s.u===u)){msg=TEKS.muridSama;return render()}
+  db.students.push({id:uid(),t:S.id,n:f.n.value.trim(),u,p0:f.p.value,c:f.c.value.trim(),p:{}}); save(); bip(700,.1); render();
+}
+function delS(id){
+  const s=db.students.find(x=>x.id===id); if(!s||s.t!==S.id) return;
+  if(!confirm(TEKS.buangMuridTanya)) return;
+  db.students=db.students.filter(x=>x.id!==id); save(); render();
+}
+
+function openL(id){
+  const L=LESSONS.find(l=>l.id===id); if(!L) return;
+  lesson=id;B={ph:"learn",q:0,ok:0,hp:L.hearts||4,fb:null,qs:[]};render();window.scrollTo(0,0)
+}
+function closeL(){bip(440,.08);lesson=null;B=null;render();window.scrollTo(0,0)}
+
+function skipLevel(id){
+  const L=LESSONS.find(l=>l.id===id); if(!L||!S) return;
+  const me=db.students.find(s=>s.id===S.id); if(!me) return;
+  const total=L.n||3;
+  me.p[L.id]={s:total,t:total};
+  save();
+  lesson=id;
+  B={ph:"end",q:total,ok:total,hp:L.hearts||4,fb:null,qs:new Array(total).fill({})};
+  Chiptune.fanfare();
+  render();
+  window.scrollTo(0,0);
+}
+function skipCurrentBattle(){
+  const L=lessonObj(); if(!L) return;
+  skipLevel(L.id);
+}
+
+function shuf(a){const r=a.slice();for(let i=r.length-1;i>0;i--){const k=Math.floor(Math.random()*(i+1));[r[i],r[k]]=[r[k],r[i]]}return r}
+function startB(){
+  const L=lessonObj();
+  B.qs=shuf(L.q).slice(0,L.n||L.q.length).map(q=>{
+    const idx=shuf(q.o.map((_,i)=>i));
+    return {q:q.q,o:idx.map(i=>q.o[i]),a:idx.indexOf(q.a),e:q.e,x:q.x};
+  });
+  B.q=0;B.ok=0;B.hp=L.hearts||4;B.fb=null;
+  bip(560,.1);B.ph="fight";render();
+}
+
+function answer(j){
+  if(!B||B.fb) return;
+  const q=B.qs[B.q], right=j===q.a;
+  B.fb={j,right};
+  if(right){B.ok++; Chiptune.thunder();}
+  else{B.hp--; bip(140,.25);}
+  render();
+}
+function nextQ(){
+  if(!B||!B.fb) return;
+  B.fb=null; B.q++;
+  if(B.q>=B.qs.length||B.hp<=0) finishB();
+  else{render();window.scrollTo(0,0)}
+}
+
+function finishB(){
+  const L=lessonObj(), me=db.students.find(s=>s.id===S.id), old=me.p[L.id];
+  if(!old||B.ok>old.s) me.p[L.id]={s:B.ok,t:B.qs.length};
+  save(); B.ph="end";
+  if(B.ok>=need(L)) Chiptune.fanfare(); else bip(180,.3);
+  render(); window.scrollTo(0,0);
+}
+
+const BG_ACTIVITY={
+  "bg-pikachu":{msg:"Pikachu menggunakan Thunderbolt! ⚡",sound:880},
+  "bg-jigglypuff":{msg:"Jigglypuff menyanyikan lagu 8-bit! 🎵",sound:660},
+  "bg-eevee":{msg:"Eevee bersorak untuk anda! ✨",sound:520}
+};
+function setupBackgroundPokemon(){
+  document.querySelectorAll(".bg-pokemon").forEach(el=>{
+    const act=()=>{
+      const a=BG_ACTIVITY[el.id]; if(!a) return;
+      const old=document.querySelector(".pokemon-bubble"); if(old) old.remove();
+      const b=document.createElement("div"); b.className="pokemon-bubble"; b.textContent=a.msg;
+      document.body.appendChild(b);
+      const r=el.getBoundingClientRect();
+      b.style.left=Math.max(8,Math.min(r.left,window.innerWidth-230))+"px";
+      b.style.top=Math.max(8,r.top-52)+"px";
+      bip(a.sound,.14);
+      setTimeout(()=>b.remove(),2200);
+    };
+    el.addEventListener("click",act);
+    el.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" ") act();});
+  });
+}
+
+seedDemo();
+setupBackgroundPokemon();
+render();
+</script>
+<script src="sijil.js"></script>
+<script src="lingua/lingua.js"></script>
+</body>
+</html>
