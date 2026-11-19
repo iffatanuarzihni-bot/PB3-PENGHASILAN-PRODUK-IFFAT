@@ -14,12 +14,25 @@
   let recordedChunks = [];
   let recordedBlob = null;
   let recordedUrl = null;
+  let existingUrl = null;
+  let teacherUrls = [];
   let isRecording = false;
   let timerInterval = null;
   let secondsElapsed = 0;
   let activeStudentId = null;
 
-  /* ---------- INJEK GAYA CSS KHUSUS PRODUK AKHIR ---------- */
+  function safeEsc(str) {
+    return String(str ?? "").replace(/[&<>"']/g, function (c) {
+      return {
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      }[c];
+    });
+  }
+
   function injectStyles() {
     if (document.getElementById("pa-styles")) return;
     const style = document.createElement("style");
@@ -186,7 +199,6 @@
         font-size: .92rem;
       }
 
-      /* KAD HANTARAN TERDAHULU MURID & PAPARAN GURU */
       .pa-saved-box {
         margin-top: 1.1rem;
         padding: 1rem;
@@ -234,7 +246,6 @@
     document.head.appendChild(style);
   }
 
-  /* ---------- INDEXEDDB UNTUK MENYIMPAN FAIL VIDEO ---------- */
   function openDB() {
     return new Promise((resolve, reject) => {
       const req = indexedDB.open(DB_NAME, DB_VERSION);
@@ -279,7 +290,6 @@
     });
   }
 
-  /* ---------- KAWALAN KAMERA & RAKAMAN ---------- */
   function formatTime(sec) {
     const m = String(Math.floor(sec / 60)).padStart(2, "0");
     const s = String(sec % 60).padStart(2, "0");
@@ -298,11 +308,35 @@
     isRecording = false;
   }
 
+  function cleanupObjectUrls() {
+    if (recordedUrl) {
+      URL.revokeObjectURL(recordedUrl);
+      recordedUrl = null;
+    }
+    if (existingUrl) {
+      URL.revokeObjectURL(existingUrl);
+      existingUrl = null;
+    }
+  }
+
+  function cleanupTeacherUrls() {
+    teacherUrls.forEach((u) => URL.revokeObjectURL(u));
+    teacherUrls = [];
+  }
+
   async function initCamera() {
     const previewEl = document.getElementById("pa-preview");
     const statusEl = document.getElementById("pa-status");
     const recBtn = document.getElementById("pa-btn-rec");
     if (!previewEl) return;
+
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      if (recBtn) recBtn.disabled = true;
+      if (statusEl) {
+        statusEl.innerHTML = "⚠️ <b>Pelayar tidak menyokong rakaman kamera secara langsung</b> atau sambungan bukan HTTPS/localhost.";
+      }
+      return;
+    }
 
     try {
       stopCameraStream();
@@ -323,7 +357,7 @@
     } catch (err) {
       if (recBtn) recBtn.disabled = true;
       if (statusEl) {
-        statusEl.innerHTML = "⚠️ <b>Kamera tidak dapat diakses.</b> Sila benarkan kebenaran Kamera & Mikrofon pada pelayar anda dan muat semula paparan ini.";
+        statusEl.innerHTML = "⚠️ <b>Kamera tidak dapat diakses.</b> Sila benarkan kebenaran Kamera & Mikrofon pada pelayar anda.";
       }
     }
   }
@@ -344,7 +378,10 @@
       "video/webm",
       "video/mp4"
     ];
-    const supportedMime = mimeOptions.find((m) => window.MediaRecorder && MediaRecorder.isTypeSupported(m)) || "";
+    const supportedMime =
+      window.MediaRecorder && typeof MediaRecorder.isTypeSupported === "function"
+        ? mimeOptions.find((m) => MediaRecorder.isTypeSupported(m)) || ""
+        : "";
 
     try {
       mediaRecorder = supportedMime
@@ -386,7 +423,6 @@
     isRecording = true;
     secondsElapsed = 0;
 
-    // Kecilkan panel arahan ke sisi secara automatik semasa merakam
     const workspace = document.getElementById("pa-workspace");
     if (workspace) workspace.classList.add("recording-mode");
 
@@ -497,27 +533,36 @@
     const holder = document.getElementById("pa-existing-holder");
     if (!holder || !activeStudentId) return;
 
+    if (existingUrl) {
+      URL.revokeObjectURL(existingUrl);
+      existingUrl = null;
+    }
+
     const existing = await getSubmission(activeStudentId);
     if (!existing || !existing.blob) {
       holder.innerHTML = "";
       return;
     }
 
-    const oldUrl = URL.createObjectURL(existing.blob);
+    existingUrl = URL.createObjectURL(existing.blob);
+    const ext = (existing.mimeType || "").includes("mp4") ? "mp4" : "webm";
+    const safeName = safeEsc(existing.studentName || "Murid").replace(/[^a-zA-Z0-9_-]/g, "_");
+
     holder.innerHTML = `
       <div class="pa-saved-box">
         <span class="pa-badge-pill">✅ Produk Akhir Telah Dihantar</span>
         <h3 style="margin:.4rem 0 .2rem">Video Anda yang Telah Dihantar kepada Guru</h3>
-        <small class="mut">Dihantar pada: ${existing.submittedAt} · Tempoh: ${formatTime(existing.durationSec || 0)}</small><br>
-        <video class="pa-saved-video" src="${oldUrl}" controls></video>
+        <small class="mut">Dihantar pada: ${safeEsc(existing.submittedAt)} · Tempoh: ${formatTime(existing.durationSec || 0)}</small><br>
+        <video class="pa-saved-video" src="${existingUrl}" controls></video>
         <div style="margin-top:.6rem">
-          <a href="${oldUrl}" download="Hantaran_Produk_Akhir.webm"><button type="button" class="ghost">⬇️ Muat Turun Video Dihantar</button></a>
+          <a href="${existingUrl}" download="Hantaran_Produk_Akhir_${safeName}.${ext}">
+            <button type="button" class="ghost">⬇️ Muat Turun Video Dihantar</button>
+          </a>
         </div>
       </div>
     `;
   }
 
-  /* ---------- BUKA PAPARAN PRODUK AKHIR MURID ---------- */
   async function open() {
     injectStyles();
     if (!window.S || window.S.role !== "murid") return;
@@ -543,10 +588,9 @@
         </div>
 
         <div class="pa-workspace" id="pa-workspace">
-          <!-- STUDIO KAMERA & RAKAMAN -->
           <div class="pa-studio-card">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.6rem;flex-wrap:wrap;gap:.5rem">
-              <b>📹 Kamera Rakaman (${me ? me.n : "Murid"})</b>
+              <b>📹 Kamera Rakaman (${safeEsc(me ? me.n : "Murid")})</b>
               <span class="tag">DSKP BM Tahun 4 · SK 5.2</span>
             </div>
 
@@ -570,7 +614,6 @@
             <div id="pa-existing-holder"></div>
           </div>
 
-          <!-- ARAHAN TUGASAN (SENTIASA TERBUKA & MENGECIL DI SISI BILA RAKAM) -->
           <aside class="pa-guide-card" id="pa-guide-card">
             <span class="tag ok">📌 Arahan Tugasan Murid</span>
             <h2 style="margin:.4rem 0 .3rem">Soalan &amp; Panduan Video Penerangan</h2>
@@ -600,20 +643,18 @@
 
   function close() {
     stopCameraStream();
-    if (recordedUrl) {
-      URL.revokeObjectURL(recordedUrl);
-      recordedUrl = null;
-    }
+    cleanupObjectUrls();
+    recordedBlob = null;
     const overlay = document.getElementById("pa-overlay");
     if (overlay) overlay.remove();
   }
 
-  /* ---------- PAPARAN VIDEO HANTARAN MURID DALAM HALAMAN GURU ---------- */
   async function renderTeacherSection(teacherId) {
     injectStyles();
     const container = document.getElementById("teacher-video-submissions");
     if (!container) return;
 
+    cleanupTeacherUrls();
     const all = await getAllSubmissions();
     const mine = all.filter((item) => item.teacherId === teacherId);
 
@@ -634,16 +675,19 @@
         <div class="pa-teacher-grid">
           ${mine.map((item) => {
             const vidUrl = URL.createObjectURL(item.blob);
+            teacherUrls.push(vidUrl);
+            const ext = (item.mimeType || "").includes("mp4") ? "mp4" : "webm";
+            const safeName = safeEsc(item.studentName || "Murid").replace(/[^a-zA-Z0-9_-]/g, "_");
             return `
               <div class="pa-teacher-item">
                 <div style="display:flex;justify-content:space-between;align-items:center;gap:.5rem;flex-wrap:wrap">
-                  <b>🎒 ${item.studentName}</b>
-                  <span class="tag">${item.studentClass}</span>
+                  <b>🎒 ${safeEsc(item.studentName)}</b>
+                  <span class="tag">${safeEsc(item.studentClass)}</span>
                 </div>
-                <small class="mut">Dihantar: ${item.submittedAt} · Tempoh: ${formatTime(item.durationSec || 0)}</small>
+                <small class="mut">Dihantar: ${safeEsc(item.submittedAt)} · Tempoh: ${formatTime(item.durationSec || 0)}</small>
                 <video src="${vidUrl}" controls></video>
                 <div style="margin-top:.55rem">
-                  <a href="${vidUrl}" download="Produk_Akhir_${item.studentName.replace(/\s+/g, "_")}.webm">
+                  <a href="${vidUrl}" download="Produk_Akhir_${safeName}.${ext}">
                     <button type="button" class="ghost">⬇️ Muat Turun Video Murid</button>
                   </a>
                 </div>
