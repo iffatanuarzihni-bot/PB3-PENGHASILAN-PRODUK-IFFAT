@@ -233,4 +233,4 @@
     renderBanner,
     openModal
   };
-})();siji
+})();sijil
