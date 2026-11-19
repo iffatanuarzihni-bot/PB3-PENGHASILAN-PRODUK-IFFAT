@@ -685,8 +685,8 @@ th{font-size:.82rem;color:var(--mut);text-transform:uppercase;letter-spacing:.04
 .role:hover .mon{animation:jump .48s}
 @keyframes jump{40%{transform:translateY(-14px) scale(1.1)}}
 .role .mon{width:90px;height:90px}
-.role strong{font-size:1.3rem;color:var(--ink)}
-.role .mut{font-size:.86rem;line-height:1.3}
+.role strong{display:block;font-size:1.3rem;color:var(--ink)}
+.role .role-desc{display:block;padding-left:.75rem;font-size:.86rem;line-height:1.35}
 .role-arrow{
   position:absolute;
   right:12px;
@@ -1536,7 +1536,10 @@ function home(){
   ROLES.map(r=>`
     <button class="role role-${r[0]}" onclick="pick('${r[0]}');bip(660)">
       <div class="mon">${pokemon(r[3],88,r[4])}</div>
-      <span><strong>${r[1]}</strong><span class="mut">${r[2]}</span></span>
+      <div>
+        <strong>${r[1]}</strong>
+        <span class="role-desc mut">${r[2]}</span>
+      </div>
       <span class="role-arrow">➜</span>
     </button>`).join("")+
   `</div>`+demoBox();
