@@ -36,7 +36,6 @@ body{
   overflow-x:hidden;
 }
 
-/* Corak grid retro halus */
 body:before{
   content:"";
   position:fixed;
@@ -66,7 +65,6 @@ body:before{
 .wrap>*{pointer-events:auto}
 @keyframes pop{from{opacity:0;transform:translateY(12px) scale(.98)}}
 
-/* Bar Kawalan Audio Terapung */
 .audio-dock{
   position:fixed;
   top:14px;
@@ -88,13 +86,10 @@ body:before{
   box-shadow:0 4px 0 var(--ink);
   cursor:pointer;
 }
-.audio-btn.on{
-  background:var(--gold);
-}
+.audio-btn.on{background:var(--gold)}
 .audio-btn:hover{transform:translateY(-2px)}
 .audio-btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--ink)}
 
-/* Tipografi & Elemen Asas */
 h1,h2{margin:0 0 .5rem;line-height:1.3}
 h1{
   font:400 1.2rem/1.55 "Press Start 2P",monospace;
@@ -113,7 +108,6 @@ h2{font-size:1.3rem;font-weight:800;color:var(--navy)}
 .mut{color:var(--mut)}
 .top .mut{color:#cfe0ff}
 
-/* Butang Gaya Konsol */
 button{
   font:inherit;
   font-weight:800;
@@ -144,7 +138,6 @@ input{
 }
 label{display:block;font-weight:800;font-size:.9rem;margin-bottom:.2rem;color:var(--navy)}
 
-/* Kad RPG / Pokédex */
 .card{
   position:relative;
   background:var(--paper);
@@ -198,7 +191,6 @@ th{font-size:.82rem;color:var(--mut);text-transform:uppercase;letter-spacing:.04
 }
 .q{margin:1rem 0}
 
-/* Sprite Pokémon */
 .mon{display:flex;align-items:center;justify-content:center;flex:none}
 .mon img,.pokemon-sprite{
   display:block;
@@ -212,7 +204,40 @@ th{font-size:.82rem;color:var(--mut);text-transform:uppercase;letter-spacing:.04
 .float{animation:bob 2.2s ease-in-out infinite}
 @keyframes bob{50%{transform:translateY(-10px)}}
 
-/* ==================== SKRIN MULA (PIKACHU THUNDERBOLT SHOWCASE) ==================== */
+/* Grid Video Kata Imbuhan & Kata Majmuk */
+.video-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:1rem;
+  margin-top:.8rem;
+}
+.video-box{
+  background:#f4f8ff;
+  border:3px solid var(--ink);
+  border-radius:18px;
+  padding:1rem;
+  display:flex;
+  flex-direction:column;
+  gap:.65rem;
+}
+.video-frame-wrap{
+  position:relative;
+  width:100%;
+  padding-top:56.25%;
+  border:3px solid var(--ink);
+  border-radius:14px;
+  overflow:hidden;
+  background:#0d1630;
+}
+.video-frame-wrap iframe{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  border:0;
+}
+
+/* ==================== SKRIN MULA ==================== */
 .start-screen{
   position:relative;
   min-height:84vh;
@@ -224,13 +249,11 @@ th{font-size:.82rem;color:var(--mut);text-transform:uppercase;letter-spacing:.04
   padding:2.2rem 1.4rem 2.3rem;
   border:5px solid var(--ink);
   border-radius:30px;
-  background:
-    radial-gradient(circle at 50% 25%, #2b4e94 0%, #162852 55%, #0c142b 100%);
+  background:radial-gradient(circle at 50% 25%, #2b4e94 0%, #162852 55%, #0c142b 100%);
   box-shadow:0 12px 0 var(--ink), 0 25px 50px rgba(0,0,0,.55);
   overflow:hidden;
   color:#fff;
 }
-/* Garisan scanline CRT halus */
 .start-screen:before{
   content:"";
   position:absolute;
@@ -253,7 +276,6 @@ th{font-size:.82rem;color:var(--mut);text-transform:uppercase;letter-spacing:.04
   pointer-events:none;
   z-index:1;
 }
-
 .start-badge{
   position:relative;
   z-index:3;
@@ -270,7 +292,6 @@ th{font-size:.82rem;color:var(--mut);text-transform:uppercase;letter-spacing:.04
   margin-bottom:.95rem;
   box-shadow:0 4px 0 #091020;
 }
-
 .start-title{
   position:relative;
   z-index:3;
@@ -280,10 +301,7 @@ th{font-size:.82rem;color:var(--mut);text-transform:uppercase;letter-spacing:.04
   margin:0 0 .55rem;
   animation:titleFloat 2.8s ease-in-out infinite;
 }
-@keyframes titleFloat{
-  0%,100%{transform:translateY(0)}
-  50%{transform:translateY(-6px)}
-}
+@keyframes titleFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 .start-sub{
   position:relative;
   z-index:3;
@@ -292,8 +310,6 @@ th{font-size:.82rem;color:var(--mut);text-transform:uppercase;letter-spacing:.04
   font-size:1.08rem;
   margin:0 auto 1.2rem;
 }
-
-/* PENTAS ANIMASI PERTARUNGAN EPIK */
 .battle-stage{
   position:relative;
   z-index:3;
@@ -318,8 +334,6 @@ th{font-size:.82rem;color:var(--mut);text-transform:uppercase;letter-spacing:.04
   52%{transform:translate(6px, 4px)}
   55%{transform:translate(-4px, 2px)}
 }
-
-/* Awan & bintang arena mula */
 .stage-cloud{
   position:absolute;
   top:14%;
@@ -329,8 +343,6 @@ th{font-size:.82rem;color:var(--mut);text-transform:uppercase;letter-spacing:.04
 }
 .stage-cloud.c2{top:27%;font-size:1.25rem;animation-delay:-9s}
 @keyframes driftSlow{from{left:-12%}to{left:108%}}
-
-/* HUD mini dalam pentas animasi */
 .stage-hud{
   position:absolute;
   padding:.35rem .6rem;
@@ -354,15 +366,12 @@ th{font-size:.82rem;color:var(--mut);text-transform:uppercase;letter-spacing:.04
   overflow:hidden;
 }
 .mini-hp i{display:block;height:100%;background:#35c46a}
-.foe-hp-bar{
-  animation:foeHpDrop 3.6s infinite;
-}
+.foe-hp-bar{animation:foeHpDrop 3.6s infinite}
 @keyframes foeHpDrop{
   0%, 40%{width:100%;background:#35c46a}
   48%, 78%{width:18%;background:#ef3e4a}
   92%, 100%{width:100%;background:#35c46a}
 }
-
 .stage-flash{
   position:absolute;
   inset:0;
@@ -378,7 +387,6 @@ th{font-size:.82rem;color:var(--mut);text-transform:uppercase;letter-spacing:.04
   44%{opacity:.15}
   47%{opacity:.65}
 }
-
 .stage-platform{
   position:absolute;
   bottom:24px;
@@ -390,8 +398,6 @@ th{font-size:.82rem;color:var(--mut);text-transform:uppercase;letter-spacing:.04
 }
 .plat-left{left:7%}
 .plat-right{right:7%}
-
-/* Pikachu Hero */
 .hero-pikachu{
   position:absolute;
   left:9%;
@@ -438,8 +444,6 @@ th{font-size:.82rem;color:var(--mut);text-transform:uppercase;letter-spacing:.04
   0%, 16%, 52%, 100%{opacity:0;transform:rotate(0deg) scale(.6)}
   30%, 44%{opacity:.95;transform:rotate(180deg) scale(1.15)}
 }
-
-/* Panahan Petir Ganda SVG */
 .lightning-beam{
   position:absolute;
   left:23%;
@@ -457,7 +461,6 @@ th{font-size:.82rem;color:var(--mut);text-transform:uppercase;letter-spacing:.04
   54%{opacity:1;transform:scaleX(1)}
   62%, 100%{opacity:0;transform:scaleX(1)}
 }
-
 .target-dummy{
   position:absolute;
   right:9%;
@@ -480,7 +483,6 @@ th{font-size:.82rem;color:var(--mut);text-transform:uppercase;letter-spacing:.04
   52%{transform:translateX(9px);filter:brightness(1.6)}
   66%, 100%{transform:translateX(0) rotate(0);filter:brightness(1)}
 }
-
 .attack-label{
   position:absolute;
   bottom:12px;
@@ -503,7 +505,6 @@ th{font-size:.82rem;color:var(--mut);text-transform:uppercase;letter-spacing:.04
   38%, 58%{opacity:1;transform:translate(-50%, 0) scale(1)}
   66%, 100%{opacity:0;transform:translate(-50%, -6px)}
 }
-
 .spark-burst{
   position:absolute;
   right:12%;
@@ -534,8 +535,6 @@ th{font-size:.82rem;color:var(--mut);text-transform:uppercase;letter-spacing:.04
   62%{opacity:1;transform:translateY(-30px) scale(1)}
   70%, 100%{opacity:0;transform:translateY(-40px)}
 }
-
-/* Butang MULA Utama */
 .btn-start-game{
   position:relative;
   z-index:4;
@@ -555,10 +554,7 @@ th{font-size:.82rem;color:var(--mut);text-transform:uppercase;letter-spacing:.04
   transform:translateY(-4px) scale(1.04);
   box-shadow:0 12px 0 var(--ink), 0 0 40px rgba(255,203,5,.95);
 }
-.btn-start-game:active{
-  transform:translateY(5px);
-  box-shadow:0 3px 0 var(--ink);
-}
+.btn-start-game:active{transform:translateY(5px);box-shadow:0 3px 0 var(--ink)}
 @keyframes pulseBtn{
   0%,100%{box-shadow:0 8px 0 var(--ink), 0 0 18px rgba(255,203,5,.55)}
   50%{box-shadow:0 8px 0 var(--ink), 0 0 38px rgba(255,203,5,.95)}
@@ -574,7 +570,6 @@ th{font-size:.82rem;color:var(--mut);text-transform:uppercase;letter-spacing:.04
 }
 @keyframes blinkText{50%{opacity:.3}}
 
-/* ==================== HUB PILIHAN PERANAN ==================== */
 .hub-nav{
   display:flex;
   justify-content:space-between;
@@ -699,7 +694,6 @@ th{font-size:.82rem;color:var(--mut);text-transform:uppercase;letter-spacing:.04
 .role-guru{background:linear-gradient(155deg,#ffe9dc,#ffffff)}
 .role-murid{background:linear-gradient(155deg,#fff5cc,#ffffff)}
 
-/* ==================== HUD MURID & ARENA PERTARUNGAN ==================== */
 .stage{display:flex;align-items:center;gap:1rem;border-radius:22px}
 .stage .mon{width:88px;height:88px}
 .grow{flex:1;min-width:0}
@@ -762,7 +756,6 @@ th{font-size:.82rem;color:var(--mut);text-transform:uppercase;letter-spacing:.04
 .cloud{position:absolute;top:12%;font-size:2rem;animation:drift 16s linear infinite;z-index:0}
 .cloud-second{top:28%;font-size:1.45rem;animation-delay:-8s;opacity:.85}
 @keyframes drift{from{left:-12%}to{left:108%}}
-
 .enemy{position:absolute;right:10%;top:55px;width:136px;z-index:2}
 .enemy:after{
   content:"";
@@ -777,7 +770,6 @@ th{font-size:.82rem;color:var(--mut);text-transform:uppercase;letter-spacing:.04
 }
 .enemy .mon{width:124px;height:124px;animation:bob 2s ease-in-out infinite}
 .enemy .pokemon-sprite{width:100%;height:100%}
-
 .trainer{
   position:absolute;
   left:8%;
@@ -800,7 +792,6 @@ th{font-size:.82rem;color:var(--mut);text-transform:uppercase;letter-spacing:.04
 .trainer-pokemon{display:inline-flex;width:68px;height:68px;margin-left:-6px;animation:bob 2s ease-in-out infinite}
 .trainer-pokemon img{width:100%;height:100%}
 @keyframes trainerHop{50%{transform:translateY(-8px) rotate(-8deg)}}
-
 .plate{
   position:absolute;
   background:var(--paper);
@@ -812,8 +803,6 @@ th{font-size:.82rem;color:var(--mut);text-transform:uppercase;letter-spacing:.04
 }
 .plate.en{left:4%;top:14px;width:44%}
 .plate.me{right:4%;bottom:14px}
-
-/* Kesan Serangan & Kilat Semasa Menjawab Betul */
 .battle-bolt{
   position:absolute;
   left:20%;
@@ -881,7 +870,6 @@ th{font-size:.82rem;color:var(--mut);text-transform:uppercase;letter-spacing:.04
   margin:.5rem 0;
 }
 
-/* Animasi Tangkap Pokéball */
 .capt{position:relative;height:155px;display:grid;place-items:center}
 .capt .mon{width:125px;height:125px;opacity:0;animation:appear .5s 2s forwards}
 .capt .mon img{width:100%;height:100%}
@@ -920,7 +908,6 @@ th{font-size:.82rem;color:var(--mut);text-transform:uppercase;letter-spacing:.04
 .flee{width:120px;margin:0 auto;animation:flee 1.2s forwards}
 @keyframes flee{to{transform:translateX(220px) rotate(25deg);opacity:0}}
 
-/* Pokémon Interaktif di Latar */
 .pokemon-background{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:1}
 .bg-pokemon{
   position:absolute;
@@ -961,7 +948,6 @@ th{font-size:.82rem;color:var(--mut);text-transform:uppercase;letter-spacing:.04
   100%{opacity:0;transform:translateY(-10px) scale(.9)}
 }
 
-/* Responsif */
 @media(max-width:720px){
   .world-banner{grid-template-columns:1fr;padding:1.15rem}
   .world-characters{min-height:150px}
@@ -996,12 +982,10 @@ button[disabled]{opacity:.55;cursor:not-allowed}
 </head>
 <body>
 
-<!-- Kawalan Muzik 8-Bit -->
 <div class="audio-dock">
   <button id="musicBtn" class="audio-btn" onclick="toggleMusic()" aria-label="Hidupkan atau matikan muzik 8-bit">🎵 Muzik: OFF</button>
 </div>
 
-<!-- Pokémon Interaktif Latar -->
 <div class="pokemon-background">
   <img id="bg-pikachu" class="bg-pokemon bg-pikachu" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png" alt="Pikachu interaktif" tabindex="0" role="button">
   <img id="bg-jigglypuff" class="bg-pokemon bg-jigglypuff" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/39.png" alt="Jigglypuff interaktif" tabindex="0" role="button">
@@ -1028,7 +1012,6 @@ const Chiptune = (() => {
   let timer = null;
   let noiseBuf = null;
 
-  // Frekuensi not muzik (Hz)
   const N = {
     _:0,
     C3:130.81, D3:146.83, E3:164.81, F3:174.61, G3:196.00, A3:220.00, B3:246.94,
@@ -1036,7 +1019,6 @@ const Chiptune = (() => {
     C5:523.25, D5:587.33, Eb5:622.25, E5:659.25, F5:698.46, Fs5:739.99, G5:783.99, Gs5:830.61, A5:880.00, B5:987.77, C6:1046.50
   };
 
-  // Lagu 1: Tema Pengembaraan 8-Bit (Ceria ala Bandar Pokémon)
   const MENU_TRACK = {
     tempoMs: 145,
     lead: [
@@ -1053,7 +1035,6 @@ const Chiptune = (() => {
     ]
   };
 
-  // Lagu 2: Tema Pertarungan 8-Bit (Laju & Mendebarkan)
   const BATTLE_TRACK = {
     tempoMs: 112,
     lead: [
@@ -1075,7 +1056,6 @@ const Chiptune = (() => {
       const AC = window.AudioContext || window.webkitAudioContext;
       if(!AC) return null;
       ctx = new AC();
-      // Buffer bunyi 'noise' untuk dram 8-bit
       const len = ctx.sampleRate * 0.08;
       noiseBuf = ctx.createBuffer(1, len, ctx.sampleRate);
       const data = noiseBuf.getChannelData(0);
@@ -1289,8 +1269,8 @@ const LESSONS = [
     lead:"Volt: Bandar Metro menanti! Selesaikan teka-teki kata majmuk untuk mendapat Lencana Pengetahuan.",
     text:"Kata majmuk ialah gabungan dua kata atau lebih yang membawa satu makna.\n• Kata majmuk bebas: gabungan kata yang ditulis berasingan. Contoh: kereta api, meja makan, jalan raya.\n• Kata majmuk mantap: gabungan kata yang sudah tetap dan ditulis rapat. Contoh: matahari, kerjasama, tanggungjawab.",
     q:[
-      {q:"Antara berikut, yang manakah kata majmuk?",o:["kereta api","berjalan","makanan","cantik"],a:0,e:"Kereta api ialah gabungan dua kata (kereta + api) yang membawa satu makna baharu.",x:"Ayah menaiki kereta api."},
-      {q:"Antara berikut, yang manakah kata majmuk mantap?",o:["rumah sakit","matahari","meja makan","jalan raya"],a:1,e:"Matahari ialah gabungan mata + hari yang sudah tetap dan ditulis rapat.",x:"Matahari terbit di timur."},
+      {q:"Antara berikut, yang manakah kata majmuk bebas?",o:["hospital","kereta api","matahari","kerjasama"],a:1,e:"Kereta api ialah gabungan dua kata (kereta + api) yang ditulis berasingan dan membawa satu makna baharu. 'Hospital' ialah kata tunggal.",x:"Ayah menaiki kereta api."},
+      {q:"Antara berikut, yang manakah kata majmuk mantap?",o:["hospital","matahari","meja makan","jalan raya"],a:1,e:"Matahari ialah gabungan mata + hari yang sudah tetap dan ditulis rapat.",x:"Matahari terbit di timur."},
       {q:"Perkataan manakah kata majmuk mantap?",o:["buku teks","kapal terbang","tanggungjawab","lampu isyarat"],a:2,e:"Tanggungjawab ditulis rapat sebagai satu perkataan. Yang lain ialah kata majmuk bebas.",x:"Murid harus memikul tanggungjawab."},
       {q:"Perkataan manakah kata majmuk bebas?",o:["matahari","kerjasama","kapal terbang","hulubalang"],a:2,e:"Kapal terbang ditulis berasingan, maka ia kata majmuk bebas.",x:"Kapal terbang mendarat di lapangan terbang."},
       {q:"Gabungkan perkataan meja dan makan.",o:["meja makan","makan meja","mejamakan","mejamakanan"],a:0,e:"Meja + makan = meja makan, iaitu meja untuk makan. Susunan kata penting.",x:"Keluarga makan di meja makan."},
@@ -1301,7 +1281,7 @@ const LESSONS = [
       {q:"Bagaimanakah kata majmuk mantap ditulis?",o:["Dirapatkan menjadi satu perkataan","Dipisahkan dengan sempang","Ditulis dua perkataan berjarak","Ditulis dengan huruf besar"],a:0,e:"Kata majmuk mantap ditulis rapat sebagai satu perkataan, contohnya kerjasama dan matahari.",x:"kerja + sama = kerjasama"},
       {q:"Perkataan kerjasama ialah kata majmuk jenis ...",o:["mantap","bebas","ganda","berimbuhan"],a:0,e:"Kerjasama ditulis rapat dan maknanya sudah tetap, maka ia kata majmuk mantap.",x:"Kerjasama memudahkan kerja kumpulan."},
       {q:"Lampu isyarat ialah kata majmuk jenis ...",o:["mantap","ganda penuh","bebas","akhiran"],a:2,e:"Lampu isyarat ditulis berasingan, maka ia kata majmuk bebas.",x:"Pemandu berhenti apabila lampu isyarat merah."},
-      {q:"Rumah sakit bermaksud ...",o:["rumah yang buruk","orang sakit","kedai ubat","hospital"],a:3,e:"Makna kata majmuk berbeza daripada makna setiap kata. Rumah sakit bermaksud hospital.",x:"Datuk dirawat di rumah sakit."},
+      {q:"Hospital bermaksud ...",o:["rumah yang buruk","orang sakit","kedai ubat","tempat merawat pesakit"],a:3,e:"Hospital ialah tempat merawat orang sakit atau pesakit.",x:"Datuk dirawat di hospital."},
       {q:"Pilih pasangan kata yang membentuk kata majmuk.",o:["makan + an","ber + jalan","kapal + terbang","buku + buku"],a:2,e:"Kapal + terbang ialah gabungan dua kata, maka ia kata majmuk. Pilihan lain ialah imbuhan atau ganda.",x:"kapal terbang"},
       {q:"Antara berikut, yang manakah bukan kata majmuk mantap?",o:["hulubalang","matahari","kerjasama","jalan raya"],a:3,e:"Jalan raya ditulis berasingan sebagai kata majmuk bebas. Tiga yang lain ditulis rapat.",x:"Kereta lalu di jalan raya."},
       {q:"Ibu memandu kereta di ____.",o:["berjalan","jalan raya","menjalani","perjalanan"],a:1,e:"Jalan raya ialah kata majmuk bebas yang bermaksud jalan besar untuk kenderaan.",x:"Ibu memandu kereta di jalan raya."},
@@ -1331,25 +1311,35 @@ const LESSONS = [
   }
 ];
 
+window.LESSONS = LESSONS;
+
 /* =====================================================================
    2) KEADAAN & PENYIMPANAN DATA
    ===================================================================== */
 const KEY="belajar_digital_v1";
 let db; try{db=JSON.parse(localStorage.getItem(KEY))}catch(e){}
 db=db||{teachers:[],students:[]};
+window.db = db;
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(db))}catch(e){}};
+window.save = save;
 const uid=()=>Math.random().toString(36).slice(2,10);
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const $=s=>document.querySelector(s);
 
 let S=null; try{S=JSON.parse(sessionStorage.getItem("bd_s"))}catch(e){}
+window.S = S;
 let started=Boolean(S);
 let loginRole=null, lesson=null, msg="", prefill={u:"",p:""};
+let studentPage="video"; /* Muka surat selepas murid log masuk: "video" atau "missions" */
 let B=null;
 
 function setS(v){
   S=v;
-  if(v) started=true;
+  window.S = v;
+  if(v){
+    started=true;
+    if(v.role==="murid") studentPage="video";
+  }
   try{v?sessionStorage.setItem("bd_s",JSON.stringify(v)):sessionStorage.removeItem("bd_s")}catch(e){}
   render();
 }
@@ -1390,7 +1380,7 @@ const ROLES=[
 ];
 
 /* =====================================================================
-   3) PAPARAN SKRIN MULA (ANIMASI PIKACHU THUNDERBOLT)
+   3) PAPARAN SKRIN MULA
    ===================================================================== */
 function startView(){
   return `
@@ -1417,7 +1407,6 @@ function startView(){
       <div class="stage-platform plat-left"></div>
       <div class="stage-platform plat-right"></div>
 
-      <!-- PIKACHU MENYERANG -->
       <div class="hero-pikachu">
         <div class="electric-aura"></div>
         <div class="charge-ring"></div>
@@ -1426,7 +1415,6 @@ function startView(){
              alt="Pikachu menyerang">
       </div>
 
-      <!-- PANAHAN PETIR SVG -->
       <svg class="lightning-beam" viewBox="0 0 340 110" preserveAspectRatio="none">
         <defs>
           <filter id="glowBolt" x="-20%" y="-20%" width="140%" height="140%">
@@ -1447,7 +1435,6 @@ function startView(){
       <div class="spark-burst">💥⚡✨</div>
       <div class="crit-dmg">-99 HP!</div>
 
-      <!-- LAWAN TERKENA SERANGAN -->
       <div class="target-dummy">
         <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/52.gif"
              onerror="this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/52.png'"
@@ -1547,7 +1534,7 @@ function loginView(){
 }
 
 /* =====================================================================
-   5) PAPAN PEMUKA ADMIN, GURU & MURID
+   5) PAPAN PEMUKA ADMIN, GURU & MURID + MUKA SURAT VIDEO
    ===================================================================== */
 function topBar(title,sub){
   return `<div class="top">
@@ -1612,12 +1599,61 @@ function guruView(){
   </div>`+blocks;
 }
 
+/* Muka Surat Video Kata Imbuhan & Kata Majmuk selepas murid log masuk */
+function videoPageView(me){
+  return topBar(TEKS.helo+" "+me.n,TEKS.kelas+" "+me.c+" · Video Pembelajaran")+
+  `<div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:.8rem;flex-wrap:wrap">
+      <div>
+        <span class="tag ok">Muka Surat Pembelajaran Video</span>
+        <h2 style="margin:.35rem 0 .2rem">🎬 Video Kata Imbuhan &amp; Kata Majmuk</h2>
+        <p class="mut" style="margin:0">Tonton video penerangan di bawah sebelum memulakan misi kuiz dan pertarungan Pokémon.</p>
+      </div>
+      <button onclick="setStudentPage('missions')">⚔️ Teruskan ke Misi &amp; Kuiz ➡</button>
+    </div>
+
+    <div class="video-grid">
+      <div class="video-box">
+        <span class="tag">Video 1 · Kata Imbuhan</span>
+        <h2 style="font-size:1.1rem;margin:0">Penerangan Kata Imbuhan</h2>
+        <div class="video-frame-wrap">
+          <iframe src="https://www.youtube.com/embed/R-vBmExJPwQ" title="Video Kata Imbuhan" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+        <small class="mut">Pautan: <a href="https://youtu.be/R-vBmExJPwQ?si=V-huzOBVYiwzPHIo" target="_blank" rel="noopener noreferrer">https://youtu.be/R-vBmExJPwQ?si=V-huzOBVYiwzPHIo</a></small>
+      </div>
+
+      <div class="video-box">
+        <span class="tag">Video 2 · Kata Majmuk</span>
+        <h2 style="font-size:1.1rem;margin:0">Penerangan Kata Majmuk</h2>
+        <div class="video-frame-wrap">
+          <iframe src="https://www.youtube.com/embed/EkVYEHeOmAg" title="Video Kata Majmuk" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+        <small class="mut">Pautan: <a href="https://youtu.be/EkVYEHeOmAg?si=aSqlxu4SALlux9Ru" target="_blank" rel="noopener noreferrer">https://youtu.be/EkVYEHeOmAg?si=aSqlxu4SALlux9Ru</a></small>
+      </div>
+    </div>
+
+    <div style="margin-top:1rem;display:flex;gap:.7rem;flex-wrap:wrap">
+      <button onclick="setStudentPage('missions')">🗺️ Mula Menjawab Level &amp; Kuiz</button>
+      <button class="ghost" onclick="LinguaGame.open()">🌍 Buka Pokémon Language Adventure</button>
+    </div>
+  </div>`;
+}
+
 const monOf=l=>l.mon||{n:"Pikachu",c:"#ffcf33",k:0};
 const need=L=>Math.ceil((L.n||L.q.length)*2/3);
 const lessonObj=()=>LESSONS.find(l=>l.id===lesson);
 
+function setStudentPage(page){
+  bip(560,.1);
+  studentPage = page;
+  render();
+  window.scrollTo(0,0);
+}
+
 function muridView(){
   const me=db.students.find(s=>s.id===S.id); if(!me){setTimeout(logout);return ""}
+  if(studentPage==="video") return videoPageView(me);
+
   const got=l=>me.p[l.id]&&me.p[l.id].s>=need(l);
   const xp=LESSONS.reduce((a,l)=>a+(me.p[l.id]?me.p[l.id].s*10:0),0), lv=1+Math.floor(xp/30);
   const regionLessons=LESSONS.filter(l=>l.id!=="c1");
@@ -1641,7 +1677,14 @@ function muridView(){
     </div>`;
   }).join("");
 
+  const certBanner = window.SijilModul ? window.SijilModul.renderBanner(me, LESSONS, db) : "";
+
   return topBar(TEKS.helo+" "+me.n,TEKS.kelas+" "+me.c)+
+  `<div style="margin-bottom:.9rem;display:flex;gap:.6rem;flex-wrap:wrap">
+    <button class="ghost" onclick="setStudentPage('video')">🎬 Video Kata Imbuhan &amp; Kata Majmuk</button>
+    <span class="tag">Peta Misi &amp; Level</span>
+  </div>`+
+  certBanner+
   `<div class="card">
     <div class="hud">
       <div class="avatar">🧢<span class="avatar-pokemon">${pokemon(25,52,"Pikachu")}</span></div>
@@ -1675,12 +1718,17 @@ function lessonView(){
   }
   if(B.ph==="end"){
     const won=B.ok>=need(L);
+    const me=db.students.find(s=>s.id===S.id);
+    const allDone=window.SijilModul && me && window.SijilModul.isAllCompleted(me, LESSONS);
     return `<div class="card center">
       <h2>${esc(L.title)}</h2>
       <div class="big">${B.ok}/${B.qs.length}</div>`+
       (won ? `<div class="capt"><div class="orb"></div><div class="mon">${mm}</div><span class="spark" style="left:18%;top:10%">✨</span><span class="spark" style="right:18%;top:20%">⭐</span></div><p><b>${TEKS.berjaya}</b></p><p>🏅 ${esc(L.badge)}</p>${L.id==="c1"?"<p><b>🏆 Tahniah! Anda kini PENGUASA BAHASA POKÉMON!</b></p>":""}`
            : `<div class="mon flee">${mm}</div><p>${TEKS.gagal}</p>`)+
-      `<button onclick="closeL()">⬅ ${TEKS.kembali}</button>
+      `<div style="display:flex;gap:.7rem;justify-content:center;flex-wrap:wrap;margin-top:.8rem">
+        ${allDone?`<button onclick="SijilModul.openModal()">📜 Jana &amp; Muat Turun Sijil</button>`:""}
+        <button onclick="closeL()">⬅ ${TEKS.kembali}</button>
+      </div>
     </div>`;
   }
 
@@ -1750,7 +1798,7 @@ function render(){
 const pick=r=>{Chiptune.enable();loginRole=r;msg="";render()};
 const demoFill=(r,u,p)=>{Chiptune.enable();started=true;loginRole=r;prefill={u,p};msg="";render();window.scrollTo(0,0)};
 const back=()=>{loginRole=null;render()};
-const logout=()=>{loginRole=null;lesson=null;B=null;setS(null)};
+const logout=()=>{loginRole=null;lesson=null;B=null;studentPage="video";setS(null)};
 
 function login(e){
   e.preventDefault();
@@ -1793,7 +1841,6 @@ function openL(id){
 }
 function closeL(){bip(440,.08);lesson=null;B=null;render();window.scrollTo(0,0)}
 
-/* Skip level untuk pensyarah: berkelakuan seperti murid telah berjaya menjawab semua soalan */
 function skipLevel(id){
   const L=LESSONS.find(l=>l.id===id); if(!L||!S) return;
   const me=db.students.find(s=>s.id===S.id); if(!me) return;
@@ -1811,9 +1858,7 @@ function skipCurrentBattle(){
   skipLevel(L.id);
 }
 
-/* Kocok susunan (Fisher-Yates) */
 function shuf(a){const r=a.slice();for(let i=r.length-1;i>0;i--){const k=Math.floor(Math.random()*(i+1));[r[i],r[k]]=[r[k],r[i]]}return r}
-/* Pilih soalan rawak daripada bank & kocok pilihan jawapan supaya tidak berulang */
 function startB(){
   const L=lessonObj();
   B.qs=shuf(L.q).slice(0,L.n||L.q.length).map(q=>{
@@ -1832,7 +1877,6 @@ function answer(j){
   else{B.hp--; bip(140,.25);}
   render();
 }
-/* Pergi ke soalan seterusnya selepas murid membaca penjelasan */
 function nextQ(){
   if(!B||!B.fb) return;
   B.fb=null; B.q++;
@@ -1848,7 +1892,6 @@ function finishB(){
   render(); window.scrollTo(0,0);
 }
 
-/* Interaksi Pokémon Latar */
 const BG_ACTIVITY={
   "bg-pikachu":{msg:"Pikachu menggunakan Thunderbolt! ⚡",sound:880},
   "bg-jigglypuff":{msg:"Jigglypuff menyanyikan lagu 8-bit! 🎵",sound:660},
@@ -1876,6 +1919,7 @@ seedDemo();
 setupBackgroundPokemon();
 render();
 </script>
+<script src="sijil.js"></script>
 <script src="lingua/lingua.js"></script>
 </body>
 </html>
