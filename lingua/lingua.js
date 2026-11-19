@@ -12,15 +12,12 @@ const rnd=a=>a[Math.floor(Math.random()*a.length)];
 const shuf=a=>{const r=a.slice();for(let i=r.length-1;i>0;i--){const k=Math.floor(Math.random()*(i+1));[r[i],r[k]]=[r[k],r[i]]}return r};
 const U=()=>Math.random().toString(36).slice(2,9);
 
-/* ---------- DATA POKÉMON ---------- */
+/* ---------- DATA POKÉMON (Charmander dibuang sepenuhnya) ---------- */
 const SP={};
 const sp=(id,n,t,hp,e,l,x)=>{SP[id]=Object.assign({n,t,hp,e,l},x||{})};
 sp(1,"Bulbasaur","Rumput",40,"🌱","Kata berimbuhan: ber + main = bermain.",{evo:[5,2]});
 sp(2,"Ivysaur","Rumput",52,"🌿","Kata berimbuhan: makan + an = makanan.",{evo:[10,3]});
 sp(3,"Venusaur","Rumput",65,"🌳","Apitan: per + main + an = permainan.");
-sp(4,"Charmander","Api",38,"🔥","Awalan me-: me + baca = membaca.",{evo:[5,5]});
-sp(5,"Charmeleon","Api",50,"🔥","Akhiran -kan: ambilkan.",{evo:[10,6]});
-sp(6,"Charizard","Api",64,"🐉","Apitan ke-an: kegembiraan.");
 sp(7,"Squirtle","Air",40,"💧","Kata majmuk: kapal terbang.",{evo:[5,8]});
 sp(8,"Wartortle","Air",52,"💧","Kata majmuk bebas: meja makan.",{evo:[10,9]});
 sp(9,"Blastoise","Air",66,"🐢","Kata majmuk mantap: matahari.");
@@ -41,7 +38,7 @@ sp(100,"Voltorb","Elektrik",32,"⚪","Kata majmuk mantap: tanggungjawab.");
 sp(133,"Eevee","Biasa",40,"✨","Awalan se-: sekelas.",{stone:136});
 sp(136,"Flareon","Api",60,"🔥","Awalan ber-: bermain.");
 sp(149,"Dragonite","Naga",90,"🐲","Penguasa semua jenis kata!");
-const STARTERS=[1,4,7,25];
+const STARTERS=[1,7,25];
 const stage=id=>{for(const k in SP){const s=SP[k];if((s.evo&&s.evo[1]==id)||s.stone==id)return 1+stage(+k)}return 1};
 const spr=(id,w)=>`<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png" width="${w||96}" height="${w||96}" alt="${esc(SP[id]?SP[id].n:"Pokémon")}" onerror="this.outerHTML='<span class=&quot;lg-fbk&quot;>${SP[id]?SP[id].e:"🐾"}</span>'">`;
 
@@ -57,7 +54,7 @@ const NB=ORDER.length; /* bilangan lencana wilayah */
 const KB={
  imbuhan:{t:"Kata Berimbuhan",d:"Kata akar yang ditambah imbuhan. Awalan di hadapan (ber-, me-, di-, ter-, se-), akhiran di belakang (-an, -kan, -i), apitan di hadapan dan belakang serentak (per-an, ke-an, pe-an).",ex:"ber + main = bermain; makan + an = makanan; ke + gembira + an = kegembiraan",hint:"Cari kata akar dahulu. Kemudian lihat imbuhan: di hadapan, di belakang atau kedua-duanya?"},
  majmuk:{t:"Kata Majmuk",d:"Gabungan dua kata atau lebih yang membawa satu makna. Majmuk bebas ditulis berasingan; majmuk mantap ditulis rapat.",ex:"kereta api, meja makan (bebas); matahari, kerjasama (mantap)",hint:"Adakah dua kata bergabung menjadi satu makna? Jika ditulis rapat, ia majmuk mantap."},
- campuran:{t:"Campuran",d:"Gabungan kata berimbuhan dan kata majmuk.",ex:"makanan, kereta api, bermain",hint:"Tanya diri: ada imbuhan, dua kata bergabung, atau kata diulang?"}
+ campuran:{t:"Campuran",d:"Gabungan kata berimbuhan dan kata majmuk.",ex:"makanan, kereta api, bermain",hint:"Tanya diri: ada imbuhan atau dua kata bergabung?"}
 };
 const FAQ=[
  ["Apakah beza awalan, akhiran dan apitan?","Awalan di hadapan kata akar (bermain). Akhiran di belakang (makanan). Apitan ada di hadapan dan di belakang serentak (permainan)."],
@@ -314,10 +311,10 @@ function battle(c){
   BT=null;music(win?"win":"menu");let msgs=[],extra="";
   if(win){snd("win");G.stats.wins++;msgs=reward(c.xp,c.coins,cu);if(c.prog)G.prog[c.prog]=(G.prog[c.prog]||0)+1;if(c.onWin)extra=c.onWin(hit,N)||"";persist()}
   show(`<div class="card" style="text-align:center"><h2>${win?"🏆 Kemenangan!":"💫 Belum berjaya"}</h2><div class="lg-sp big">${spr(win?cu.id:c.e.id,110)}</div>
-  <p>${win?`Anda mengalahkan ${SP[c.e.id].n}! +${c.xp} XP, +${c.coins} 🪙`:"Jangan risau! Baca semula penjelasan, pulihkan Pokémon di Pusat Pokémon dan cuba lagi. Anda pasti boleh!"}</p>${msgs.map(t=>`<p>${t}</p>`).join("")}${extra}<button data-act="bk">Teruskan ➡</button></div>`,c.bg);
+  <p>${win?`Anda mengalahkan ${SP[c.e.id].n}! +${c.xp} XP, +${c.coins} 🪙`:"Jangan risau! Baca semula penjelasan, pulihkan Pokémon di Pusat Pokémon dan cuba lagi. Anda pasti boleh!"}</p>${msgs.map(t=>`<p>${t}</p>`).join("")}${extra}<button data-act="bk">⬅ Kembali</button></div>`,c.bg);
   BT={bk:c.back};
  };
- const quit=()=>{if(!confirm("Mahu mengalah dan kembali? Pertarungan ini tidak dikira."))return;snd("click");BT=null;music("menu");c.back()};
+ const quit=()=>{snd("click");BT=null;music("menu");c.back()};
  /* Skip pensyarah: rekod jawapan baki soalan sebagai betul supaya berkelakuan seperti murid berjaya menjawab */
  const skip=()=>{
   for(let k=i;k<N;k++)grade(c.qs[k],true);
@@ -344,7 +341,7 @@ function trainer(r){
 }
 function gym(r){
  const R=RG[r];dialog([`Saya Ketua Gim ${R.n}! Tunjukkan anda memahami ${R.top.toLowerCase()}!`],()=>battle({title:`Gim ${R.n}: ${R.leader}`,bg:R.bg,e:R.gym,qs:Q(r,3),atk:12,xp:70,coins:70,back:()=>region(r),
-  onWin:(h,n)=>{const first=!G.badges.includes(r);if(first){G.badges.push(r);snd("badge")}sync(r,h,n);chk();return `<p class="lg-badge">🏅 ${R.badge}${first?" diperoleh!":""}</p>`}}),R.leader,R.bg,back("region",R.n,r));
+  onWin:(h,n)=>{const first=!G.badges.includes(r);if(first){G.badges.push(r);snd("badge")}sync(r,h,n);chk();return `<p class="lg-badge">🏅 ${R.badge}${first?" diperoleh!":""}</p>`}}),R.leader,R.bg,back("region",RG[r].n,r));
 }
 function elite(){
  battle({title:"Elit Empat: Penilaian Gabungan",bg:"lg-c1",e:{id:65,lv:25},qs:mixed(5),atk:13,xp:90,coins:100,back:champ,onWin:()=>{G.elite=true;return "<p>🏅 Elit Empat dikalahkan!</p>"}});
