@@ -45,7 +45,7 @@ const STARTERS=[1,4,7,25];
 const stage=id=>{for(const k in SP){const s=SP[k];if((s.evo&&s.evo[1]==id)||s.stone==id)return 1+stage(+k)}return 1};
 const spr=(id,w)=>`<img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png" width="${w||96}" height="${w||96}" alt="${esc(SP[id]?SP[id].n:"Pokémon")}" onerror="this.outerHTML='<span class=&quot;lg-fbk&quot;>${SP[id]?SP[id].e:"🐾"}</span>'">`;
 
-/* ---------- WILAYAH ---------- */
+/* ---------- WILAYAH (Tiada Gua Gunung: Kata Ganda) ---------- */
 const RG={
  g1:{n:"Hutan Rumput",top:"Kata Berimbuhan",t:"imbuhan",leader:"Flora",badge:"Lencana Alam (Nature Badge)",bg:"lg-g1",pool:[10,16,43,69,41],gym:{id:43,lv:8},deco:"🌳🌿🍃🌲🌸",lines:"Pokémon di sini lupa cara menggunakan imbuhan. Bantu mereka!"},
  g2:{n:"Bandar Metro",top:"Kata Majmuk",t:"majmuk",leader:"Volt",badge:"Lencana Pengetahuan (Knowledge Badge)",bg:"lg-g2",pool:[81,100,19,52],gym:{id:26,lv:14},deco:"🏙️🚆🚦💡🛰️",lines:"Teka-teki kata majmuk bertaburan di seluruh bandar. Gabungkan kata dengan betul!"}
@@ -153,11 +153,11 @@ const pixelTrainer=(who,pose="idle")=>{
 };
 const portrait=(who,cls,pose="idle")=>{const P=PORT[who]||{p:null};return `<div class="lg-port ${cls||""}"><span class="lg-face ${pose==="talk"?"talking":""}">${pixelTrainer(who,pose)}</span>${P.p?`<span class="lg-pk">${spr(P.p,160)}</span>`:""}</div>`};
 /* Dialog RPG: setiap baris boleh "teks" atau [penutur,"teks"]; klik untuk teruskan */
-function dialog(lines,done,who,cls){
+function dialog(lines,done,who,cls,backBtnHtml){
  let i=0,tm=null;
  const d=()=>{
   const L=lines[i],sp=Array.isArray(L)?L[0]:(who||"Profesor Bahasa"),tx=Array.isArray(L)?L[1]:L;
-  show(`<div class="lg-talk"><div class="lg-stage">${portrait(sp,"","talk")}</div><div class="lg-dlg" id="dl"><b class="lg-who">${esc(sp)}</b><span id="dt"></span><br><small>(klik untuk teruskan ▶ ${i+1}/${lines.length})</small></div></div><div class="lg-row" style="justify-content:center"><button class="skip" id="dlsk">⏭ Skip</button></div>`,cls);
+  show(`<div class="lg-talk"><div class="lg-stage">${portrait(sp,"","talk")}</div><div class="lg-dlg" id="dl"><b class="lg-who">${esc(sp)}</b><span id="dt"></span><br><small>(klik untuk teruskan ▶ ${i+1}/${lines.length})</small></div></div><div class="lg-row" style="justify-content:center">${backBtnHtml||""}<button class="skip" id="dlsk">⏭ Skip</button></div>`,cls);
   const el=$("#dt");let n=0;
   tm=setInterval(()=>{n++;el.textContent=tx.slice(0,n);if(n>=tx.length){clearInterval(tm);tm=null}},22);
   $("#dlsk").onclick=()=>{if(tm){clearInterval(tm);tm=null}done()};
@@ -224,13 +224,13 @@ function intro(){
  dialog(["Selamat datang, "+G.name+"! Saya Profesor Bahasa. Anda dijemput menjelajah Wilayah LINGUA!","Malangnya, Pasukan Roket telah mencuri dan merosakkan data dalam Pokédex Bahasa.","Kini Pokémon di seluruh wilayah lupa cara menggunakan perkataan Bahasa Melayu dengan betul.","Tangkap Pokémon, selesaikan cabaran tatabahasa dan kumpul 2 Lencana Gim.","Akhirnya, kalahkan Pasukan Roket dan Juara Bahasa untuk menjadi PENGUASA BAHASA POKÉMON!"],()=>{G.intro=true;chk();hub()},"Profesor Bahasa","lg-hub");
 }
 function hub(){
- music("menu");const lv=tl(),open={g1:true,g2:G.badges.includes("g1")},champ=G.badges.length>=NB;
+ music("menu");const lv=tl(),open={g1:true,g2:G.badges.includes("g1")};
  show(`<div class="card"><div class="lg-row"><span style="font-size:2.2rem">🧢</span><div style="flex:1;min-width:180px"><b>${esc(G.name)} · Tahap ${lv}</b> <span class="tag">XP ${G.xp}</span>${bar(G.xp%100,100,"xp")}</div>
  <span class="tag">🪙 ${G.coins}</span><span class="tag">📕 ${G.caught.length} Pokémon</span><span class="tag">🏅 ${G.badges.length}/${NB}</span><span class="tag">✅ Misi ${G.mis}</span></div>
  <div class="lg-row" style="margin-top:.5rem">${G.team.map(u=>mon(u)).filter(Boolean).map(m=>`<span class="mon" title="${SP[m.id].n} Lv${m.lv}">${spr(m.id,48)}</span>`).join("")||"<small>Tiada pasukan</small>"}</div>
  <small>Kemajuan pembelajaran: ${prog()}%</small>${bar(prog(),100)}</div>
  <h2>🗺️ Peta Lingua Region</h2><div class="lg-map">${ORDER.map(r=>{const R=RG[r];return `<button class="lg-node ${R.bg}" data-act="region" data-a="${r}" ${open[r]?"":"disabled"} style="color:#fff"><b style="font-size:1.1rem">${open[r]?"":"🔒 "}${R.n}</b><small>${R.top} · Gim ${R.leader}</small><span>${R.deco}</span>${G.badges.includes(r)?"<span>🏅 Selesai</span>":""}</button>`}).join("")}
- <button class="lg-node lg-c1" data-act="champ" ${champ?"":"disabled"} style="color:#fff"><b style="font-size:1.1rem">${champ?"":"🔒 "}Liga Juara</b><small>${champ?"Elit Empat & Peperiksaan Akhir":"Perlu "+NB+" lencana"}</small><span>🏟️👑</span>${G.master?"<span>🏆 PENGUASA</span>":""}</button></div>
+ <button class="lg-node lg-c1" data-act="champ" style="color:#fff"><b style="font-size:1.1rem">Liga Juara</b><small>Peperiksaan Akhir & Cabaran Juara</small><span>🏟️👑</span>${G.master?"<span>🏆 PENGUASA</span>":""}</button></div>
  <div class="lg-nav"><button data-act="prof">🧑‍🔬 Prof. Bahasa</button><button data-act="team">👥 Pasukan</button><button data-act="dex">📕 Pokédex</button><button data-act="shop">🛒 Kedai</button><button data-act="center">🏥 Pusat Pokémon</button><button data-act="ach">🏆 Pencapaian</button></div>`,"lg-hub");
 }
 function region(r){
@@ -238,25 +238,26 @@ function region(r){
  show(`${back("hub","Peta")}<h2>${R.n}</h2><p>${R.top} · Ketua Gim <b>${R.leader}</b></p><div class="lg-gym-scene ${r}" aria-label="${R.n} gaya gim Pokémon"><div class="gym-skyline"><i></i><i></i><i></i></div><div class="gym-building"><div class="gym-roof"></div><div class="gym-sign">GYM</div><div class="gym-window"></div><div class="gym-door"></div></div><div class="gym-tree tree-a"></div><div class="gym-tree tree-b"></div><div class="gym-leader-sprite">${pixelTrainer(R.leader)}</div><div class="gym-partner">${spr(R.gym.id,62)}</div></div>
  <div class="lg-row lg-sayrow">${portrait(R.leader,"sm")}<div class="lg-dlg" style="flex:1;min-width:220px"><b class="lg-who">${R.leader}</b>${esc(R.lines)}${pr<3&&!G.badges.includes(r)?" Selesaikan 3 aktiviti dahulu sebelum mencabar saya!":""}</div></div>
  <p>Cabaran wilayah: ${Math.min(pr,3)}/3 ${bar(Math.min(pr,3),3)}</p>
- <div class="lg-nav"><button data-act="enc" data-a="${r}">🌿 Pertemuan Liar</button><button data-act="trn" data-a="${r}">⚔️ Pertarungan Jurulatih</button><button data-act="puz" data-a="${r}">🧩 Teka-teki Pokémon</button><button data-act="hunt" data-a="${r}">🔎 Cari Kata (Pilih Terus)</button><button data-act="gym" data-a="${r}" ${can?"":"disabled"}>🏟️ Cabaran Gim ${can?"":"🔒"}</button><button class="skip" data-act="skiprg" data-a="${r}">⏭ Skip Wilayah</button></div>`,R.bg);
+ <div class="lg-nav"><button data-act="enc" data-a="${r}">🌿 Pertemuan Liar</button><button data-act="trn" data-a="${r}">⚔️ Pertarungan Jurulatih (3 Soalan)</button><button data-act="puz" data-a="${r}">🧩 Teka-teki Pokémon</button><button data-act="hunt" data-a="${r}">🔎 Cari Kata (Pilih Terus)</button><button data-act="gym" data-a="${r}" ${can?"":"disabled"}>🏟️ Cabaran Gim (3 Soalan) ${can?"":"🔒"}</button><button class="skip" data-act="skiprg" data-a="${r}">⏭ Skip Wilayah</button></div>`,R.bg);
 }
-const hubBtn=r=>`<button data-act="region" data-a="${r}">Kembali ke ${RG[r].n}</button>`;
-function done(r,msgs,extra){const m=alive()[0];return show(`<div class="card" style="text-align:center"><h2>🎉 Misi Selesai!</h2>${(msgs||[]).map(t=>`<p>${t}</p>`).join("")}${extra||""}${hubBtn(r)}</div>`,RG[r].bg)}
+const hubBtn=r=>`<button class="ghost" data-act="region" data-a="${r}">⬅ Kembali ke ${RG[r].n}</button>`;
+function done(r,msgs,extra){return show(`<div class="card" style="text-align:center"><h2>🎉 Misi Selesai!</h2>${(msgs||[]).map(t=>`<p>${t}</p>`).join("")}${extra||""}${hubBtn(r)}</div>`,RG[r].bg)}
 
 /* ---------- PERTEMUAN LIAR & MENANGKAP POKÉMON ---------- */
 function wild(r){
  const id=rnd(RG[r].pool),lv=Math.max(2,Math.min(30,Math.round((alive()[0]||{lv:3}).lv)+Math.floor(Math.random()*3)-1));
  if(!G.seen.includes(id))G.seen.push(id);snd("enc");CF={r,w:{id,lv},throws:0};
- show(`<h2>🌿 ${SP[id].n} liar muncul!</h2><div class="card" style="text-align:center"><div class="lg-sp big float">${spr(id,130)}</div><span class="tag">${SP[id].t}</span> <span class="tag">Tahap ${lv}</span><p>Apa yang anda mahu lakukan?</p><div class="lg-row" style="justify-content:center"><button data-act="catchq">⚾ Tangkap (jawab soalan)</button><button data-act="wfight">⚔️ Bertarung</button><button class="skip" data-act="skipcatch">⏭ Skip: tangkap terus</button>${hubBtn(r)}</div></div>`,RG[r].bg);
+ show(`${back("region",RG[r].n,r)}<h2>🌿 ${SP[id].n} liar muncul!</h2><div class="card" style="text-align:center"><div class="lg-sp big float">${spr(id,130)}</div><span class="tag">${SP[id].t}</span> <span class="tag">Tahap ${lv}</span><p>Apa yang anda mahu lakukan?</p><div class="lg-row" style="justify-content:center"><button data-act="catchq">⚾ Tangkap (jawab soalan)</button><button data-act="wfight">⚔️ Bertarung</button><button class="skip" data-act="skipcatch">⏭ Skip: tangkap terus</button>${hubBtn(r)}</div></div>`,RG[r].bg);
 }
 function catchQ(msg){
- const {r,w}=CF;show(`<h2>⚾ Menangkap ${SP[w.id].n}</h2>${msg?`<p>${msg}</p>`:""}<div class="lg-sp big">${spr(w.id,100)}</div><p>Jawab dengan betul untuk meningkatkan peluang menangkap!</p><div id="qa"></div><div class="lg-row" style="justify-content:center"><button class="ghost" data-act="region" data-a="${r}">🏃 Lari</button><button class="skip" data-act="skipcatch">⏭ Skip: tangkap terus</button></div>`,RG[r].bg);
- ask(Q(r,1)[0],$("#qa"),right=>ballSel(right),{next:"Pilih Poké Ball ➡"});
+ const {r,w}=CF,qs=Q(r,1),q=qs[0];
+ show(`${back("region",RG[r].n,r)}<h2>⚾ Menangkap ${SP[w.id].n}</h2>${msg?`<p>${msg}</p>`:""}<div class="lg-sp big">${spr(w.id,100)}</div><p>Jawab dengan betul untuk meningkatkan peluang menangkap!</p><div id="qa"></div><div class="lg-row" style="justify-content:center"><button class="ghost" data-act="region" data-a="${r}">⬅ Kembali ke ${RG[r].n}</button><button class="skip" data-act="skipcatch">⏭ Skip: tangkap terus</button></div>`,RG[r].bg);
+ ask(q,$("#qa"),right=>ballSel(right),{next:"Pilih Poké Ball ➡"});
 }
 function ballSel(right){
  CF.right=right;const {r,w}=CF,i=G.items;
- show(`<h2>⚾ Baling Poké Ball!</h2><div class="lg-sp big">${spr(w.id,100)}</div><div class="lg-ball" id="ball"></div><p>${right?"Jawapan betul! Peluang menangkap tinggi.":"Peluang agak rendah. Anda boleh cuba soalan lain."}</p>
- <div class="lg-row" style="justify-content:center"><button data-act="throw" data-a="ball" ${i.ball>0?"":"disabled"}>Poké Ball ×${i.ball}</button><button data-act="throw" data-a="great" ${i.great>0?"":"disabled"}>Great Ball ×${i.great}</button><button class="ghost" data-act="catchq">🔄 Soalan lain</button><button class="ghost" data-act="region" data-a="${r}">🏃 Lari</button><button class="skip" data-act="skipcatch">⏭ Skip: tangkap terus</button></div>${i.ball+i.great<=0?"<p>Poké Ball habis! Beli di Kedai.</p>":""}`,RG[r].bg);
+ show(`${back("region",RG[r].n,r)}<h2>⚾ Baling Poké Ball!</h2><div class="lg-sp big">${spr(w.id,100)}</div><div class="lg-ball" id="ball"></div><p>${right?"Jawapan betul! Peluang menangkap tinggi.":"Peluang agak rendah. Anda boleh cuba soalan lain."}</p>
+ <div class="lg-row" style="justify-content:center"><button data-act="throw" data-a="ball" ${i.ball>0?"":"disabled"}>Poké Ball ×${i.ball}</button><button data-act="throw" data-a="great" ${i.great>0?"":"disabled"}>Great Ball ×${i.great}</button><button class="ghost" data-act="catchq">🔄 Soalan lain</button><button class="ghost" data-act="region" data-a="${r}">⬅ Kembali ke ${RG[r].n}</button><button class="skip" data-act="skipcatch">⏭ Skip: tangkap terus</button></div>${i.ball+i.great<=0?"<p>Poké Ball habis! Beli di Kedai.</p>":""}`,RG[r].bg);
 }
 function doThrow(k){
  const i=G.items;if(i[k]<=0)return;i[k]--;const {r,w,right}=CF,p=Math.min(.95,(k==="great"?.65:.45)+(right?.4:0));
@@ -269,15 +270,38 @@ function doThrow(k){
  },1900);
 }
 
-function caught(){const {r,w}=CF,m=addMon(w.id,w.lv),msgs=reward(25,20,null);snd("win");done(r,[`Anda berjaya menangkap <b>${SP[w.id].n}</b> (Tahap ${w.lv})! ${G.team.includes(m.u)?"Ia menyertai pasukan anda.":"Ia disimpan dalam koleksi."}`,...msgs]);G.prog[r]=(G.prog[r]||0)+1;persist()}
-/* Skip untuk pensyarah: langkau seluruh wilayah dan terus dapat lencana */
-function skipRegion(r){G.prog[r]=Math.max(3,G.prog[r]||0);if(!G.badges.includes(r))G.badges.push(r);snd("badge");sync(r,5,5);chk();toast(`⏭ ${RG[r].n} di-skip. Lencana diberi.`);hub()}
-function skipChamp(){G.rocket=true;G.elite=true;G.master=true;snd("badge");sync("c1",5,5);chk();toast("⏭ Liga Juara di-skip. Anda kini Penguasa Bahasa!");hub()}
+function caught(){
+ const {r,w}=CF,sample=Q(r,1)[0];
+ if(sample)grade(sample,true);
+ const m=addMon(w.id,w.lv),msgs=reward(25,20,null);
+ snd("win");
+ done(r,[`Anda berjaya menangkap <b>${SP[w.id].n}</b> (Tahap ${w.lv})! ${G.team.includes(m.u)?"Ia menyertai pasukan anda.":"Ia disimpan dalam koleksi."}`,...msgs]);
+ G.prog[r]=(G.prog[r]||0)+1;
+ persist();
+}
+/* Skip untuk pensyarah: langkau seluruh wilayah dan terus dapat lencana (seperti berjaya selesaikan) */
+function skipRegion(r){
+ const sample=Q(r,1)[0];
+ if(sample)grade(sample,true);
+ G.prog[r]=Math.max(3,G.prog[r]||0);
+ if(!G.badges.includes(r))G.badges.push(r);
+ snd("badge");sync(r,3,3);chk();
+ toast(`⏭ ${RG[r].n} di-skip. Lencana diberi.`);
+ hub();
+}
+function skipChamp(){
+ const sample=Q("c1",1)[0];
+ if(sample)grade(sample,true);
+ G.rocket=true;G.elite=true;G.master=true;
+ snd("badge");sync("c1",3,3);chk();
+ toast("⏭ Liga Juara di-skip. Anda kini Penguasa Bahasa!");
+ hub();
+}
 
 /* ---------- SISTEM PERTARUNGAN GILIRAN ---------- */
 /* c:{title,bg,e:{id,lv},qs,atk,xp,coins,prog,back,onWin} */
 function battle(c){
- const N=c.qs.length,need=Math.ceil(N*.7),emax=need*10;let i=0,hit=0,ehp=emax,msg=`${SP[c.e.id].n} mahu bertarung!`,cu=alive()[0];
+ const N=c.qs.length,need=N<=3?N:Math.ceil(N*.7),emax=need*10;let i=0,hit=0,ehp=emax,msg=`${SP[c.e.id].n} mahu bertarung!`,cu=alive()[0];
  if(!cu){toast("Pasukan anda pengsan! Pergi ke Pusat Pokémon.");return c.back()}
  music("battle");snd("enc");
  const FX={Rumput:"🍃",Api:"🔥",Air:"💧",Elektrik:"⚡",Batu:"🪨",Psikik:"🔮",Naga:"🐲",Racun:"☠️",Terbang:"💨",Serangga:"🐛",Lawan:"👊",Biasa:"✨"};
@@ -294,10 +318,16 @@ function battle(c){
   BT={bk:c.back};
  };
  const quit=()=>{if(!confirm("Mahu mengalah dan kembali? Pertarungan ini tidak dikira."))return;snd("click");BT=null;music("menu");c.back()};
- const skip=()=>{hit=need;ehp=0;end(true)};
+ /* Skip pensyarah: rekod jawapan baki soalan sebagai betul supaya berkelakuan seperti murid berjaya menjawab */
+ const skip=()=>{
+  for(let k=i;k<N;k++)grade(c.qs[k],true);
+  hit=need;ehp=0;end(true);
+ };
  const q=()=>{
   if(i>=N)return end(false);
-  show(`<h2>${esc(c.title)}</h2><div id="sc"></div><div id="qa"></div>`,c.bg);sc();
+  show(`<div class="lg-row" style="justify-content:space-between;align-items:center"><h2>${esc(c.title)}</h2><button class="ghost" id="lgqbk">⬅ Kembali</button></div><div id="sc"></div><div id="qa"></div>`,c.bg);
+  const qbk=$("#lgqbk");if(qbk)qbk.onclick=quit;
+  sc();
   ask(c.qs[i],$("#qa"),()=>{
    i++;if(hit>=need)return end(true);if(!alive().length)return end(false);if(hit+(N-i)<need)return end(false);q();
   },{onAns:r=>{
@@ -310,28 +340,25 @@ function battle(c){
 const avgLv=()=>{const a=alive()[0];return a?a.lv:3};
 function trainer(r){
  const nm=rnd(["Ali","Mei Ling","Kumar","Aisyah","Jebat","Siti"]),e={id:rnd(RG[r].pool),lv:Math.max(2,avgLv()+rnd([-1,0,1]))};
- dialog(["Saya akan mencabar pengetahuan tatabahasa anda!"],()=>battle({title:`Jurulatih ${nm}`,bg:RG[r].bg,e,qs:Q(r,5),atk:9,xp:30,coins:30,prog:r,back:()=>region(r)}),"Jurulatih "+nm,RG[r].bg);
+ dialog(["Saya akan mencabar pengetahuan tatabahasa anda!"],()=>battle({title:`Jurulatih ${nm} (${RG[r].n})`,bg:RG[r].bg,e,qs:Q(r,3),atk:9,xp:30,coins:30,prog:r,back:()=>region(r)}),"Jurulatih "+nm,RG[r].bg,back("region",RG[r].n,r));
 }
 function gym(r){
- const R=RG[r];dialog([`Saya Ketua Gim ${R.n}! Tunjukkan anda memahami ${R.top.toLowerCase()}!`],()=>battle({title:`Gim ${R.n}: ${R.leader}`,bg:R.bg,e:R.gym,qs:Q(r,5),atk:12,xp:70,coins:70,back:()=>region(r),
-  onWin:(h,n)=>{const first=!G.badges.includes(r);if(first){G.badges.push(r);snd("badge")}sync(r,h,n);chk();return `<p class="lg-badge">🏅 ${R.badge}${first?" diperoleh!":""}</p>`}}),R.leader,R.bg);
+ const R=RG[r];dialog([`Saya Ketua Gim ${R.n}! Tunjukkan anda memahami ${R.top.toLowerCase()}!`],()=>battle({title:`Gim ${R.n}: ${R.leader}`,bg:R.bg,e:R.gym,qs:Q(r,3),atk:12,xp:70,coins:70,back:()=>region(r),
+  onWin:(h,n)=>{const first=!G.badges.includes(r);if(first){G.badges.push(r);snd("badge")}sync(r,h,n);chk();return `<p class="lg-badge">🏅 ${R.badge}${first?" diperoleh!":""}</p>`}}),R.leader,R.bg,back("region",R.n,r));
 }
 function elite(){
  battle({title:"Elit Empat: Penilaian Gabungan",bg:"lg-c1",e:{id:65,lv:25},qs:mixed(5),atk:13,xp:90,coins:100,back:champ,onWin:()=>{G.elite=true;return "<p>🏅 Elit Empat dikalahkan!</p>"}});
 }
 function champ(){
  music("menu");
- if(!G.rocket){
-  return show(`${back("hub","Peta")}<h2>👑 Liga Juara</h2><div class="card"><p>Pasukan Roket menyekat pintu masuk Stadium!</p><div class="lg-row"><button data-act="boss">🚀 Lawan Bos Pasukan Roket</button><button data-act="elite">🏅 Elit Empat (latihan)</button><button class="skip" data-act="skipchamp">⏭ Skip Liga Juara</button></div></div>`,"lg-c1");
- }
- show(`${back("hub","Peta")}<h2>👑 Liga Juara</h2><div class="card"><p>${G.master?"Anda sudah menjadi PENGUASA BAHASA POKÉMON! Cabar semula untuk berlatih.":"Bos Roket telah tewas! Kini cabar Juara Bahasa."}</p><div class="lg-row"><button data-act="final">🏆 Cabar Juara Bahasa</button><button data-act="elite">🏅 Elit Empat</button><button class="skip" data-act="skipchamp">⏭ Skip Liga Juara</button></div></div>`,"lg-c1");
+ show(`${back("hub","Peta")}<h2>👑 Liga Juara</h2><div class="card"><p>${G.master?"Anda sudah menjadi PENGUASA BAHASA POKÉMON! Anda boleh masuk ke Peperiksaan Akhir atau cabaran lain pada bila-bila masa.":"Selamat datang ke Liga Juara! Anda boleh terus masuk ke Peperiksaan Akhir atau mencabar lawan di stadium."}</p><div class="lg-row"><button data-act="final">🏆 Liga Juara: Peperiksaan Akhir (3 Soalan)</button><button data-act="boss">🚀 Lawan Bos Pasukan Roket</button><button data-act="elite">🏅 Elit Empat</button><button class="skip" data-act="skipchamp">⏭ Skip Liga Juara</button></div></div>`,"lg-c1");
 }
 function boss(){
- dialog([["Bos Roket","Hahaha! Pokédex Bahasa itu milik kami!"],["Profesor Bahasa","Jawab dengan betul, "+G.name+". Kita boleh menang!"]],()=>battle({title:"Bos Pasukan Roket",bg:"lg-c1",e:{id:53,lv:28},qs:mixed(5),atk:14,xp:100,coins:100,back:champ,onWin:()=>{G.rocket=true;return "<p>🚀 Pasukan Roket dikalahkan! Data Pokédex Bahasa dipulihkan.</p>"}}),"Bos Roket","lg-c1");
+ dialog([["Bos Roket","Hahaha! Pokédex Bahasa itu milik kami!"],["Profesor Bahasa","Jawab dengan betul, "+G.name+". Kita boleh menang!"]],()=>battle({title:"Bos Pasukan Roket",bg:"lg-c1",e:{id:53,lv:28},qs:mixed(5),atk:14,xp:100,coins:100,back:champ,onWin:()=>{G.rocket=true;return "<p>🚀 Pasukan Roket dikalahkan! Data Pokédex Bahasa dipulihkan.</p>"}}),"Bos Roket","lg-c1",back("champ","Liga Juara"));
 }
 function final(){
- dialog(["Selamat datang ke arena akhir! 5 soalan, 4 jawapan betul diperlukan.","Tunjukkan bahawa anda menguasai kata berimbuhan dan kata majmuk!"],()=>battle({title:"Juara Bahasa: Peperiksaan Akhir",bg:"lg-c1",e:{id:149,lv:40},qs:Q("c1",5),atk:12,xp:200,coins:200,back:champ,
-  onWin:(h,n)=>{G.master=true;sync("c1",h,n);chk();return `<p class="lg-badge">🏆 PENGUASA BAHASA POKÉMON 🏆</p><p>Tahniah, ${esc(G.name)}! Anda telah memulihkan Pokédex Bahasa.</p>`}}),"Juara Bahasa","lg-c1");
+ dialog(["Selamat datang ke arena akhir Liga Juara: Peperiksaan Akhir! 3 soalan disediakan.","Tunjukkan bahawa anda menguasai pembentukan kata Bahasa Melayu!"],()=>battle({title:"Liga Juara: Peperiksaan Akhir",bg:"lg-c1",e:{id:149,lv:40},qs:Q("c1",3),atk:12,xp:200,coins:200,back:champ,
+  onWin:(h,n)=>{G.master=true;sync("c1",h,n);chk();return `<p class="lg-badge">🏆 PENGUASA BAHASA POKÉMON 🏆</p><p>Tahniah, ${esc(G.name)}! Anda telah menamatkan Liga Juara: Peperiksaan Akhir.</p>`}}),"Juara Bahasa","lg-c1",back("champ","Liga Juara"));
 }
 
 /* ---------- TEKA-TEKI (susun, lengkapkan, padankan) · 5 langkah ---------- */
@@ -340,7 +367,11 @@ function puzzle(r){PU={r,step:0,s:shuf(PZ[r].s),l:shuf(PZ[r].l),si:0,li:0};pz()}
 function pz(){const {r,step}=PU,f=[pzSusun,pzLengkap,pzSusun,pzLengkap,pzPadan][step];f?f(r):pzEnd(r)}
 const pzNext=()=>{PU.step++;pz()}
 const pzTop=r=>`${back("region",RG[r].n,r)} <button class="skip" id="pzsk">⏭ Skip</button>`;
-const pzSkip=r=>{const b=$("#pzsk");if(b)b.onclick=()=>pzEnd(r)};
+const pzSkip=r=>{const b=$("#pzsk");if(b)b.onclick=()=>{
+ const sample=Q(r,1)[0];
+ if(sample)grade(sample,true);
+ pzEnd(r);
+}};
 function pzEnd(r){snd("win");const msgs=reward(30,25,alive()[0]);G.prog[r]=(G.prog[r]||0)+1;done(r,["🧩 Semua teka-teki selesai! +30 XP, +25 🪙",...msgs])}
 function pzSusun(r){
  const it=PU.s[(PU.si++)%PU.s.length],n=PU.step+1;let tray=[];const chips=shuf(it.p.map((p,i)=>({p,i})));
@@ -349,14 +380,14 @@ function pzSusun(r){
   pzSkip(r);
   document.querySelectorAll(".lg-chip").forEach(b=>b.onclick=()=>{tray.push(chips.find(c=>c.i==b.dataset.i));snd("click");draw()});
   $("#pzc").onclick=()=>{tray=[];draw()};
-  $("#pzk").onclick=()=>{const a=tray.map(c=>c.p).join(it.j);if(a===it.a){snd("ok");draw(`<div class="lg-fb good"><b>🎉 Betul! ${esc(it.a)}</b><p>📘 ${esc(it.n)}</p><button id="pzn">Seterusnya ➡</button></div>`);$("#pzn").onclick=pzNext}else{snd("no");tray=[];draw(`<div class="lg-fb try"><b>💪 Hampir! Cuba lagi.</b><p>Petua: ${esc(it.n)}</p></div>`)}};
+  $("#pzk").onclick=()=>{const a=tray.map(c=>c.p).join(it.j);if(a===it.a){snd("ok");grade({q:it.a,o:[it.a],a:0,e:it.n,x:it.a,t:RG[r].t},true);draw(`<div class="lg-fb good"><b>🎉 Betul! ${esc(it.a)}</b><p>📘 ${esc(it.n)}</p><button id="pzn">Seterusnya ➡</button></div>`);$("#pzn").onclick=pzNext}else{snd("no");tray=[];draw(`<div class="lg-fb try"><b>💪 Hampir! Cuba lagi.</b><p>Petua: ${esc(it.n)}</p></div>`)}};
  };draw();
 }
 function pzLengkap(r){
  const it=PU.l[(PU.li++)%PU.l.length],n=PU.step+1;let fb=null;
  const draw=()=>{show(`${pzTop(r)}<h2>🧩 Lengkapkan Ayat (${n}/${NSTEP})</h2><div class="card"><h3>${esc(it.s)}</h3><p>${it.o.map((o,j)=>`<button class="lg-chip ${fb!==null?(j===it.a?"ok":j===fb?"no":"dim"):""}" data-j="${j}" ${fb!==null?"disabled":""}>${esc(o)}</button>`).join("")}</p>${fb!==null?`<div class="lg-fb ${fb===it.a?"good":"try"}"><b>${fb===it.a?"🎉 Betul!":"💪 Tidak mengapa! Jawapan: "+esc(it.o[it.a])}</b><p>📘 ${esc(it.n)}</p><button id="pzn">Seterusnya ➡</button></div>`:""}</div>`,RG[r].bg);
   pzSkip(r);
-  document.querySelectorAll(".lg-chip").forEach(b=>b.onclick=()=>{fb=+b.dataset.j;snd(fb===it.a?"ok":"no");draw()});const nx=$("#pzn");if(nx)nx.onclick=pzNext};draw();
+  document.querySelectorAll(".lg-chip").forEach(b=>b.onclick=()=>{fb=+b.dataset.j;const ok=fb===it.a;grade({q:it.s,o:it.o,a:it.a,e:it.n,x:it.o[it.a],t:RG[r].t},ok);snd(ok?"ok":"no");draw()});const nx=$("#pzn");if(nx)nx.onclick=pzNext};draw();
 }
 function pzPadan(r){
  const ws=shuf(W).slice(0,4),n=PU.step+1;const ok={};let sel=null;
@@ -366,7 +397,7 @@ function pzPadan(r){
   pzSkip(r);
   document.querySelectorAll(".lg-chip").forEach(b=>b.onclick=()=>{sel=b.dataset.w;snd("click");draw()});
   document.querySelectorAll(".lg-cat").forEach(b=>b.onclick=()=>{if(!sel)return draw(["try","Pilih perkataan dahulu."]);const w=ws.find(x=>x.w===sel);
-   if(w.t===b.dataset.t){ok[w.w]=1;sel=null;snd("ok");draw(["good",`Betul! ${esc(w.w)} ialah ${esc(w.n)}.`])}else{snd("no");draw(["try",`Tidak mengapa! ${esc(w.w)} ialah ${TN[w.t]} (${esc(w.n)}). Cuba lagi.`])}});
+   if(w.t===b.dataset.t){ok[w.w]=1;sel=null;grade({q:w.w,o:[w.w],a:0,e:w.n,x:w.w,t:w.t},true);snd("ok");draw(["good",`Betul! ${esc(w.w)} ialah ${esc(w.n)}.`])}else{snd("no");draw(["try",`Tidak mengapa! ${esc(w.w)} ialah ${TN[w.t]} (${esc(w.n)}). Cuba lagi.`])}});
   const nx=$("#pzn");if(nx)nx.onclick=pzNext};draw();
 }
 
@@ -376,8 +407,12 @@ function hunt(r){
  const t=RG[r].t,K=5,tg=shuf(W.filter(w=>w.t===t)).slice(0,K),ot=shuf(W.filter(w=>w.t!==t)).slice(0,5),tiles=shuf(tg.concat(ot).map(w=>({w,s:0})));let found=0,msg="";
  const fin=()=>{const m=reward(25,30,alive()[0]);G.prog[r]=(G.prog[r]||0)+1;snd("win");done(r,["Semua kata ditemui! +25 XP, +30 🪙",...m])};
  const draw=()=>{show(`${back("region",RG[r].n,r)} <button class="skip" id="hksk">⏭ Skip</button><h2>🔎 Pilih Perkataan ${TN[t]}</h2><div class="card"><p>Ketik <b>${K} perkataan ${TN[t].toLowerCase()}</b> daripada senarai di bawah. Ditemui: ${found}/${K}</p><div class="lg-tiles">${tiles.map((x,i)=>`<button data-i="${i}" class="${x.s===1?"got":x.s===2?"miss":""}" ${x.s?"disabled":""}>${esc(x.w.w)}${x.s===1?" ✔":""}</button>`).join("")}</div>${msg?`<div class="lg-fb ${msg[0]}"><p>${msg[1]}</p></div>`:""}${found>=K?`<button id="hk">Selesai ➡</button>`:""}</div>`,RG[r].bg);
-  $("#hksk").onclick=fin;
-  document.querySelectorAll(".lg-tiles button").forEach(b=>b.onclick=()=>{const x=tiles[+b.dataset.i];if(x.w.t===t){x.s=1;found++;snd("ok");msg=["good",`Betul! ${esc(x.w.w)} ialah ${esc(x.w.n)}.`]}else{x.s=2;snd("no");msg=["try",`Tidak mengapa! ${esc(x.w.w)} ialah ${TN[x.w.t]} (${esc(x.w.n)}). Teruskan memilih!`]}draw()});
+  $("#hksk").onclick=()=>{
+   const sample=Q(r,1)[0];
+   if(sample)grade(sample,true);
+   fin();
+  };
+  document.querySelectorAll(".lg-tiles button").forEach(b=>b.onclick=()=>{const x=tiles[+b.dataset.i];if(x.w.t===t){x.s=1;found++;grade({q:x.w.w,o:[x.w.w],a:0,e:x.w.n,x:x.w.w,t:x.w.t},true);snd("ok");msg=["good",`Betul! ${esc(x.w.w)} ialah ${esc(x.w.n)}.`]}else{x.s=2;snd("no");msg=["try",`Tidak mengapa! ${esc(x.w.w)} ialah ${TN[x.w.t]} (${esc(x.w.n)}). Teruskan memilih!`]}draw()});
   const h=$("#hk");if(h)h.onclick=fin};draw();
 }
 
@@ -441,7 +476,7 @@ const ACT={
  cont:()=>{G=readSave();if(!G){toast("Simpanan rosak. Mulakan permainan baharu.");return menu()}G.intro?hub():intro()},newg:()=>{if(readSave()&&!confirm("Permainan baharu akan menggantikan simpanan lama. Teruskan?"))return;newGame()},
  reset:()=>{if(confirm("Set semula SEMUA kemajuan? Ini tidak boleh dibatalkan.")){try{localStorage.removeItem(key)}catch(e){}G=null;menu()}},
  starter:id=>{addMon(+id,5);chk();intro()},
- enc:wild,wfight:()=>{const {r,w}=CF;battle({title:`${SP[w.id].n} liar`,bg:RG[r].bg,e:w,qs:Q(r,5),atk:8,xp:30,coins:20,prog:r,back:()=>region(r)})},
+ enc:wild,wfight:()=>{const {r,w}=CF;battle({title:`${SP[w.id].n} liar`,bg:RG[r].bg,e:w,qs:Q(r,3),atk:8,xp:30,coins:20,prog:r,back:()=>region(r)})},
  catchq:()=>catchQ(),throw:doThrow,trn:trainer,gym,puz:puzzle,hunt,boss,elite,final,
  use:k=>BT&&BT.use&&BT.use(k),bk:()=>BT&&BT.bk&&BT.bk(),
  tmain:u=>{G.team=[u].concat(G.team.filter(x=>x!==u));team()},
@@ -468,7 +503,8 @@ const TIP_ID={
  lght:"Dapatkan petua daripada Profesor Bahasa. Ia tidak menjejaskan markah.",
  lgnx:"Teruskan ke langkah seterusnya.",
  lgbk:"Mengalah dan kembali ke skrin sebelumnya. Pertarungan ini tidak dikira.",
- lgsk:"Skip (untuk pensyarah): terus menang pertarungan ini.",
+ lgqbk:"Kembali ke skrin sebelumnya.",
+ lgsk:"Skip (untuk pensyarah): terus menang pertarungan ini seolah-olah berjaya menjawab.",
  dlsk:"Skip dialog dan teruskan.",
  pzc:"Padam susunan dan mula semula.",
  pzk:"Semak sama ada susunan anda betul.",
@@ -482,7 +518,7 @@ const TIP_ACT={
  menu:()=>"Kembali ke skrin permulaan permainan.",
  hub:()=>"Kembali ke Peta Lingua Region.",
  region:(v,b,tx)=>{const R=RG[v];if(!R)return "";if(b.classList.contains("lg-node"))return b.disabled?`Dikunci. Menangi lencana wilayah sebelum ini untuk membuka ${R.n}.`:`Masuk ke ${R.n} untuk berlatih ${R.top.toLowerCase()}.`;if(/Lari/.test(tx))return `Lari daripada Pokémon ini dan kembali ke ${R.n}.`;return `Kembali ke ${R.n}.`},
- champ:(v,b)=>b.disabled?`Dikunci. Kumpul ${NB} lencana dahulu.`:"Masuk Liga Juara: lawan Bos Roket dan Juara Bahasa.",
+ champ:()=>"Masuk Liga Juara: Peperiksaan Akhir dan cabaran stadium.",
  team:()=>"Lihat Pokémon anda, atur pasukan dan guna Batu Evolusi.",
  dex:v=>v==="l"?"Buka Kamus Bahasa: lihat penerangan dan contoh yang telah anda pelajari.":v==="p"?"Buka Pokédex: lihat Pokémon yang ditemui dan ditangkap.":"Buka Pokédex dan Kamus Bahasa.",
  shop:()=>"Beli Poké Ball, Potion dan item lain menggunakan syiling.",
@@ -494,16 +530,16 @@ const TIP_ACT={
  reset:()=>"Padam SEMUA kemajuan dan mula dari awal.",
  starter:v=>SP[v]?`Pilih ${SP[v].n} sebagai Pokémon pertama anda.`:"",
  enc:()=>"Cari Pokémon liar: tangkap dengan menjawab soalan atau lawan.",
- wfight:()=>"Lawan Pokémon liar. Jawab 5 soalan; 4 betul untuk menang.",
+ wfight:()=>"Lawan Pokémon liar. Jawab 3 soalan untuk menang.",
  catchq:()=>"Jawab soalan baharu untuk meningkatkan peluang menangkap.",
  throw:v=>v==="great"?"Baling Great Ball: peluang menangkap lebih tinggi.":"Baling Poké Ball untuk cuba menangkap Pokémon ini.",
- trn:()=>"Cabar jurulatih: jawab 5 soalan; 4 betul untuk menang.",
- gym:()=>"Cabaran Gim: lawan ketua gim (5 soalan) untuk dapat lencana.",
+ trn:()=>"Cabar jurulatih: jawab 3 soalan untuk menang.",
+ gym:()=>"Cabaran Gim: lawan ketua gim (3 soalan) untuk dapat lencana.",
  puz:()=>"Main teka-teki Pokémon: susun, lengkapkan dan padankan (5 langkah).",
  hunt:()=>"Cari perkataan yang betul daripada senarai (5 perkataan).",
  boss:()=>"Lawan Bos Pasukan Roket (5 soalan campuran).",
  elite:()=>"Elit Empat: penilaian gabungan (5 soalan).",
- final:()=>"Cabar Juara Bahasa dalam peperiksaan akhir (5 soalan).",
+ final:()=>"Masuk Liga Juara: Peperiksaan Akhir (3 soalan).",
  use:v=>v==="super"?"Guna Super Potion: pulihkan 50 HP Pokémon anda.":"Guna Potion: pulihkan 20 HP Pokémon anda.",
  bk:()=>"Teruskan dan kembali ke skrin sebelumnya.",
  tmain:()=>"Jadikan Pokémon ini ketua pasukan (bertarung dahulu).",
