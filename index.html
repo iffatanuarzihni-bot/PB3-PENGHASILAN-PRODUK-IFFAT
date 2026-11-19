@@ -1628,7 +1628,8 @@ function guruView(){
       <div><label for="c">${TEKS.kelas}</label><input id="c" name="c" list="cls" placeholder="${TEKS.contohKelas}" required><datalist id="cls">${classes.map(c=>`<option value="${esc(c)}">`).join("")}</datalist></div>
       <button type="submit">+ ${TEKS.tambahMurid}</button>
     </form>
-  </div>`+blocks;
+  </div>
+  <div id="teacher-video-submissions"></div>`+blocks;
 }
 
 /* Muka Surat Video Kata Imbuhan & Kata Majmuk selepas murid log masuk */
@@ -1728,7 +1729,8 @@ function muridView(){
     </div>
     <div class="strip" aria-label="${TEKS.koleksi}">${strip}</div>
   </div>
-  <div class="card stage"><div class="mon float">${mon("#ffcf33",0,84)}</div><div class="grow"><h2>🌍 Pokémon Language Adventure</h2><span class="tag">Bahasa Melayu Tahun 4</span><p class="mut" style="margin:.3rem 0 0">Jelajah Lingua Region, tangkap Pokémon dan jadi Penguasa Bahasa!</p></div><button onclick="LinguaGame.open()">🎮 Main Game</button></div>`+cards;
+  <div class="card stage"><div class="mon float">${mon("#ffcf33",0,84)}</div><div class="grow"><h2>🌍 Pokémon Language Adventure</h2><span class="tag">Bahasa Melayu Tahun 4</span><p class="mut" style="margin:.3rem 0 0">Jelajah Lingua Region, tangkap Pokémon dan jadi Penguasa Bahasa!</p></div><button onclick="LinguaGame.open()">🎮 Main Game</button></div>
+  <div class="card stage"><div class="mon float">${pokemon(133,84,"Eevee")}</div><div class="grow"><h2>🎥 Produk Akhir: Video Penerangan</h2><span class="tag ok">Objektif Pembelajaran 1 &amp; 2</span><p class="mut" style="margin:.3rem 0 0">Rakam video penerangan jenis kata berimbuhan &amp; kata majmuk serta bina ayat lengkap untuk dihantar kepada guru.</p></div><button onclick="ProdukAkhir.open()">🎬 Buat Produk Akhir</button></div>`+cards;
 }
 
 function lessonView(){
@@ -1820,6 +1822,7 @@ function render(){
   } else if(S.role==="guru"){
     Chiptune.setTrack("menu");
     a.innerHTML=guruView();
+    if(window.ProdukAkhir) ProdukAkhir.renderTeacherSection(S.id);
   } else {
     Chiptune.setTrack(lesson && B && B.ph==="fight" ? "battle" : "menu");
     a.innerHTML = lesson ? lessonView() : muridView();
@@ -1953,5 +1956,6 @@ render();
 </script>
 <script src="sijil.js"></script>
 <script src="lingua/lingua.js"></script>
+<script src="produk-akhir.js"></script>
 </body>
 </html>
